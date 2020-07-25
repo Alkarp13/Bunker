@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\db_models",
+    "\\db_models\\migrations",
+    "\\www",
+    "\\www\\src",
+    "\\www\\src\\components",
+    "\\www\\static",
+    "\\www\\static\\js",
+    "\\www\\static\\js\\lib",
+    "\\www\\templates",
+    "\\www\\templates\\registration"
+  ],
+  "SelectedNode": "\\db_models\\views.py",
+  "PreviewInSolutionExplorer": false
+}

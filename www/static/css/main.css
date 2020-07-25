@@ -1,0 +1,63 @@
+body, html {
+    height: 100%;
+}
+
+.lobby-bg {
+    background-image: url("/www/static/img/lobby_bg.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bunker-bg {
+    background-image: url("/www/static/img/bunker_bg.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.login-form {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    width: 450px;
+    margin: 0 auto;
+    background-color: rgba(249, 201, 16, 0.9);
+    border-radius: 5px;
+    border: 2px solid black;
+    color: black;
+    box-shadow: 0 0 10px rgba(0,0,0,0.7);
+    padding: 10px;
+}
+
+.login-form > form {
+    margin-bottom: 5px;
+}
+
+.login-btn {
+    width: 100px;
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border-color: black;
+}
+
+.login-btn:hover {
+    background: rgb(0,0,0);
+    color: white;
+    border-color: black;
+}
+
+.top-bar {
+    border-bottom: 2px solid orange;
+    background: rgba(0,0,0,0.7);
+    color: wheat;
+    box-shadow: 0 0 10px rgba(0,0,0,0.7);
+}
+
+.top-bar > label,
+.top-bar > a {
+    margin: 5px;
+}
