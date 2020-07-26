@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Avatar, Pane } from 'evergreen-ui'
+import { Avatar, Pane, Button } from 'evergreen-ui'
 
 class App extends React.Component {
     constructor(props) {
@@ -13,20 +13,22 @@ class App extends React.Component {
         };
     }
 
+    setReadyState() {
+        console.log(this);
+    }
+
     componentDidMount() {
         fetch("/lobby_state", { method: 'GET' })
-            .then(function (responce) {
-                responce.json()
-            })
-            .then(
-                function (result) {
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result)
                     this.setState({
                         isLoaded: true,
                         lobby_state: result.lobby_state,
-                        users: result.items
+                        users: result.users
                     });
                 },
-                function (error) {
+                (error) => {
                     this.setState({
                         isLoaded: true,
                         error
@@ -36,29 +38,43 @@ class App extends React.Component {
     }
 
     render() {
-        const { error, isLoaded, users } = this.state;
+        const { error, isLoaded, users, lobby_state } = this.state;
         if (error) {
             return <div>Ошибка: {error.message}</div>;
         } else if (!isLoaded) {
             return <div>Загрузка...</div>;
-        } else {
+        } else if (lobby_state === 'S') {
+            //
+        } else if (lobby_state === 'R') {
             return (
-               <Pane
-                    float="left"
-                    height={100}
-                    margin={24}
+                <Pane
                     display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    flexDirection="column">
-                    {users.map(function (user) {
-                        return <Avatar
-                                    name={user.first_name}
-                                    size={80}
-                                    marginRight={16}
-                                />
-                    })}
-               </Pane>
+                    height={100}
+                    width="100%"
+                    float="left"
+                    padding={16}
+                    borderRadius={5}
+                    background="rgba(0, 0, 0, 0.3)">
+                   <Pane
+                        float="left"
+                        display="flex"
+                        flex={1}
+                        justifyContent="left"
+                        alignItems="center"
+                        flexDirection="row">
+                        {users.map(function (user, index) {
+                           return <Avatar
+                               key={index}
+                               name={user.first_name}
+                               size={80}
+                               marginRight={16}
+                           />
+                       })}
+                    </Pane>
+                    <Pane>
+                        <Button appearance="primary" onClick={() => this.setReadyState()}>Ready</Button>
+                    </Pane>
+                </Pane>
             );
         }
     }

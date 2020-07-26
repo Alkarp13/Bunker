@@ -6,7 +6,7 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('person/', views.PersonCardView.as_view(), name = 'person-card'),
+    path('person/', views.PersonCardView.as_view(), name = 'person_card'),
     path('lobby/', views.LobbyView.as_view(), name = 'lobby'),
     path('lobby_state', views.lobbyState, name = 'lobbystate'),
     path('', RedirectView.as_view(url='/lobby/', permanent=False), name='index')

@@ -1,8 +1,8 @@
 ﻿<!DOCTYPE html>
 <html lang="ru">
 <head>
-    {% block head %}
     <meta charset="UTF-8">
+    {% block head %}
     {% block title %}
     <title>Бункер</title> {% endblock %}
     {% endblock %}
@@ -20,7 +20,7 @@
             {% block content %} {% endblock %}
         </div>
         {% load static %}
-        <script src="{% static 'frontend/main.js' %}"></script>
+        <script charset="utf-8" src="{% static 'frontend/main.js' %}"></script>
     {% else %}
         <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
     {% endif %}

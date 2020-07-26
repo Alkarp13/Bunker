@@ -14,7 +14,18 @@ class Lobby(models.Model):
 
 class UserProfile(AbstractUser):
     avatar = models.ImageField(upload_to='images/users', verbose_name='Изображение')
+
+class UserInfo(models.Model):
+    id = models.AutoField(primary_key=True)
+    username = models.CharField(max_length=20)
+    first_name = models.CharField(max_length=20)
+    last_name = models.CharField(max_length=20)
+    avatar = models.ImageField(upload_to='images/users', verbose_name='Изображение')
     linked_lobby = models.ForeignKey(Lobby, on_delete = models.CASCADE, null=True, blank=True)
+
+class ShownFields(models.Model):
+    id = models.AutoField(primary_key=True)
+    field = models.CharField(max_length=20)
 
 class Person(models.Model):
     MALE_VAR = [
@@ -24,7 +35,8 @@ class Person(models.Model):
     
     id = models.AutoField(primary_key=True)
     lobby = models.ForeignKey(Lobby, on_delete = models.CASCADE, null=True, blank=True)
-    linked_user = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True, blank=True)
+    linked_user = models.ForeignKey(UserInfo, on_delete=models.CASCADE, null=True, blank=True)
+    shown_fields = models.ForeignKey(ShownFields, on_delete = models.CASCADE, null=True, blank=True)
     male = models.CharField(max_length=1, choices=MALE_VAR, default='M')
     age = models.PositiveSmallIntegerField()
     profession = models.CharField(max_length=40)
