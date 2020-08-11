@@ -22,6 +22,10 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
-    "evergreen-ui": "^4.28.1"
+    "evergreen-ui": "^4.28.1",
+    "prop-types": "^15.7.2",
+    "react-dnr": "^0.4.0",
+    "react-native": "^0.63.2",
+    "react-router-dom": "^5.2.0"
   }
 }

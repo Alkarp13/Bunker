@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'db_models.apps.DbModelsConfig',
     'rest_framework',
+    'channels',
     'www'
 ]
 
@@ -65,6 +66,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Bunker.wsgi.application'
+ASGI_APPLICATION = 'Bunker.routing.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 # Database
 DATABASES = {

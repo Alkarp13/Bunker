@@ -9,5 +9,7 @@ urlpatterns = [
     path('person/', views.PersonCardView.as_view(), name = 'person_card'),
     path('lobby/', views.LobbyView.as_view(), name = 'lobby'),
     path('lobby_state', views.lobbyState, name = 'lobbystate'),
+    path('set_ready', views.setReady, name = 'setready'),
+    path('get_all_persons', views.getAllPersons, name = 'allpersons'),
     path('', RedirectView.as_view(url='/lobby/', permanent=False), name='index')
 ]

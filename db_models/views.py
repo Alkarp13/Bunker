@@ -3,6 +3,7 @@ import simplejson as json
 from django.shortcuts import render
 from django.contrib.auth import get_user
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.views import generic
 from django.http import HttpResponse
 from Bunker.settings import BASE_DIR
@@ -65,27 +66,103 @@ class PersonCardView(LoginRequiredMixin, generic.ListView):
         else:
             return current_person
 
+@csrf_exempt
 def lobbyState(request):
     if request.method == 'GET':
         users_data = []
         lobby = Lobby.objects.first()
-        users = list(lobby.userinfo_set.values_list('username', 'first_name', 'last_name', named=True))
+        users = list(lobby.userinfo_set.values_list('username', 'first_name', 'last_name', 'ready_state', named=True))
         if users:
             for i, user in enumerate(users):
-                print(user)
                 users_data.append({
                     'username': user.username,
                     'first_name': user.first_name,
-                    'last_name': user.last_name
+                    'last_name': user.last_name,
+                    'ready_state': user.ready_state
                 })
         result = {
             'lobby_state': lobby.game_state,
             'users': users_data
         }
         return HttpResponse(json.dumps(result))
-    elif request.method == 'POST':
-        #get all persons for current user with known fields?
-        return HttpResponse()
+
+@csrf_exempt
+def getAllPersons(request):
+    #Получить список персон с их характеристиками и связанного пользователя, 
+    #если это твой персонаж, то передать все характеристики, 
+    #если нет, то передать только известные характеристики
+    if request.method == 'GET':
+        other_users = []
+        current_user = {}
+        user_profile = get_user(request)
+        lobby = Lobby.objects.first()
+        persons = lobby.person_set.all()
+        if persons:
+            for i, person in enumerate(persons):
+                if person.linked_user.username == user_profile.username:
+                    fields = person.shownfields_set.all()
+                    shown_fields = []
+                    for i, field in enumerate(fields):
+                        shown_fields.append(field.field)
+                    current_user.update({
+                        'username': user_profile.username,
+                        'first_name': user_profile.first_name,
+                        'last_name': user_profile.last_name,
+                        'male': person.male,
+                        'age': person.age,
+                        'profession': person.profession,
+                        'life': person.life,
+                        'phobia': person.phobia,
+                        'hobbi': person.hobbi,
+                        'character': person.character,
+                        'skill': person.skill,
+                        'inventar': person.inventar,
+                        'action_1': person.action_1,
+                        'action_2': person.action_2,
+                        'shown_fields': shown_fields
+                    })
+                else:
+                    shown_fields = person.shownfields_set.all()
+                    other_user = {
+                        'username': person.linked_user.username,
+                        'first_name': person.linked_user.first_name,
+                        'last_name': person.linked_user.last_name,
+                        'is_shown': False
+                    }
+                    if shown_fields:
+                        for i, field in enumerate(shown_fields):
+                            other_user.update(dict.fromkeys([field.field], getattr(person, field.field)))
+                    other_users.append(other_user)
+        result = {
+            'lobby_state': lobby.game_state,
+            'current_user': current_user,
+            'other_users': other_users
+        }
+        return HttpResponse(json.dumps(result))
+
+@csrf_exempt
+def setReady(request):
+    if request.method == 'POST':
+        is_all_ready = True
+        lobby = Lobby.objects.first()
+        user_profile = get_user(request)
+        try:
+            current_user = lobby.userinfo_set.filter(username = user_profile.username).first()
+            current_user.ready_state = True
+            current_user.save()
+            users = list(lobby.userinfo_set.values_list('username', 'ready_state', named=True))
+            if users:
+                for i, user in enumerate(users):
+                    print(user)
+                    if not user.ready_state:
+                        is_all_ready = False
+                if is_all_ready:
+                    lobby.game_state = 'S'
+                    lobby.save()
+            return HttpResponse(json.dumps({'success': True, 'lobby_state': lobby.game_state}))
+        except BaseException as e:
+            print(e)
+            return HttpResponse(json.dumps({'success': False}))
 
 def getRandomFobie(all_persons):
     fobies = Fobies.objects.values_list('phobia', flat=True)

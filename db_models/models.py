@@ -4,12 +4,13 @@ from django.contrib.auth.models import User, AbstractUser
 class Lobby(models.Model):
     LOBBY_STATE = [
         ('R', 'recruiting_players'),
-        ('P', 'ready_to_play'),
         ('S', 'game_start'),
         ('E', 'game_end'),
     ]
 
     id = models.AutoField(primary_key=True)
+    turn = models.PositiveSmallIntegerField(default=1)
+    kickout_players = models.PositiveSmallIntegerField(default=1)
     game_state = models.CharField(max_length=1, choices=LOBBY_STATE, default='R')
 
 class UserProfile(AbstractUser):
@@ -21,11 +22,8 @@ class UserInfo(models.Model):
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
     avatar = models.ImageField(upload_to='images/users', verbose_name='Изображение')
+    ready_state= models.BooleanField(default=False)
     linked_lobby = models.ForeignKey(Lobby, on_delete = models.CASCADE, null=True, blank=True)
-
-class ShownFields(models.Model):
-    id = models.AutoField(primary_key=True)
-    field = models.CharField(max_length=20)
 
 class Person(models.Model):
     MALE_VAR = [
@@ -36,7 +34,7 @@ class Person(models.Model):
     id = models.AutoField(primary_key=True)
     lobby = models.ForeignKey(Lobby, on_delete = models.CASCADE, null=True, blank=True)
     linked_user = models.ForeignKey(UserInfo, on_delete=models.CASCADE, null=True, blank=True)
-    shown_fields = models.ForeignKey(ShownFields, on_delete = models.CASCADE, null=True, blank=True)
+    #shown_fields = models.ForeignKey(ShownFields, on_delete = models.CASCADE, null=True, blank=True)
     male = models.CharField(max_length=1, choices=MALE_VAR, default='M')
     age = models.PositiveSmallIntegerField()
     profession = models.CharField(max_length=40)
@@ -48,6 +46,11 @@ class Person(models.Model):
     inventar = models.CharField(max_length=40)
     action_1 = models.CharField(max_length=250)
     action_2 = models.CharField(max_length=250)
+
+class ShownFields(models.Model):
+    id = models.AutoField(primary_key=True)
+    field = models.CharField(max_length=20)
+    person = models.ForeignKey(Person, on_delete = models.CASCADE, null=True, blank=True)
 
 class Fobies(models.Model):
     id = models.AutoField(primary_key=True)

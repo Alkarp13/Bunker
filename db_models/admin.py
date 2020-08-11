@@ -11,7 +11,7 @@ class UserProfileAdmin(UserAdmin):
 
 class UserInfoAdmin(admin.ModelAdmin):
     model = UserInfo
-    list_display = ['first_name', 'last_name', 'username',]
+    list_display = ['first_name', 'last_name', 'username', 'ready_state']
 
 class PersonAdmin(admin.ModelAdmin):
     list_display = ('id', 'male', 'age', 'profession', 'life', 'skill', 'phobia', 'hobbi', 'character', 'inventar')

@@ -1,17 +1,12 @@
 {
   "ExpandedNodes": [
     "",
+    "\\Bunker",
     "\\db_models",
-    "\\db_models\\migrations",
     "\\www",
     "\\www\\src",
-    "\\www\\src\\components",
-    "\\www\\static",
-    "\\www\\static\\js",
-    "\\www\\static\\js\\lib",
-    "\\www\\templates",
-    "\\www\\templates\\registration"
+    "\\www\\src\\components"
   ],
-  "SelectedNode": "\\db_models\\views.py",
+  "SelectedNode": "\\www\\src\\components\\Persons.js",
   "PreviewInSolutionExplorer": false
 }
