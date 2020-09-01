@@ -11,7 +11,7 @@
     {% block sidebar %} {% endblock %}
         <div class="bunker-bg">
             {% if user.is_authenticated %}
-            <div class="panel panel-default">
+            <div id="top_panel"class="panel panel-default">
                 <div class="panel-body top-bar">
                     <label>{% autoescape on %}Вы вошли как: {% endautoescape %}{{ user.get_username }}</label>
                     <a class="btn btn-secondary btn-sm" href="{% url 'logout'%}?next={{request.path}}">{% autoescape on %}Выйти{% endautoescape %}</a>

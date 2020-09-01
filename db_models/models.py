@@ -1,5 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User, AbstractUser
+from django.utils.safestring import mark_safe
+
+class Legend(models.Model):
+    id = models.AutoField(primary_key=True)
+    square = models.PositiveSmallIntegerField(default=100)
+    await_time = models.PositiveSmallIntegerField(default=30)
+    medicines = models.PositiveSmallIntegerField(default=1)
+    armor = models.PositiveSmallIntegerField(default=1)
+    additional_info = models.CharField(max_length=750, null=True)
 
 class Lobby(models.Model):
     LOBBY_STATE = [
@@ -11,10 +20,29 @@ class Lobby(models.Model):
     id = models.AutoField(primary_key=True)
     turn = models.PositiveSmallIntegerField(default=1)
     kickout_players = models.PositiveSmallIntegerField(default=1)
+    story = models.CharField(max_length=350, null=True)
+    legend = models.OneToOneField(Legend, on_delete = models.CASCADE, null=True)
+    number_of_seats = models.PositiveSmallIntegerField(default=1)
+    current_person = models.PositiveSmallIntegerField(default=1)
+    direction = models.BooleanField(default=False)
+    is_round_over = models.BooleanField(default=False)
     game_state = models.CharField(max_length=1, choices=LOBBY_STATE, default='R')
 
+def upload_to(instance, filename):
+    return 'www/static/img/%s' % filename
+
 class UserProfile(AbstractUser):
-    avatar = models.ImageField(upload_to='images/users', verbose_name='Изображение')
+    avatar = models.ImageField(verbose_name='Avatar', upload_to=upload_to, null=True, blank=True)
+
+    def get_avatar(self):
+        if not self.avatar:
+            return 'www/static/img/anon.jpeg'
+        return self.avatar.url
+
+    def avatar_tag(self):
+        return mark_safe('<img src="%s" width="50" height="50" />' % self.get_avatar())
+ 
+    avatar_tag.short_description = 'Avatar'
 
 class UserInfo(models.Model):
     id = models.AutoField(primary_key=True)
@@ -22,7 +50,19 @@ class UserInfo(models.Model):
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
     avatar = models.ImageField(upload_to='images/users', verbose_name='Изображение')
-    ready_state= models.BooleanField(default=False)
+    ready_state = models.BooleanField(default=False)
+    linked_lobby = models.ForeignKey(Lobby, on_delete = models.CASCADE, null=True, blank=True)
+
+class PersonsQuery(models.Model):
+    id = models.AutoField(primary_key=True)
+    username = models.CharField(max_length=20)
+    linked_lobby = models.ForeignKey(Lobby, on_delete = models.CASCADE, null=True, blank=True)
+
+class PersonsKickList(models.Model):
+    id = models.AutoField(primary_key=True)
+    username = models.CharField(max_length=20)
+    weight = models.PositiveSmallIntegerField(default=1)
+    kick_person = models.CharField(max_length=20)
     linked_lobby = models.ForeignKey(Lobby, on_delete = models.CASCADE, null=True, blank=True)
 
 class Person(models.Model):
@@ -32,9 +72,11 @@ class Person(models.Model):
     ]
     
     id = models.AutoField(primary_key=True)
+    protection = models.BooleanField(default=False)
+    voices = models.PositiveSmallIntegerField(default=1)
+    speak_time = models.PositiveSmallIntegerField(default=60)
     lobby = models.ForeignKey(Lobby, on_delete = models.CASCADE, null=True, blank=True)
     linked_user = models.ForeignKey(UserInfo, on_delete=models.CASCADE, null=True, blank=True)
-    #shown_fields = models.ForeignKey(ShownFields, on_delete = models.CASCADE, null=True, blank=True)
     male = models.CharField(max_length=1, choices=MALE_VAR, default='M')
     age = models.PositiveSmallIntegerField()
     profession = models.CharField(max_length=40)
@@ -51,6 +93,10 @@ class ShownFields(models.Model):
     id = models.AutoField(primary_key=True)
     field = models.CharField(max_length=20)
     person = models.ForeignKey(Person, on_delete = models.CASCADE, null=True, blank=True)
+
+class Story(models.Model):
+    id = models.AutoField(primary_key=True)
+    story = models.CharField(max_length=350)
 
 class Fobies(models.Model):
     id = models.AutoField(primary_key=True)

@@ -80,9 +80,13 @@ CHANNEL_LAYERS = {
 # Database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'bunker',
+        'USER' : 'bunker',
+        'PASSWORD' : '7966915',
+        'HOST' : '127.0.0.1',
+        'PORT' : '5432',
+    },
 }
 
 # Password validation
@@ -113,3 +117,4 @@ AUTH_USER_MODEL = 'db_models.UserProfile'
 STATIC_URL = '/www/static/'
 STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['www']))
 LOGIN_REDIRECT_URL = 'lobby'
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.1.43']

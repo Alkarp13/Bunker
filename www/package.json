@@ -24,6 +24,7 @@
   "dependencies": {
     "evergreen-ui": "^4.28.1",
     "prop-types": "^15.7.2",
+    "react-countdown-circle-timer": "^2.3.7",
     "react-dnr": "^0.4.0",
     "react-native": "^0.63.2",
     "react-router-dom": "^5.2.0"

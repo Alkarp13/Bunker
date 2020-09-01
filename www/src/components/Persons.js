@@ -1,14 +1,16 @@
 import React from 'react';
-import { Avatar, Pane, Button, Spinner, SelectField } from 'evergreen-ui'
+import { Avatar, Pane, Button, Spinner, SelectField, Combobox, CornerDialog, Dialog, Paragraph } from 'evergreen-ui'
 import DnR from './DnR';
 import { WindowsTheme } from './themes'
 import PersonCard from './PersonCard'
+import Legend from './Legend'
+import CornerAlert from './CornerAlert'
 
 const paneStyle = {
     width: '300px',
-    height: '500px',
-    top: '25%',
-    left: '10%',
+    height: '550px',
+    top: '30%',
+    left: '50%',
     backgroundColor: 'rgba(0, 0, 0, 0.8)'
 };
 
@@ -21,60 +23,128 @@ class Persons extends React.Component {
             person: {},
 			other_persons: [],
             selected_field: 'male',
-            lobby_state: ''
+            lobby_state: '',
+            story: '',
+            legend: {},
+            number_of_seats: 1,
+            turn: 1,
+            is_round_over: false,
+            is_anyperson_shown: false,
+            is_anycard_shown: false,
+            person_to_kick: '',
+            anyone_person: '',
+            anyone_card: 'male',
+            current_person: 1,
+            persons_query: []
         };
+        this.passMove = this.passMove.bind(this);
         this.showOtherPerson = this.showOtherPerson.bind(this);
         this.sendCharacteristicToSocked = this.sendCharacteristicToSocked.bind(this);
+        this.kickSelectedPlayer = this.kickSelectedPlayer.bind(this);
+        this.someoneSelected = this.someoneSelected.bind(this);
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return this.state.selected_field === nextState.selected_field;
+        return (this.state.selected_field === nextState.selected_field) ||
+            (this.state.person_to_kick === nextState.person_to_kick);
     }
 
     componentDidMount() {
-        this.connection = new WebSocket('ws://' + window.location.host + '/persons');
-        this.connection.onmessage = evt => {
-            console.log(evt.data);
-            if (evt.data === 'update_fields') {
-                fetch("/get_all_persons", { method: 'GET' })
-                    .then((response) => response.json())
-                    .then(
-                        (result) => {
-                            console.log(result);
-                            this.setState({
-                                isLoaded: true,
-                                lobby_state: result.lobby_state,
-                                person: result.current_user,
-                                other_persons: result.other_users
+        console.log(window.location.href);
+        if (/person/i.test(window.location.href)) {
+            this.connection = new WebSocket('ws://' + window.location.host + '/persons');
+            this.connection.onmessage = evt => {
+                console.log(evt.data);
+                if (evt.data === 'update_fields') {
+                    fetch("/get_all_persons", { method: 'GET' })
+                        .then((response) => response.json())
+                        .then(
+                            (result) => {
+                                console.log(result);
+                                this.setState({
+                                    isLoaded: true,
+                                    lobby_state: result.lobby_state,
+                                    person: result.current_user,
+                                    other_persons: result.other_users,
+                                    story: result.story,
+                                    legend: result.legend,
+                                    number_of_seats: result.number_of_seats,
+                                    turn: result.turn,
+                                    current_person: result.current_person,
+                                    persons_query: result.persons_query,
+                                    is_round_over: result.is_round_over
+                                });
                             });
+                } else {
+                    let result = JSON.parse(evt.data);
+                    if (typeof result.update_turn !== 'undefined') {
+                        this.setState({
+                            turn: result.update_turn.turn,
+                            current_person: result.update_turn.current_person,
+                            is_round_over: result.update_turn.is_round_over
                         });
-            }
-        };
-        fetch("/get_all_persons", { method: 'GET' })
-            .then((response) => response.json())
-            .then(
-                (result) => {
-                    console.log(result);
-                    this.setState({
-                        isLoaded: true,
-                        lobby_state: result.lobby_state,
-                        person: result.current_user,
-                        other_persons: result.other_users
-                    });
-                },
-                (error) => {
-                    console.log(error);
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
+                    }
                 }
-            )
+            };
+            fetch("/get_all_persons", { method: 'GET' })
+                .then((response) => response.json())
+                .then(
+                    (result) => {
+                        console.log(result);
+                        this.setState({
+                            isLoaded: true,
+                            lobby_state: result.lobby_state,
+                            person: result.current_user,
+                            other_persons: result.other_users,
+                            story: result.story,
+                            legend: result.legend,
+                            number_of_seats: result.number_of_seats,
+                            turn: result.turn,
+                            current_person: result.current_person,
+                            persons_query: result.persons_query
+                        });
+                    },
+                    (error) => {
+                        console.log(error);
+                        this.setState({
+                            isLoaded: true,
+                            error
+                        });
+                    }
+                )
+        } else {
+            window.location.href = '/person/';
+        }
     }
 
     sendCharacteristicToSocked() {
-        if (this.state.selected_field !== '')
-            this.connection.send(JSON.stringify({ value: this.state.selected_field }));
+        if (this.state.selected_field !== '') {
+            if ((this.state.selected_field === 'action_1') || (this.state.selected_field === 'action_2')) {
+                let action = this.state.person[this.state.selected_field];
+                if (/любым человеком/i.test(action) || /любого игрока/i.test(action)
+                    || /другого игрока/i.test(action) || /выбрать кто покинет/i.test(action)) {
+                    if (/любую карту/i.test(action)) {
+                        this.setState({ is_anyperson_shown: true,  is_anycard_shown: true});
+                    } else {
+                        this.setState({ is_anyperson_shown: true });
+                    }
+                } else {
+                    this.connection.send(JSON.stringify({ value: this.state.selected_field }));
+                }
+            } else {
+                this.connection.send(JSON.stringify({ value: this.state.selected_field }));
+            }
+        }
+    }
+
+    someoneSelected() {
+        if (this.state.is_anycard_shown) {
+            this.connection.send(JSON.stringify({ value: this.state.selected_field, someone: this.state.anyone_person, card: this.state.anyone_card }));
+            this.setState({ is_anyperson_shown: false, is_anycard_shown: false });
+        } else {
+            this.connection.send(JSON.stringify({ value: this.state.selected_field, someone: this.state.anyone_person }));
+            this.setState({ is_anyperson_shown: false });
+        }
     }
 
     showOtherPerson(e) {
@@ -83,7 +153,9 @@ class Persons extends React.Component {
  
         other_persons.forEach(function (other) {
             if (other.username === username) {
-                other.is_shown = !other.is_shown;
+                let is_shown = other.is_shown;
+                other.is_shown = !is_shown;
+                
             }
         });
 
@@ -115,15 +187,23 @@ class Persons extends React.Component {
         }
     }
 
+    passMove() {
+        this.connection.send(JSON.stringify({ current_person: this.state.current_person }));
+    }
+
+    kickSelectedPlayer() {
+        this.connection.send(JSON.stringify({ kick_person: this.state.person_to_kick, username: this.state.person.username}));
+    }
+
     render() {
-        const { error, isLoaded, person, other_persons, lobby_state } = this.state;
+        const { error, isLoaded, person, other_persons, number_of_seats, legend, story, turn, current_person, persons_query, is_round_over, is_anyperson_shown, is_anycard_shown } = this.state;
         if (error) {
             return <div></div>;
         } else if (!isLoaded) {
             return <Spinner size={32} />;
         } else {
             return (
-                <div>
+                <div width="100%" height="100%">
                     <Pane
                         display="flex"
                         height={100}
@@ -145,11 +225,61 @@ class Persons extends React.Component {
                                     name={person.username}
                                     size={80}
                                     marginRight={16}
+                                    isSolid={(persons_query[current_person - 1].username === person.username) ? true : false}
                                     onClick={(e) => this.showOtherPerson(e)}
                                 />
                             }, this)}
                         </Pane>
                     </Pane>
+                    <Legend story={story} legend={legend} number_of_seats={number_of_seats} turn={turn} />
+                    <CornerAlert
+                        username={person.username}
+                        duration={person.speak_time}
+                        isShown={((persons_query[current_person - 1].username === person.username) && !is_round_over) ? true : false}
+                        passMove={() => this.passMove()}
+                    />
+                    <CornerDialog
+                        title="Time to kick someone"
+                        isShown={is_round_over}
+                        width={320}
+                        hasFooter={false}
+                        hasClose={false}>
+                        <Combobox
+                            openOnFocus
+                            height={40}
+                            items={persons_query.map((item) => { return item.username })}
+                            onChange={selected => this.setState({ person_to_kick: selected })}
+                            placeholder="Usernames"
+                        />
+                        <div className='bottom-alert-footer'>
+                            <Button intent="success" onClick={() => this.kickSelectedPlayer()}>Kick now</Button>
+                        </div>
+                    </CornerDialog>
+                    <Dialog
+                        isShown={is_anyperson_shown}
+                        title="Choose anyone"
+                        hasFooter={false}
+                        hasClose={false}
+                        shouldCloseOnOverlayClick={false}>
+                        <Combobox
+                            openOnFocus
+                            height={40}
+                            disabled={is_anycard_shown}
+                            items={['male', 'age', 'profession', 'life', 'phobia', 'hobbi', 'character', 'skill', 'inventar']}
+                            onChange={selected => this.setState({ anyone_card: selected })}
+                            placeholder="Cards"
+                        />
+                        <Combobox
+                            openOnFocus
+                            height={40}
+                            items={persons_query.map((item) => { return item.username })}
+                            onChange={selected => this.setState({ anyone_person: selected })}
+                            placeholder="Usernames"
+                        />
+                        <div className='bottom-alert-footer'>
+                            <Button intent="success" onClick={() => this.someoneSelected()}>Send</Button>
+                        </div>
+                    </Dialog>
                     <DnR ref='dnr' {...WindowsTheme({title: 'My person card'})}
                         style={paneStyle}>
                         <PersonCard person={person} other={false}/>

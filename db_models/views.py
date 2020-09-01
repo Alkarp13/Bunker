@@ -1,5 +1,6 @@
-import os, posixpath, random
+import os, posixpath, random, math
 import simplejson as json
+from .API import *
 from django.shortcuts import render
 from django.contrib.auth import get_user
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -7,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.views import generic
 from django.http import HttpResponse
 from Bunker.settings import BASE_DIR
-from .models import Person, Lobby, UserInfo, UserProfile, Fobies, Characters, Hobbies, Skills, Life, Inventar, Profesions, ActionCards
+from .models import Person, Lobby, UserInfo, UserProfile, Fobies, Characters, Hobbies, Skills, Life, Inventar, Profesions, ActionCards, Story, Legend, PersonsQuery
 
 class LobbyView(LoginRequiredMixin, generic.ListView):
     model = Lobby
@@ -17,7 +18,7 @@ class LobbyView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         lobby = Lobby.objects.first()
         if not lobby:
-            lobby = Lobby(game_state='R')
+            lobby = Lobby(game_state='R', story=getRandomStory(), legend=getRandomLegend())
             lobby.save()
 
         user_profile = get_user(self.request)
@@ -44,11 +45,11 @@ class PersonCardView(LoginRequiredMixin, generic.ListView):
     def get_new_person(self):
         lobby = Lobby.objects.first()
         all_persons = lobby.person_set.all()
-        first_action = getRandomActionCard(all_persons)
-        new_person = Person(male=random.choice(['M', 'F']), age=random.randint(18, 80), profession=getRandomProfesion(all_persons), \
-                            life=getRandomLife(all_persons), phobia=getRandomFobie(all_persons), hobbi=getRandomHobbie(all_persons), \
-                            character=getRandomCharacter(all_persons), skill=getRandomSkill(all_persons), inventar=getRandomInventar(all_persons), \
-                            action_1=first_action, action_2=getRandomActionCard(all_persons, first_action))
+        first_action = getRandomActionCard()
+        new_person = Person(male=random.choice(['M', 'F']), age=random.randint(18, 80), profession=getRandomProfesion(), \
+                            life=getRandomLife(), phobia=getRandomFobie(), hobbi=getRandomHobbie(), \
+                            character=getRandomCharacter(), skill=getRandomSkill(), inventar=getRandomInventar(), \
+                            action_1=first_action, action_2=getRandomActionCard(first_action))
         new_person.save()
         return new_person;
 
@@ -97,6 +98,15 @@ def getAllPersons(request):
         user_profile = get_user(request)
         lobby = Lobby.objects.first()
         persons = lobby.person_set.all()
+        legend = lobby.legend
+        if legend:
+            legend = {
+                'square': legend.square,
+                'await_time': legend.await_time,
+                'medicines': legend.medicines,
+                'armor': legend.armor,
+                'additional_info': legend.additional_info
+            }
         if persons:
             for i, person in enumerate(persons):
                 if person.linked_user.username == user_profile.username:
@@ -106,6 +116,7 @@ def getAllPersons(request):
                         shown_fields.append(field.field)
                     current_user.update({
                         'username': user_profile.username,
+                        'speak_time': person.speak_time,
                         'first_name': user_profile.first_name,
                         'last_name': user_profile.last_name,
                         'male': person.male,
@@ -126,8 +137,7 @@ def getAllPersons(request):
                     other_user = {
                         'username': person.linked_user.username,
                         'first_name': person.linked_user.first_name,
-                        'last_name': person.linked_user.last_name,
-                        'is_shown': False
+                        'last_name': person.linked_user.last_name
                     }
                     if shown_fields:
                         for i, field in enumerate(shown_fields):
@@ -135,8 +145,16 @@ def getAllPersons(request):
                     other_users.append(other_user)
         result = {
             'lobby_state': lobby.game_state,
+            'turn': lobby.turn,
+            'kickout_players': lobby.kickout_players,
+            'number_of_seats': lobby.number_of_seats,
+            'story': lobby.story,
             'current_user': current_user,
-            'other_users': other_users
+            'other_users': other_users,
+            'legend': legend,
+            'persons_query': getPersonsQuery(),
+            'current_person': lobby.current_person,
+            'is_round_over': lobby.is_round_over
         }
         return HttpResponse(json.dumps(result))
 
@@ -151,117 +169,22 @@ def setReady(request):
             current_user.ready_state = True
             current_user.save()
             users = list(lobby.userinfo_set.values_list('username', 'ready_state', named=True))
+            random.shuffle(users)
             if users:
                 for i, user in enumerate(users):
-                    print(user)
                     if not user.ready_state:
                         is_all_ready = False
                 if is_all_ready:
+                    print('all_ready')
+                    #Добавить ограничение по количеству игроков
+                    lobby.number_of_seats = math.ceil(lobby.userinfo_set.count() / 2)
                     lobby.game_state = 'S'
+                    for i, user in enumerate(users):
+                        person = PersonsQuery(username=user.username)
+                        person.save()
+                        lobby.personsquery_set.add(person)
                     lobby.save()
             return HttpResponse(json.dumps({'success': True, 'lobby_state': lobby.game_state}))
         except BaseException as e:
             print(e)
             return HttpResponse(json.dumps({'success': False}))
-
-def getRandomFobie(all_persons):
-    fobies = Fobies.objects.values_list('phobia', flat=True)
-    fobies = list(fobies)
-    for i, person in enumerate(all_persons):
-        for index, fobie in enumerate(fobies):
-            if fobie == person.phobia:
-                fobies.pop(index)
-                break
-    fobie = random.choice(fobies)
-    print(fobie)
-    return fobie
-
-def getRandomCharacter(all_persons):
-    characters = Characters.objects.values_list('character', flat=True)
-    characters = list(characters)
-    for i, person in enumerate(all_persons):
-        for index, character in enumerate(characters):
-            if character == person.character:
-                characters.pop(index)
-                break
-    character = random.choice(characters)
-    print(character)
-    return character
-
-def getRandomHobbie(all_persons):
-    hobbies = Hobbies.objects.values_list('hobbi', flat=True)
-    hobbies = list(hobbies)
-    for i, person in enumerate(all_persons):
-        for index, hobbi in enumerate(hobbies):
-            if hobbi == person.hobbi:
-                hobbies.pop(index)
-                break
-    hobbi = random.choice(hobbies)
-    print(hobbi)
-    return hobbi
-
-def getRandomSkill(all_persons):
-    skills = Skills.objects.values_list('skill', flat=True)
-    skills = list(skills)
-    for i, person in enumerate(all_persons):
-        for index, skill in enumerate(skills):
-            if skill == person.skill:
-                skills.pop(index)
-                break
-    skill = random.choice(skills)
-    print(skill)
-    return skill
-
-def getRandomLife(all_persons):
-    life = Life.objects.values_list('life', flat=True)
-    life = list(life)
-    for i, person in enumerate(all_persons):
-        for index, life_ in enumerate(life):
-            if life_ == person.life:
-                life.pop(index)
-                break
-    lif = random.choice(life)
-    print(lif)
-    return lif
-
-def getRandomInventar(all_persons):
-    inventar = Inventar.objects.values_list('inventar', flat=True)
-    inventar = list(inventar)
-    for i, person in enumerate(all_persons):
-        for index, inventar_ in enumerate(inventar):
-            if inventar_ == person.inventar:
-                inventar.pop(index)
-                break
-    inventar_ = random.choice(inventar)
-    print(inventar_)
-    return inventar_
-
-def getRandomProfesion(all_persons):
-    profesions = Profesions.objects.values_list('profession', flat=True)
-    profesions = list(profesions)
-    for i, person in enumerate(all_persons):
-        for index, profesion in enumerate(profesions):
-            if profesion == person.profession:
-                profesions.pop(index)
-                break
-    profesion = random.choice(profesions)
-    print(profesion)
-    return profesion
-
-def getRandomActionCard(all_persons, first_card=''):
-    action_cards = ActionCards.objects.values_list('action', flat=True)
-    action_cards = list(action_cards)
-    for i, person in enumerate(all_persons):
-        for index, action_card in enumerate(action_cards):
-            if (action_card == person.action_1) or (action_card == person.action_2):
-                action_cards.pop(index)
-                break
-
-    if not (first_card == ''):
-        for index, action_card in enumerate(action_cards):
-            if action_card == first_card:
-                action_cards.pop(index)
-                break
-    action_card = random.choice(action_cards)
-    print(action_card)
-    return action_card

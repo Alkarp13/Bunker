@@ -1,13 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Lobby, UserInfo, UserProfile, Person, Fobies, Characters, Hobbies, Skills, Life, Inventar, Profesions, ActionCards
+from .models import Lobby, UserInfo, UserProfile, Person, Fobies, Characters, Hobbies, Skills, Life, Inventar, Profesions, ActionCards, Story, PersonsQuery
 
 class LobbyAdmin(admin.ModelAdmin):
     list_display = ('id', 'game_state')
 
 class UserProfileAdmin(UserAdmin):
     model = UserProfile
-    list_display = ['email', 'username',]
+    list_display = ('avatar_tag', 'username')
 
 class UserInfoAdmin(admin.ModelAdmin):
     model = UserInfo
@@ -15,6 +15,12 @@ class UserInfoAdmin(admin.ModelAdmin):
 
 class PersonAdmin(admin.ModelAdmin):
     list_display = ('id', 'male', 'age', 'profession', 'life', 'skill', 'phobia', 'hobbi', 'character', 'inventar')
+
+class StoryAdmin(admin.ModelAdmin):
+    list_display = ('id', 'story')
+
+class PersonsQueryAdmin(admin.ModelAdmin):
+    list_display = ('id', 'username')
 
 class FobiesAdmin(admin.ModelAdmin):
     list_display = ('id', 'phobia')
@@ -44,6 +50,8 @@ admin.site.register(Lobby, LobbyAdmin)
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(UserInfo, UserInfoAdmin)
 admin.site.register(Person, PersonAdmin)
+admin.site.register(Story, StoryAdmin)
+admin.site.register(PersonsQuery, PersonsQueryAdmin)
 admin.site.register(Fobies, FobiesAdmin)
 admin.site.register(Characters, CharactersAdmin)
 admin.site.register(Hobbies, HobbiesAdmin)
