@@ -1,4 +1,4 @@
-import os, posixpath, random, math
+import os, posixpath, random, math, re
 import simplejson as json
 from .API import *
 from django.shortcuts import render
@@ -46,8 +46,8 @@ class PersonCardView(LoginRequiredMixin, generic.ListView):
         lobby = Lobby.objects.first()
         all_persons = lobby.person_set.all()
         first_action = getRandomActionCard()
-        new_person = Person(male=random.choice(['M', 'F']), age=random.randint(18, 80), profession=getRandomProfesion(), \
-                            life=getRandomLife(), phobia=getRandomFobie(), hobbi=getRandomHobbie(), \
+        new_person = Person(male=random.choice(['M', 'F']), age=getRandomAge(), growth=getRandomGrowth(), weight=getRandomWeight(), \
+                            profession=getRandomProfesion(), life=getRandomLife(), phobia=getRandomFobie(), hobbi=getRandomHobbie(), \
                             character=getRandomCharacter(), skill=getRandomSkill(), inventar=getRandomInventar(), \
                             action_1=first_action, action_2=getRandomActionCard(first_action))
         new_person.save()
@@ -121,6 +121,8 @@ def getAllPersons(request):
                         'last_name': user_profile.last_name,
                         'male': person.male,
                         'age': person.age,
+                        'growth': person.growth,
+                        'weight': person.weight,
                         'profession': person.profession,
                         'life': person.life,
                         'phobia': person.phobia,
@@ -137,11 +139,18 @@ def getAllPersons(request):
                     other_user = {
                         'username': person.linked_user.username,
                         'first_name': person.linked_user.first_name,
-                        'last_name': person.linked_user.last_name
+                        'last_name': person.linked_user.last_name,
+                        'is_shown': False,
+                        'note': ''
                     }
                     if shown_fields:
                         for i, field in enumerate(shown_fields):
                             other_user.update(dict.fromkeys([field.field], getattr(person, field.field)))
+                    current_person = lobby.person_set.filter(linked_user__username = user_profile.username).first()
+                    other_state = current_person.savedcardstate_set.filter(username = other_user['username']).first()
+                    if other_state:
+                        other_user['is_shown'] = other_state.is_shown
+                        other_user['note'] = other_state.note
                     other_users.append(other_user)
         result = {
             'lobby_state': lobby.game_state,
@@ -156,6 +165,29 @@ def getAllPersons(request):
             'current_person': lobby.current_person,
             'is_round_over': lobby.is_round_over
         }
+        return HttpResponse(json.dumps(result))
+
+@csrf_exempt
+def getFieldsAction(request):
+    if request.method == 'POST':
+        result = { 'is_anyperson_shown': False,  'is_anycard_shown': False}
+        lobby = Lobby.objects.first()
+        user_profile = get_user(request)
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        action = body['field']
+        person = lobby.person_set.filter(linked_user__username = user_profile.username).first()
+        if action == 'action_1':
+            action = person.action_1
+        else:
+            action = person.action_2
+
+        if re.search(r'любым человеком', action) or re.search(r'любого игрока', action) or \
+            re.search(r'другого игрока', action) or re.search(r'выбрать кто покинет', action):
+            if re.search(r'любую карту', action):
+                result['is_anycard_shown'] = True
+            result['is_anyperson_shown'] = True
+
         return HttpResponse(json.dumps(result))
 
 @csrf_exempt
@@ -174,9 +206,8 @@ def setReady(request):
                 for i, user in enumerate(users):
                     if not user.ready_state:
                         is_all_ready = False
-                if is_all_ready:
+                if is_all_ready and (lobby.userinfo_set.count() > 5):
                     print('all_ready')
-                    #Добавить ограничение по количеству игроков
                     lobby.number_of_seats = math.ceil(lobby.userinfo_set.count() / 2)
                     lobby.game_state = 'S'
                     for i, user in enumerate(users):

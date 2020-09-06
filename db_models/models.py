@@ -28,29 +28,23 @@ class Lobby(models.Model):
     is_round_over = models.BooleanField(default=False)
     game_state = models.CharField(max_length=1, choices=LOBBY_STATE, default='R')
 
-def upload_to(instance, filename):
-    return 'www/static/img/%s' % filename
+def upload_to():
+    pass
 
 class UserProfile(AbstractUser):
-    avatar = models.ImageField(verbose_name='Avatar', upload_to=upload_to, null=True, blank=True)
-
-    def get_avatar(self):
-        if not self.avatar:
-            return 'www/static/img/anon.jpeg'
-        return self.avatar.url
-
-    def avatar_tag(self):
-        return mark_safe('<img src="%s" width="50" height="50" />' % self.get_avatar())
- 
-    avatar_tag.short_description = 'Avatar'
+    avatar = models.ImageField(verbose_name='Avatar', null=True)
 
 class UserInfo(models.Model):
     id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=20)
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
-    avatar = models.ImageField(upload_to='images/users', verbose_name='Изображение')
     ready_state = models.BooleanField(default=False)
+    linked_lobby = models.ForeignKey(Lobby, on_delete = models.CASCADE, null=True, blank=True)
+
+class Online(models.Model):
+    id = models.AutoField(primary_key=True)
+    username = models.CharField(max_length=20)
     linked_lobby = models.ForeignKey(Lobby, on_delete = models.CASCADE, null=True, blank=True)
 
 class PersonsQuery(models.Model):
@@ -79,6 +73,8 @@ class Person(models.Model):
     linked_user = models.ForeignKey(UserInfo, on_delete=models.CASCADE, null=True, blank=True)
     male = models.CharField(max_length=1, choices=MALE_VAR, default='M')
     age = models.PositiveSmallIntegerField()
+    growth = models.PositiveSmallIntegerField(default=160)
+    weight = models.PositiveSmallIntegerField(default=65)
     profession = models.CharField(max_length=40)
     life = models.CharField(max_length=50)
     phobia = models.CharField(max_length=70)
@@ -92,6 +88,13 @@ class Person(models.Model):
 class ShownFields(models.Model):
     id = models.AutoField(primary_key=True)
     field = models.CharField(max_length=20)
+    person = models.ForeignKey(Person, on_delete = models.CASCADE, null=True, blank=True)
+
+class SavedCardState(models.Model):
+    id = models.AutoField(primary_key=True)
+    username = models.CharField(max_length=20, null=True)
+    is_shown = models.BooleanField(default=False)
+    note = models.CharField(max_length=500)
     person = models.ForeignKey(Person, on_delete = models.CASCADE, null=True, blank=True)
 
 class Story(models.Model):

@@ -78,11 +78,6 @@ export default class DnR extends React.Component {
     attachedTo.addEventListener('mousemove', this.mouseMoveListener)
     attachedTo.addEventListener('mouseup', this.mouseUpListener)
   }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.transition !== this.props.transition){
-      this.setState({transition: prefixedTransition(nextProps.transition)})
-    }
-  }
   componentWillUnmount() {
     this.props.attachedTo.removeEventListener('mousemove', this.mouseMoveListener)
     this.props.attachedTo.removeEventListener('mouseup', this.mouseUpListener)
@@ -219,7 +214,7 @@ export default class DnR extends React.Component {
 
 
     const dnrState = {
-      cursor,
+      cursor: cursor,
       clicked: this.clicked,
       frameRect: this.frameRect,
       allowTransition: this.allowTransition

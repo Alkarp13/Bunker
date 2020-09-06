@@ -1,5 +1,6 @@
 import random, math
-from .models import Person, Lobby, UserInfo, UserProfile, Fobies, Characters, Hobbies, Skills, Life, Inventar, Profesions, ActionCards, Story, Legend, PersonsQuery
+from django.db.models import Min
+from .models import Person, Lobby, UserInfo, UserProfile, Fobies, Characters, Hobbies, Skills, Life, Inventar, Profesions, ActionCards, Story, Legend, PersonsQuery, ShownFields
 
 def getPersonsQuery():
     lobby = Lobby.objects.first()
@@ -33,6 +34,15 @@ def getRandomFobie():
                 break
     fobie = random.choice(fobies)
     return fobie
+
+def getRandomAge():
+    return random.randint(18, 80)
+
+def getRandomGrowth():
+    return random.randint(150, 210)
+
+def getRandomWeight():
+    return random.randint(35, 150)
 
 def getRandomCharacter():
     lobby = Lobby.objects.first()
@@ -173,6 +183,7 @@ def action_1(person_username, action):
     lobby = Lobby.objects.first()
     user = lobby.personsquery_set.filter(username = person_username).first()
     if (user):
+        users_query = getPersonsQuery()
         for i, user_ in enumerate(users_query):
             if user_.id == user.id:
                 try:
@@ -181,7 +192,7 @@ def action_1(person_username, action):
                     next_user_id = lobby.personsquery_set.aggregate(Min("id"))['id__min']
                 person = lobby.person_set.filter(linked_user__username = person_username).first()
                 next_user = lobby.personsquery_set.filter(id = next_user_id).first()
-                next_person = lobby.person_set.filter(linked_user__username = next_user.username)
+                next_person = lobby.person_set.filter(linked_user__username = next_user.username).first()
                 if (random.randint(0, 1)):
                     next_person_action = next_person.action_2
                     #Проверка добавлено ли поле в список
@@ -233,6 +244,7 @@ def action_3(person_username, action):
     lobby = Lobby.objects.first()
     user = lobby.personsquery_set.filter(username = person_username).first()
     if (user):
+        users_query = getPersonsQuery()
         for i, user_ in enumerate(users_query):
             if user_.id == user.id:
                 try:
@@ -241,7 +253,7 @@ def action_3(person_username, action):
                     next_user_id = lobby.personsquery_set.aggregate(Min("id"))['id__min']
                 person = lobby.person_set.filter(linked_user__username = person_username).first()
                 next_user = lobby.personsquery_set.filter(id = next_user_id).first()
-                next_person = lobby.person_set.filter(linked_user__username = next_user.username)
+                next_person = lobby.person_set.filter(linked_user__username = next_user.username).first()
                 next_person_life = next_person.life
                 next_person.life = person.life
                 person.life = next_person_life
@@ -256,13 +268,14 @@ def action_4(person_username, action, data):
     lobby = Lobby.objects.first()
     user = lobby.personsquery_set.filter(username = person_username).first()
     if (user):
+        users_query = getPersonsQuery()
         for i, user_ in enumerate(users_query):
             if user_.id == user.id:
                 if 'someone' in data:
                     next_user_id = lobby.personsquery_set.filter(username = data['someone']).first().id
                     person = lobby.person_set.filter(linked_user__username = person_username).first()
                     next_user = lobby.personsquery_set.filter(id = next_user_id).first()
-                    next_person = lobby.person_set.filter(linked_user__username = next_user.username)
+                    next_person = lobby.person_set.filter(linked_user__username = next_user.username).first()
                     next_person_phobia = next_person.phobia
                     next_person.phobia = person.phobia
                     person.phobia = next_person_phobia
@@ -277,13 +290,14 @@ def action_5(person_username, action, data):
     lobby = Lobby.objects.first()
     user = lobby.personsquery_set.filter(username = person_username).first()
     if (user):
+        users_query = getPersonsQuery()
         for i, user_ in enumerate(users_query):
             if user_.id == user.id:
                 if 'someone' in data:
                     next_user_id = lobby.personsquery_set.filter(username = data['someone']).first().id
                     person = lobby.person_set.filter(linked_user__username = person_username).first()
                     next_user = lobby.personsquery_set.filter(id = next_user_id).first()
-                    next_person = lobby.person_set.filter(linked_user__username = next_user.username)
+                    next_person = lobby.person_set.filter(linked_user__username = next_user.username).first()
                     next_person_life = next_person.life
                     next_person.life = person.life
                     person.life = next_person_life
@@ -298,12 +312,13 @@ def action_6(person_username, action, data):
     lobby = Lobby.objects.first()
     user = lobby.personsquery_set.filter(username = person_username).first()
     if (user):
+        users_query = getPersonsQuery()
         for i, user_ in enumerate(users_query):
             if user_.id == user.id:
                 next_user_id = lobby.personsquery_set.filter(username = data['someone']).first().id
                 person = lobby.person_set.filter(linked_user__username = person_username).first()
                 next_user = lobby.personsquery_set.filter(id = next_user_id).first()
-                next_person = lobby.person_set.filter(linked_user__username = next_user.username)
+                next_person = lobby.person_set.filter(linked_user__username = next_user.username).first()
                 if (random.randint(0, 1)):
                     next_person_action = next_person.action_2
                     #Проверка добавлено ли поле в список
@@ -343,6 +358,7 @@ def action_7(person_username, action):
     lobby = Lobby.objects.first()
     user = lobby.personsquery_set.filter(username = person_username).first()
     if (user):
+        users_query = getPersonsQuery()
         for i, user_ in enumerate(users_query):
             if user_.id == user.id:
                 try:
@@ -351,7 +367,7 @@ def action_7(person_username, action):
                     next_user_id = lobby.personsquery_set.aggregate(Min("id"))['id__min']
                 person = lobby.person_set.filter(linked_user__username = person_username).first()
                 next_user = lobby.personsquery_set.filter(id = next_user_id).first()
-                next_person = lobby.person_set.filter(linked_user__username = next_user.username)
+                next_person = lobby.person_set.filter(linked_user__username = next_user.username).first()
                 next_person_phobia = next_person.phobia
                 next_person.phobia = person.phobia
                 person.phobia = next_person_phobia
@@ -392,7 +408,18 @@ def action_10(person_username, action):
 #Данная карта дает тебе возможность пере раздать у всех игроков (включая себя) 
 #карточки Биологическая характеристика
 def action_11(person_username, action):
-    pass
+    lobby = Lobby.objects.first()
+    users = lobby.personsquery_set.all()
+    for i, user in enumerate(users):
+        person = lobby.person_set.filter(linked_user__username = user.username).first()
+        person.weight = getRandomWeight()
+        person.growth = getRandomGrowth()
+        person.save()
+    person = lobby.person_set.filter(linked_user__username = person_username).first()
+    field = ShownFields(field=action)
+    field.save()
+    person.shownfields_set.add(field)
+    person.save()
 
 #Данная карта дает тебе возможность вылечить тебя от любого недуга теперь ты абсолютно здоров
 def action_12(person_username, action):
@@ -533,7 +560,7 @@ def action_26(person_username, action):
         action_text = person.action_1
     else:
         action_text = person.action_2
-    legend.additional_info = (legend.additional_info + '. ' + action_text) if not legend.additional_info == '' else legend.additional_info
+    legend.additional_info = (legend.additional_info + '. ' + action_text) if not (legend.additional_info is None) else action_text
     field = ShownFields(field=action)
     field.save()
     person.shownfields_set.add(field)
@@ -546,12 +573,23 @@ def action_35(person_username, action, data):
     if ('someone' in data) and ('card' in data):
         next_user_id = lobby.personsquery_set.filter(username = data['someone']).first().id
         next_user = lobby.personsquery_set.filter(id = next_user_id).first()
-        next_person = lobby.person_set.filter(linked_user__username = next_user.username)
-        next_user_shownfield = next_person.shownfields_set.filter(field = data['card']).first()
+        next_person = lobby.person_set.filter(linked_user__username = next_user.username).first()
+        if data['card'] == 'IMT':
+            next_user_shownfield = next_person.shownfields_set.filter(field = data['weight']).first()
+        else:
+            next_user_shownfield = next_person.shownfields_set.filter(field = data['card']).first()
         if not next_user_shownfield:
-            field = ShownFields(field=data['card'])
-            field.save()
-            next_person.shownfields_set.add(field)
+            if data['card'] == 'IMT':
+                field = ShownFields(field='weight')
+                field.save()
+                next_person.shownfields_set.add(field)
+                field = ShownFields(field='growth')
+                field.save()
+                next_person.shownfields_set.add(field)
+            else:
+                field = ShownFields(field=data['card'])
+                field.save()
+                next_person.shownfields_set.add(field)
             next_person.save()
         person = lobby.person_set.filter(linked_user__username = person_username).first()
         field = ShownFields(field=action)
@@ -565,7 +603,7 @@ def action_36(person_username, action, data):
     if 'someone' in data:
         next_user_id = lobby.personsquery_set.filter(username = data['someone']).first().id
         next_user = lobby.personsquery_set.filter(id = next_user_id).first()
-        next_person = lobby.person_set.filter(linked_user__username = next_user.username)
+        next_person = lobby.person_set.filter(linked_user__username = next_user.username).first()
         field = ShownFields(field='life')
         field.save()
         next_person.shownfields_set.add(field)
@@ -605,7 +643,7 @@ def action_41(person_username, action, data):
         if not data['someone'] == person_username:
             next_user_id = lobby.personsquery_set.filter(username = data['someone']).first().id
             next_user = lobby.personsquery_set.filter(id = next_user_id).first()
-            next_person = lobby.person_set.filter(linked_user__username = next_user.username)
+            next_person = lobby.person_set.filter(linked_user__username = next_user.username).first()
             next_person.speak_time = next_person.speak_time - 30
             next_person.save()
             person = lobby.person_set.filter(linked_user__username = person_username).first()
@@ -653,7 +691,7 @@ def action_45(person_username, action, data):
         if not data['someone'] == person_username:
             next_user_id = lobby.personsquery_set.filter(username = data['someone']).first().id
             next_user = lobby.personsquery_set.filter(id = next_user_id).first()
-            next_person = lobby.person_set.filter(linked_user__username = next_user.username)
+            next_person = lobby.person_set.filter(linked_user__username = next_user.username).first()
             next_person.protection = True
             next_person.save()
             person = lobby.person_set.filter(linked_user__username = person_username).first()
@@ -695,7 +733,7 @@ def action_50(person_username, action, data):
         if not data['someone'] == person_username:
             next_user_id = lobby.personsquery_set.filter(username = data['someone']).first().id
             next_user = lobby.personsquery_set.filter(id = next_user_id).first()
-            next_person = lobby.person_set.filter(linked_user__username = next_user.username)
+            next_person = lobby.person_set.filter(linked_user__username = next_user.username).first()
             next_person.weight = (next_person.weight - 1) if next_person.weight >= 1 else 0
             next_person.save()
             person = lobby.person_set.filter(linked_user__username = person_username).first()

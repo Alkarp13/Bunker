@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import ReactDOM from "react-dom";
+import PropTypes from 'prop-types';
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 const renderTime = ({ remainingTime }) => {
@@ -52,6 +52,11 @@ function Timer(props) {
             </CountdownCircleTimer>
         </div>
     );
+}
+
+Timer.propTypes = {
+    duration: PropTypes.number.isRequired,
+    isPlaying: PropTypes.bool.isRequired
 }
 
 export default Timer;

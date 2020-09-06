@@ -41,7 +41,8 @@ class Persons extends React.Component {
         this.showOtherPerson = this.showOtherPerson.bind(this);
         this.sendCharacteristicToSocked = this.sendCharacteristicToSocked.bind(this);
         this.kickSelectedPlayer = this.kickSelectedPlayer.bind(this);
-        this.someoneSelected = this.someoneSelected.bind(this);
+        this.someoneSelected = this.someoneSelected.bind(this); 
+        this.changeNoteHandler = this.changeNoteHandler.bind(this); 
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -50,17 +51,14 @@ class Persons extends React.Component {
     }
 
     componentDidMount() {
-        console.log(window.location.href);
         if (/person/i.test(window.location.href)) {
             this.connection = new WebSocket('ws://' + window.location.host + '/persons');
             this.connection.onmessage = evt => {
-                console.log(evt.data);
                 if (evt.data === 'update_fields') {
                     fetch("/get_all_persons", { method: 'GET' })
                         .then((response) => response.json())
                         .then(
                             (result) => {
-                                console.log(result);
                                 this.setState({
                                     isLoaded: true,
                                     lobby_state: result.lobby_state,
@@ -90,7 +88,6 @@ class Persons extends React.Component {
                 .then((response) => response.json())
                 .then(
                     (result) => {
-                        console.log(result);
                         this.setState({
                             isLoaded: true,
                             lobby_state: result.lobby_state,
@@ -121,18 +118,30 @@ class Persons extends React.Component {
         if (this.state.selected_field !== '') {
             if ((this.state.selected_field === 'action_1') || (this.state.selected_field === 'action_2')) {
                 let action = this.state.person[this.state.selected_field];
-                if (/любым человеком/i.test(action) || /любого игрока/i.test(action)
-                    || /другого игрока/i.test(action) || /выбрать кто покинет/i.test(action)) {
-                    if (/любую карту/i.test(action)) {
-                        this.setState({ is_anyperson_shown: true,  is_anycard_shown: true});
-                    } else {
-                        this.setState({ is_anyperson_shown: true });
-                    }
+
+                fetch("/get_fields_action", {
+                    method: 'POST',
+                    body: JSON.stringify({ field: this.state.selected_field })
+                }).then((response) => response.json())
+                  .then(
+                      (result) => {
+                          console.log(result);
+                          if (result.is_anyperson_shown || result.is_anycard_shown) {
+                              this.setState({
+                                  is_anyperson_shown: result.is_anyperson_shown,
+                                  is_anycard_shown: result.is_anycard_shown
+                              });
+                          } else {
+                              this.connection.send(JSON.stringify({ value: this.state.selected_field }));
+                          }
+                      }
+                    )
+            } else {
+                if (this.state.selected_field === 'imt') {
+                    this.connection.send(JSON.stringify({ value: ['growth', 'weight'] }));
                 } else {
                     this.connection.send(JSON.stringify({ value: this.state.selected_field }));
                 }
-            } else {
-                this.connection.send(JSON.stringify({ value: this.state.selected_field }));
             }
         }
     }
@@ -159,6 +168,7 @@ class Persons extends React.Component {
             }
         });
 
+        this.sendOtherState()
         this.setState({ other_persons: other_persons });
     }
 
@@ -171,6 +181,7 @@ class Persons extends React.Component {
             }
         });
 
+        this.sendOtherState()
         this.setState({ other_persons: other_persons });
     }
 
@@ -193,6 +204,33 @@ class Persons extends React.Component {
 
     kickSelectedPlayer() {
         this.connection.send(JSON.stringify({ kick_person: this.state.person_to_kick, username: this.state.person.username}));
+    }
+
+    changeNoteHandler(text, username) {
+        let other_persons = this.state.other_persons;
+
+        other_persons.forEach(function (other) {
+            if (other.username === username) {
+                other.note = text;
+            }
+        });
+
+        this.sendOtherState()
+        this.setState({ other_persons: other_persons });
+    }
+
+    sendOtherState() {
+        let other_persons = this.state.other_persons;
+
+        other_persons.map(function (other) {
+            return {
+                username: other.username,
+                is_shown: other.is_shown,
+                note: other.note
+            }
+        });
+
+        this.connection.send(JSON.stringify({ change_card_state: other_persons, username: this.state.person.username }));
     }
 
     render() {
@@ -264,8 +302,8 @@ class Persons extends React.Component {
                         <Combobox
                             openOnFocus
                             height={40}
-                            disabled={is_anycard_shown}
-                            items={['male', 'age', 'profession', 'life', 'phobia', 'hobbi', 'character', 'skill', 'inventar']}
+                            disabled={!is_anycard_shown}
+                            items={['male', 'age', 'IMT', 'profession', 'life', 'phobia', 'hobbi', 'character', 'skill', 'inventar']}
                             onChange={selected => this.setState({ anyone_card: selected })}
                             placeholder="Cards"
                         />
@@ -297,6 +335,7 @@ class Persons extends React.Component {
                                 onChange={e => this.setState({ selected_field: e.target.value })}>
                                 <option disabled={this.checkDisabled(person.shown_fields, 'male')} value='male'>Male</option>
                                 <option disabled={this.checkDisabled(person.shown_fields, 'age')} value='age'>Age</option>
+                                <option disabled={this.checkDisabled(person.shown_fields, 'growth')} value='imt'>IMT</option>
                                 <option disabled={this.checkDisabled(person.shown_fields, 'profession')} value='profession'>Profession</option>
                                 <option disabled={this.checkDisabled(person.shown_fields, 'life')} value='life'>Life</option>
                                 <option disabled={this.checkDisabled(person.shown_fields, 'phobia')} value='phobia'>Phobia</option>
@@ -329,7 +368,7 @@ class Persons extends React.Component {
                                 })}
                                 title={other.first_name + ' ' + other.last_name}
                                 style={paneStyle}>
-                                <PersonCard person={other} other={true} />
+                                <PersonCard person={other} other={true} changeNoteHandler={this.changeNoteHandler} />
                             </DnR>
                         } else {
                             return null;

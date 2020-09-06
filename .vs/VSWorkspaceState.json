@@ -5,8 +5,10 @@
     "\\db_models",
     "\\www",
     "\\www\\src",
-    "\\www\\src\\components"
+    "\\www\\src\\components",
+    "\\www\\static",
+    "\\www\\static\\img"
   ],
-  "SelectedNode": "\\db_models\\API.py",
+  "SelectedNode": "\\www\\src\\components\\Persons.js",
   "PreviewInSolutionExplorer": false
 }

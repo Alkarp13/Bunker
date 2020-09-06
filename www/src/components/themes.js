@@ -42,138 +42,23 @@ export class Button extends React.Component {
   }
 }
 
-export const TitleBar = ({
-	children,
-	buttons,
-	button1,
-	button2,
-	button3,
-	button1Children,
-	button2Children,
-	button3Children,
-  dnrState
-}) =>
-	<div>
-		<div {...buttons}>
-			<Button {...button1} cursor={dnrState.cursor}>
-				{button1Children}
-			</Button>
-			<Button {...button2} cursor={dnrState.cursor}>
-				{button2Children}
-			</Button>
-			<Button {...button3} cursor={dnrState.cursor}>
-				{button3Children}
-			</Button>
+export function TitleBar(props) {
+	return (
+		<div>
+			<div {...props.buttons}>
+				<Button {...props.button1} cursor={props.dnrState.cursor}>
+					{props.button1Children}
+				</Button>
+				<Button {...props.button2} cursor={props.dnrState.cursor}>
+					{props.button2Children}
+				</Button>
+				<Button {...props.button3} cursor={props.dnrState.cursor}>
+					{props.button3Children}
+				</Button>
+			</div>
+			{props.children}
 		</div>
-		{children}
-	</div>
-
-export let OSXTheme = ({title, onClose, onMinimize, onMaximize}) => {
-	const titleHeight = 25
-	const buttonRadius = 6
-	const fontSize = 14
-	const fontFamily = 'Helvetica, sans-serif'
-
-	const style = {
-			height: titleHeight,
-	}
-
-	const buttonStyle = {
-		padding: 0,
-		margin: 0,
-		marginRight: '4px',
-		width: buttonRadius * 2,
-		height: buttonRadius * 2,
-		borderRadius: buttonRadius,
-		content: '',
-		border: '1px solid rgba(0, 0, 0, 0.2)',
-		outline: 'none',
-	}
-	const buttons = {
-		style: {
-			height: titleHeight,
-			position: 'absolute',
-			float: 'left',
-			margin: '0 8px',
-			display: 'flex',
-			alignItems: 'center'
-		}
-	}
-
-	const closeButton = {
-		style: {
-			...buttonStyle,
-			backgroundColor: 'rgb(255, 97, 89)',
-		},
-		hoverStyle: {
-			backgroundColor: 'rgb(230, 72, 64)'
-		},
-		downStyle: {
-			backgroundColor: 'rgb(204, 46, 38)'
-		},
-		onClick: onClose
-	}
-	const minimizeButton = {
-		style: {
-			...buttonStyle,
-			backgroundColor: 'rgb(255, 191, 47)'
-		},
-		hoverStyle: {
-			backgroundColor: 'rgb(230, 166, 22)'
-		},
-		downStyle: {
-			backgroundColor: 'rgb(204, 140, 0)'
-		},
-		onClick: onMinimize
-	};
-	const maximizeButton = {
-		style: {
-			...buttonStyle,
-			backgroundColor: 'rgb(37, 204, 62)'
-		},
-		hoverStyle: {
-			backgroundColor: 'rgb(12, 179, 37)'
-		},
-		downStyle: {
-			backgroundColor: 'rgb(0, 153, 11)'
-		},
-		onClick: onMaximize
-	}
-	return {
-		theme: {
-			title: {
-				...defaultTheme.title,
-				fontFamily: fontFamily,
-				borderTopLeftRadius: '5px',
-				borderTopRightRadius: '5px',
-				background: 'linear-gradient(0deg, #d8d8d8, #ececec)',
-				color: 'rgba(0, 0, 0, 0.7)',
-				fontSize: fontSize,
-				height: titleHeight,
-			},
-			frame: {
-				...defaultTheme.frame,
-				borderRadius: '5px',
-			},
-		  transition: 'all 0.25s ease-in-out'
-		},
-		titleBar: (<TitleBar
-				style={style}
-				buttons={buttons}
-				button1={closeButton}
-				button2={minimizeButton}
-				button3={maximizeButton}>
-					<div style={{
-						width: '100%',
-						height: '100%',
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'center'
-					}}>
-						{title}
-					</div>
-			</TitleBar>),
-	}
+	)
 }
 
 export let WindowsTheme = ({title, onClose, onMinimize, onMaximize, titleBarColor = '#0095ff'}) => {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button, CornerDialog } from 'evergreen-ui'
 import Timer from "./Timer";
 
@@ -26,6 +27,13 @@ class CornerAlert extends React.Component {
             </CornerDialog>
         );
     }
+}
+
+CornerAlert.propTypes = {
+    username: PropTypes.string,
+    duration: PropTypes.number.isRequired,
+    isShown:  PropTypes.bool,
+    passMove: PropTypes.func.isRequired
 }
 
 export default CornerAlert;

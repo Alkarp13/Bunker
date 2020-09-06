@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Avatar, Pane, Button } from 'evergreen-ui';
 
 class Lobby extends React.Component {
@@ -60,6 +61,11 @@ class Lobby extends React.Component {
             </Pane>
         );
     }
+}
+
+Lobby.propTypes = {
+    lobby_state: PropTypes.string,
+    users: PropTypes.array.isRequired
 }
 
 export default Lobby;

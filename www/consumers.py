@@ -2,7 +2,7 @@ import simplejson as json
 from collections import Counter
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
-from db_models.models import Person, Lobby, UserInfo, UserProfile, ShownFields, PersonsKickList, ActionCards
+from db_models.models import Person, Lobby, UserInfo, UserProfile, ShownFields, PersonsKickList, ActionCards, SavedCardState, Online
 from db_models.views import getPersonsQuery
 from db_models.API import actionRouterById
 
@@ -15,18 +15,24 @@ class LobbyConsumer(WebsocketConsumer):
         lobby = Lobby.objects.first()
         users_query = lobby.userinfo_set.filter(username = self.username)
         if users_query and (lobby.game_state == 'S'):
+            is_online = lobby.online_set.filter(username = self.username).first()
+            if not is_online:
+                online = Online(username = self.username)
+                online.save()
+                lobby.online_set.add(online)
+                lobby.save()
             async_to_sync(self.channel_layer.group_add)(self.group, self.channel_name)
             self.accept()
         else:
             self.close()
 
     def disconnect(self, close_code):
-        print('disconnect: ', close_code)
-        #Add logic to delete lobby
         lobby = Lobby.objects.first()
-        users_query = lobby.userinfo_set.filter(username = self.username)
+        lobby.online_set.filter(username = self.username).first().delete()
+        lobby.save()
         async_to_sync(self.channel_layer.group_discard)(self.group, self.channel_name)
-        if (not users_query) and (lobby.game_state == 'E'):
+        is_anyone_online = lobby.online_set.all()
+        if (not is_anyone_online):
             lobby.delete()
 
     def receive(self, text_data):
@@ -35,11 +41,18 @@ class LobbyConsumer(WebsocketConsumer):
         persons = lobby.person_set.all()
         if persons and (lobby.game_state == 'S'):
             if 'value' in data:
-                self.updateShownFields(data['value'], data)
+                if isinstance(data['value'], list):
+                    for value in data['value']:
+                        self.updateShownFields(value, data)
+                else:
+                    self.updateShownFields(data['value'], data)
+                self.sendMessageToAllPlayers("update_fields")
             if 'current_person' in data:
                 self.moveSpeechToNextPerson()
             if 'kick_person' in data:
                 self.kickPerson(data['kick_person'], data['username'])
+            if 'change_card_state' in data:
+                self.changeCardState(data['change_card_state'], data['username'])
 
     def updateShownFields(self, field_value, data):
         lobby = Lobby.objects.first()
@@ -59,7 +72,6 @@ class LobbyConsumer(WebsocketConsumer):
                     field.save()
                     person.shownfields_set.add(field)
                     person.save()
-                self.sendMessageToAllPlayers("update_fields")
                 break
 
     def moveSpeechToNextPerson(self):
@@ -99,6 +111,22 @@ class LobbyConsumer(WebsocketConsumer):
             "persons_query": getPersonsQuery()
         }
         self.sendMessageToAllPlayers(json.dumps({'update_turn': result}))
+
+    def changeCardState(self, states, person_username):
+        lobby = Lobby.objects.first()
+        person = lobby.person_set.filter(linked_user__username = person_username).first()
+        if person:
+            for state in states:
+                saved_state = person.savedcardstate_set.filter(username = state['username']).first()
+                if saved_state:
+                    saved_state.is_shown = state['is_shown']
+                    saved_state.note = state['note']
+                    saved_state.save()
+                else:
+                    saved_state = SavedCardState(is_shown=state['is_shown'], username=state['username'], note=state['note'])
+                    saved_state.save()
+                    person.savedcardstate_set.add(saved_state)
+                person.save()
 
     def kickPerson(self, kick_person, who_kick):
         lobby = Lobby.objects.first()

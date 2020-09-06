@@ -7,7 +7,7 @@ class LobbyAdmin(admin.ModelAdmin):
 
 class UserProfileAdmin(UserAdmin):
     model = UserProfile
-    list_display = ('avatar_tag', 'username')
+    list_display = ('username', 'first_name')
 
 class UserInfoAdmin(admin.ModelAdmin):
     model = UserInfo

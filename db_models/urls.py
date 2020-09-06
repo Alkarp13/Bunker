@@ -11,5 +11,6 @@ urlpatterns = [
     path('lobby_state', views.lobbyState, name = 'lobbystate'),
     path('set_ready', views.setReady, name = 'setready'),
     path('get_all_persons', views.getAllPersons, name = 'allpersons'),
+    path('get_fields_action', views.getFieldsAction, name = 'actionfields'),
     path('', RedirectView.as_view(url='/lobby/', permanent=False), name='index')
 ]

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Pane, Strong, Text } from 'evergreen-ui'
 
 function Legend(props) {
@@ -45,6 +46,13 @@ function Legend(props) {
             </Pane>
         </div>
     );
+}
+
+Legend.propTypes = {
+    story: PropTypes.string.isRequired,
+    legend: PropTypes.object.isRequired,
+    number_of_seats: PropTypes.number.isRequired,
+    turn: PropTypes.number.isRequired
 }
 
 export default Legend;
