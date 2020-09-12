@@ -52,11 +52,22 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'Bunker.urls'
 
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = '/static/'
+#STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['www']))
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+LOGIN_REDIRECT_URL = 'lobby'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+#ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.1.43']
+
 # Template configuration
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'www/templates')],
+        'DIRS': [os.path.join(STATIC_ROOT)],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -119,16 +130,5 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 AUTH_USER_MODEL = 'db_models.UserProfile'
-
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'
-#STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['www']))
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-LOGIN_REDIRECT_URL = 'lobby'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
-#ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.1.43']
 
 django_heroku.settings(locals())
