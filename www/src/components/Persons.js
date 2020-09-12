@@ -54,7 +54,7 @@ class Persons extends React.Component {
 
     componentDidMount() {
         if (/person/i.test(window.location.href)) {
-            this.connection = new WebSocket('wss://' + window.location.host + '/persons');
+            this.connection = new WebSocket('wss://' + window.location.host + ':14859/persons');
             this.connection.onmessage = evt => {
                 if (evt.data === 'update_fields') {
                     fetch("/get_all_persons", { method: 'GET' })
