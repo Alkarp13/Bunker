@@ -64,10 +64,12 @@ STATICFILES_DIRS = (
 #ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.1.43']
 
 # Template configuration
+#'DIRS': [os.path.join(STATIC_ROOT, '/templates/')],
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(STATIC_ROOT, '/')],
+        
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
