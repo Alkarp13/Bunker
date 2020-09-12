@@ -1,15 +1,19 @@
 import os
 import posixpath
+import django_heroku
+import dj_database_url
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'fcb4c2c2-defe-422c-b07a-f4213b7d36b1'
+#SECRET_KEY = 'fcb4c2c2-defe-422c-b07a-f4213b7d36b1'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 
 ALLOWED_HOSTS = []
 
@@ -28,12 +32,11 @@ INSTALLED_APPS = [
     'www'
 ]
 
-#Uncomment when release
-#REST_FRAMEWORK = {
-#    'DEFAULT_RENDERER_CLASSES': (
-#        'rest_framework.renderers.JSONRenderer',
-#    )
-#}
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
+}
 
 # Middleware framework
 MIDDLEWARE = [
@@ -89,6 +92,9 @@ DATABASES = {
     },
 }
 
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -117,4 +123,6 @@ AUTH_USER_MODEL = 'db_models.UserProfile'
 STATIC_URL = '/www/static/'
 STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['www']))
 LOGIN_REDIRECT_URL = 'lobby'
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.1.43']
+#ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.1.43']
+
+django_heroku.settings(locals())

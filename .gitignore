@@ -2,3 +2,5 @@
 venv/
 www/node_modules
 .vs
+*.bak
+*.sqlite3
