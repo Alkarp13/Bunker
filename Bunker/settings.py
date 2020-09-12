@@ -13,7 +13,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
-DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
+DEBUG = bool(os.environ['DJANGO_DEBUG'])
 
 ALLOWED_HOSTS = []
 
@@ -45,6 +45,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -120,9 +121,10 @@ USE_TZ = True
 AUTH_USER_MODEL = 'db_models.UserProfile'
 
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = '/www/static/'
+STATIC_URL = '/static/'
 #STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['www']))
-STATIC_ROOT = os.path.join(BASE_DIR, 'www')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 LOGIN_REDIRECT_URL = 'lobby'
 #ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.1.43']
 
