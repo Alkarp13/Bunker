@@ -126,3 +126,9 @@ body, html {
 .bottom-alert-footer > button {
     float: right
 }
+
+.react-hint {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #FBE6A2;
+    font-weight: 600;
+}

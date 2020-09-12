@@ -206,7 +206,7 @@ def setReady(request):
                 for i, user in enumerate(users):
                     if not user.ready_state:
                         is_all_ready = False
-                if is_all_ready and (lobby.userinfo_set.count() > 5):
+                if is_all_ready: #and (lobby.userinfo_set.count() > 5):
                     print('all_ready')
                     lobby.number_of_seats = math.ceil(lobby.userinfo_set.count() / 2)
                     lobby.game_state = 'S'

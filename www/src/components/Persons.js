@@ -5,7 +5,9 @@ import { WindowsTheme } from './themes'
 import PersonCard from './PersonCard'
 import Legend from './Legend'
 import CornerAlert from './CornerAlert'
+import ReactHintFactory from 'react-hint'
 
+const ReactHint = ReactHintFactory(React)
 const paneStyle = {
     width: '300px',
     height: '550px',
@@ -258,14 +260,17 @@ class Persons extends React.Component {
                             alignItems="center"
                             flexDirection="row">
                             {other_persons.map(function (person, index) {
-                                return <Avatar
-                                    key={index}
-                                    name={person.username}
-                                    size={80}
-                                    marginRight={16}
-                                    isSolid={(persons_query[current_person - 1].username === person.username) ? true : false}
-                                    onClick={(e) => this.showOtherPerson(e)}
-                                />
+                                return <div key={index}>
+                                        <ReactHint autoPosition events/>
+                                        <Avatar
+                                            name={person.username}
+                                            size={80}
+                                            data-rh={person.username + ", " + person.first_name}
+                                            marginRight={16}
+                                            isSolid={(persons_query[current_person - 1].username === person.username) ? true : false}
+                                            onClick={(e) => this.showOtherPerson(e)}
+                                        />
+                                    </div>
                             }, this)}
                         </Pane>
                     </Pane>
