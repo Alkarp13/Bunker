@@ -15,7 +15,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 #DEBUG = True
 DEBUG = bool(os.environ['DJANGO_DEBUG'])
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['bunker.herokuapp.com','127.0.0.1']
 
 # Application references
 INSTALLED_APPS = [
@@ -126,6 +126,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 LOGIN_REDIRECT_URL = 'lobby'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 #ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.1.43']
 
 django_heroku.settings(locals())
