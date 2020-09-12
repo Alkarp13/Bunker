@@ -8,8 +8,8 @@ import dj_database_url
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'fcb4c2c2-defe-422c-b07a-f4213b7d36b1'
-#SECRET_KEY = os.environ['SECRET_KEY']
+#SECRET_KEY = 'fcb4c2c2-defe-422c-b07a-f4213b7d36b1'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
@@ -121,7 +121,8 @@ AUTH_USER_MODEL = 'db_models.UserProfile'
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/www/static/'
-STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['www']))
+#STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['www']))
+STATIC_ROOT = os.path.join(BASE_DIR, 'www')
 LOGIN_REDIRECT_URL = 'lobby'
 #ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.1.43']
 

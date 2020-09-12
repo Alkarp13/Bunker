@@ -1,6 +1,9 @@
 *.pyc
 venv/
 www/node_modules
-.vs
+.vs/*
 *.bak
+.suo
 *.sqlite3
+.vs/VSWorkspaceState.json
+bunker.dump
