@@ -61,7 +61,7 @@ LOGIN_REDIRECT_URL = 'lobby'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
-#ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.1.43']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.1.43']
 
 # Template configuration
 #'DIRS': [os.path.join(STATIC_ROOT, '/templates/')],
@@ -91,6 +91,7 @@ CHANNEL_LAYERS = {
         'CONFIG': {
             "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
         },
+        "ROUTING": "Bunker.routing.channel_routing",
     },
 }
 

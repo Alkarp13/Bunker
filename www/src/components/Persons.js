@@ -6,6 +6,7 @@ import PersonCard from './PersonCard'
 import Legend from './Legend'
 import CornerAlert from './CornerAlert'
 import ReactHintFactory from 'react-hint'
+import ReconnectingWebSocket from 'reconnecting-websocket';
 
 const ReactHint = ReactHintFactory(React)
 const paneStyle = {
@@ -59,7 +60,7 @@ class Persons extends React.Component {
             } else {
                 var ws_scheme = "ws://"
             };
-            this.connection = new WebSocket(ws_scheme + window.location.host + ':14859/persons');
+            this.connection = new ReconnectingWebSocket(ws_scheme + window.location.host + '/persons');
             this.connection.onmessage = evt => {
                 if (evt.data === 'update_fields') {
                     fetch("/get_all_persons", { method: 'GET' })
