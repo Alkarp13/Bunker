@@ -84,7 +84,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Bunker.wsgi.application'
 ASGI_APPLICATION = 'Bunker.routing.application'
-#'ROUTING': 'Bunker.routing.channel_routing',
+
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
