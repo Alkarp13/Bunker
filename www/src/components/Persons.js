@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Pane, Button, Spinner, SelectField, Combobox, CornerDialog, Dialog, Paragraph } from 'evergreen-ui'
+import { Avatar, Pane, Button, Spinner, SelectField, Combobox, CornerDialog, Dialog } from 'evergreen-ui'
 import DnR from './DnR';
 import { WindowsTheme } from './themes'
 import PersonCard from './PersonCard'
@@ -54,7 +54,12 @@ class Persons extends React.Component {
 
     componentDidMount() {
         if (/person/i.test(window.location.href)) {
-            this.connection = new WebSocket('wss://' + window.location.host + ':14859/persons');
+            if (window.location.protocol == "https:") {
+                var ws_scheme = "wss://";
+            } else {
+                var ws_scheme = "ws://"
+            };
+            this.connection = new ReconnectingWebSocket(ws_scheme + window.location.host + '/persons');
             this.connection.onmessage = evt => {
                 if (evt.data === 'update_fields') {
                     fetch("/get_all_persons", { method: 'GET' })
