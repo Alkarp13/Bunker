@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Avatar, Pane, Strong, Text, TextareaField } from 'evergreen-ui'
+import { Pane, Strong, Text, TextareaField } from 'evergreen-ui'
 
 function PersonCard(props) {
     function getIMTString(weight, growth) {
