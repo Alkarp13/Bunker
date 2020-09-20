@@ -8,14 +8,14 @@ import dj_database_url
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'fcb4c2c2-defe-422c-b07a-f4213b7d36b1'
-#SECRET_KEY = os.environ['SECRET_KEY']
+#SECRET_KEY = 'fcb4c2c2-defe-422c-b07a-f4213b7d36b1'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-#DEBUG = bool(os.environ['DJANGO_DEBUG'])
+#DEBUG = True
+DEBUG = bool(os.environ['DJANGO_DEBUG'])
 
-ALLOWED_HOSTS = ['bunker.herokuapp.com','127.0.0.1']
+ALLOWED_HOSTS = []
 
 # Application references
 INSTALLED_APPS = [
@@ -54,21 +54,21 @@ ROOT_URLCONF = 'Bunker.urls'
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['www']))
-#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+#STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['www']))
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 LOGIN_REDIRECT_URL = 'lobby'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.1.43']
+#ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.1.43']
 
 # Template configuration
-#'DIRS': [os.path.join(STATIC_ROOT, '/')],
+#'DIRS': [os.path.join(STATIC_ROOT, '/templates/')],
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(STATIC_ROOT, '/templates/')],
+        'DIRS': [os.path.join(STATIC_ROOT, '/')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
