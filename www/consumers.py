@@ -10,49 +10,74 @@ class LobbyConsumer(WebsocketConsumer):
     def connect(self):
         self.username = self.scope['user']
         self.group = "broadcast"
-        print('connect: ', self.username)
+        print('connect to persons: ', self.username)
 
         lobby = Lobby.objects.first()
-        users_query = lobby.userinfo_set.filter(username = self.username)
-        if users_query and (lobby.game_state == 'S'):
-            is_online = lobby.online_set.filter(username = self.username).first()
-            if not is_online:
-                online = Online(username = self.username)
-                online.save()
-                lobby.online_set.add(online)
-                lobby.save()
-            async_to_sync(self.channel_layer.group_add)(self.group, self.channel_name)
-            self.accept()
-        else:
-            self.close()
+        if lobby:
+            users_query = lobby.userinfo_set.filter(username = self.username)
+            if users_query and (lobby.game_state == 'S'):
+                is_online = lobby.online_set.filter(username = self.username).first()
+                if not is_online:
+                    online = Online(username = self.username)
+                    online.save()
+                    lobby.online_set.add(online)
+                    lobby.save()
+                async_to_sync(self.channel_layer.group_add)(self.group, self.channel_name)
+                self.accept()
+            else:
+                self.close()
 
     def disconnect(self, close_code):
         lobby = Lobby.objects.first()
-        lobby.online_set.filter(username = self.username).first().delete()
-        lobby.save()
-        async_to_sync(self.channel_layer.group_discard)(self.group, self.channel_name)
-        is_anyone_online = lobby.online_set.all()
-        if (not is_anyone_online):
-            lobby.delete()
+        if lobby:
+            online = lobby.online_set.filter(username = self.username).first()
+            if online:
+                online.delete()
+            lobby.save()
+            async_to_sync(self.channel_layer.group_discard)(self.group, self.channel_name)
+            is_anyone_online = lobby.online_set.all()
+            if (not is_anyone_online):
+                lobby.delete()
 
     def receive(self, text_data):
         data = json.loads(text_data)
         lobby = Lobby.objects.first()
-        persons = lobby.person_set.all()
-        if persons and (lobby.game_state == 'S'):
-            if 'value' in data:
-                if isinstance(data['value'], list):
-                    for value in data['value']:
-                        self.updateShownFields(value, data)
-                else:
-                    self.updateShownFields(data['value'], data)
-                self.sendMessageToAllPlayers("update_fields")
-            if 'current_person' in data:
-                self.moveSpeechToNextPerson()
-            if 'kick_person' in data:
-                self.kickPerson(data['kick_person'], data['username'])
-            if 'change_card_state' in data:
-                self.changeCardState(data['change_card_state'], data['username'])
+        if lobby:
+            persons = lobby.person_set.all()
+            if persons and (lobby.game_state == 'S'):
+                if 'value' in data:
+                    if isinstance(data['value'], list):
+                        for value in data['value']:
+                            self.updateShownFields(value, data)
+                    else:
+                        self.updateShownFields(data['value'], data)
+                    self.sendMessageToAllPlayers("update_fields")
+                if 'current_person' in data:
+                    self.moveSpeechToNextPerson()
+                if 'kick_person' in data:
+                    self.kickPerson(data['kick_person'], data['username'])
+                if 'change_card_state' in data:
+                    self.changeCardState(data['change_card_state'], data['username'])
+                if 'update_lobby' in data:
+                    self.sendUpdateLobby()
+
+    def sendUpdateLobby(self):
+        users_data = []
+        lobby = Lobby.objects.first()
+        users = list(lobby.userinfo_set.values_list('username', 'first_name', 'last_name', 'ready_state', named=True))
+        if users:
+            for i, user in enumerate(users):
+                users_data.append({
+                    'username': user.username,
+                    'first_name': user.first_name,
+                    'last_name': user.last_name,
+                    'ready_state': user.ready_state
+                })
+        result = {
+            'lobby_state': lobby.game_state,
+            'users': users_data
+        }
+        self.sendMessageToAllPlayers(json.dumps(result))
 
     def updateShownFields(self, field_value, data):
         lobby = Lobby.objects.first()
@@ -164,6 +189,57 @@ class LobbyConsumer(WebsocketConsumer):
             lobby.personskicklist_set.all().delete()
             lobby.save()
             self.sendMessageToAllPlayers('update_fields')
+
+    def sendMessageToAllPlayers(self, message):
+        async_to_sync(self.channel_layer.group_send)(
+            self.group,
+            {
+                "type": "chat.message",
+                "text": message,
+            },
+        )
+       
+    def chat_message(self, event):
+        self.send(text_data=event["text"])
+
+class LoginConsumer(WebsocketConsumer):
+    def connect(self):
+        self.username = self.scope['user']
+        self.group = "broadcast"
+        print('connect: ', self.username)
+
+        lobby = Lobby.objects.first()
+        if lobby.game_state == 'R':
+            async_to_sync(self.channel_layer.group_add)(self.group, self.channel_name)
+            self.accept()
+        else:
+            self.close()
+
+    def disconnect(self, close_code):
+        async_to_sync(self.channel_layer.group_discard)(self.group, self.channel_name)
+
+    def receive(self, text_data):
+        data = json.loads(text_data)
+        if 'update_lobby' in data:
+            self.sendUpdateLobby()
+        
+    def sendUpdateLobby(self):
+        users_data = []
+        lobby = Lobby.objects.first()
+        users = list(lobby.userinfo_set.values_list('username', 'first_name', 'last_name', 'ready_state', named=True))
+        if users:
+            for i, user in enumerate(users):
+                users_data.append({
+                    'username': user.username,
+                    'first_name': user.first_name,
+                    'last_name': user.last_name,
+                    'ready_state': user.ready_state
+                })
+        result = {
+            'lobby_state': lobby.game_state,
+            'users': users_data
+        }
+        self.sendMessageToAllPlayers(json.dumps(result))
 
     def sendMessageToAllPlayers(self, message):
         async_to_sync(self.channel_layer.group_send)(

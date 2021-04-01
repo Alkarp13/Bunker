@@ -16,6 +16,7 @@ class Lobby extends React.Component {
             .then((res) => res.json())
             .then(
                 (result) => {
+                    this.props.connection.send(JSON.stringify({ update_lobby: true }));
                     if (result.lobby_state === 'S') {
                         window.location.href = '/person/';
                     };

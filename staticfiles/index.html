@@ -9,20 +9,21 @@
 </head>
 <body>
     {% block sidebar %} {% endblock %}
-        <div class="bunker-bg">
-            {% if user.is_authenticated %}
-            <div id="top_panel"class="panel panel-default">
-                <div class="panel-body top-bar">
-                    <label>{% autoescape on %}Вы вошли как: {% endautoescape %}{{ user.get_username }}</label>
-                    <a class="btn btn-secondary btn-sm" href="{% url 'logout'%}?next={{request.path}}">{% autoescape on %}Выйти{% endautoescape %}</a>
-                </div>
+    <div class="bunker-bg">
+        {% if user.is_authenticated %}
+        <div id="top_panel" class="panel panel-default">
+            <div class="panel-body top-bar">
+                <label>{% autoescape on %}Вы вошли как: {% endautoescape %}{{ user.get_username }}</label>
+                <a class="btn btn-secondary btn-sm" href="{% url 'logout'%}?next={{request.path}}">{% autoescape on %}Выйти{% endautoescape %}</a>
             </div>
-            {% block content %} {% endblock %}
         </div>
-        {% load static %}
-        <script charset="utf-8" src="{% static 'frontend/main.js' %}"></script>
+        {% block content %} {% endblock %}
+    </div>
+    {% load static %}
+    {% extends scripts.html %}
+    {% block scripts %} {% endblock %}
     {% else %}
-        <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+    <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
     {% endif %}
 </body>
     {% load static %}

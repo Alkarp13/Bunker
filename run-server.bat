@@ -7,7 +7,7 @@ if "%1" EQU "rundev" goto rundev
 docker run -p 6379:6379 -d redis:6.0.6
 
 :rundev
-cd www && npm run dev && cd .. && python manage.py runserver 0.0.0.0:8000
+cd www && npm run build && cd .. && python manage.py runserver 0.0.0.0:8000
 goto end
 
 :runserver

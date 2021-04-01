@@ -4,7 +4,7 @@ import { Pane, Strong, Text } from 'evergreen-ui'
 
 function Legend(props) {
     return (
-        <div className='legend'>>
+        <div className='legend'>
             <Pane width='100%'>
                 <div className='black-background'>
                     <Strong color='#FBE6A2' size={400}>Current turn: </Strong>

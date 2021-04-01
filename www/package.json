@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack --mode development ./src/index.js --output ./static/frontend/main.js",
-    "build": "webpack --mode production ./src/index.js --output ./static/frontend/main.js"
+    "dev": "webpack --mode development ./src/index.js",
+    "build": "webpack --mode production ./src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -23,7 +23,9 @@
   },
   "dependencies": {
     "evergreen-ui": "^4.28.1",
+    "html-webpack-plugin": "^4.5.0",
     "prop-types": "^15.7.2",
+    "raw-loader": "^4.0.2",
     "react-countdown-circle-timer": "^2.3.7",
     "react-dnr": "^0.4.0",
     "react-native": "^0.63.2",
