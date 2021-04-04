@@ -1,9 +1,28 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Avatar, Pane, Button } from 'evergreen-ui';
+import ReconnectingWebSocket from 'reconnecting-websocket';
 
-class Lobby extends React.Component {
-    constructor(props) {
+interface Users {
+    username     : string;
+    first_name   : string;
+    last_name    : string;
+    ready_state  : boolean;
+}
+
+export type UsersArray = Array<Users>;
+
+interface Props {
+    lobby_state : string;
+    users       : UsersArray;
+    connection  : ReconnectingWebSocket;
+}
+
+interface State {
+    is_ready    : boolean;
+}
+
+export default class Lobby extends React.Component<Props, State> {
+    constructor(props: Props) {
         super(props);
         this.state = {
             is_ready: false
@@ -11,7 +30,7 @@ class Lobby extends React.Component {
         this.setReadyState = this.setReadyState.bind(this);
     }
 
-    setReadyState(e) {
+    setReadyState() {
         fetch("/set_ready", { method: 'POST' })
             .then((res) => res.json())
             .then(
@@ -21,7 +40,7 @@ class Lobby extends React.Component {
                         window.location.href = '/person/';
                     };
 
-                    this.setState({ is_ready: !this.is_ready });
+                    this.setState({ is_ready: !this.state.is_ready });
                 },
                 (error) => {
                     console.log(error);
@@ -63,10 +82,3 @@ class Lobby extends React.Component {
         );
     }
 }
-
-Lobby.propTypes = {
-    lobby_state: PropTypes.string,
-    users: PropTypes.array.isRequired
-}
-
-export default Lobby;

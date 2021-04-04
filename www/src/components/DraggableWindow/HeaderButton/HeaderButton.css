@@ -1,0 +1,58 @@
+:root {
+    --title-height   : 25;
+    --title-bar-color: #0095ff;
+    --button-radius  : 6;
+    --font-size-14   : 14;
+    --font-family    : Helvetica, sans-serif;
+}
+
+.TitleBar-HeaderButton {
+    padding: 0;
+	margin: 0;
+	width: 25;
+	height: 25;
+	outline: none;
+	border: none;
+	text-align: center;
+}
+
+.TitleBar-HeaderButton__close {
+    font-size: 20px;
+	font-weight: 500;
+	line-height: 36px;
+	background-color: var(--title-bar-color);
+}
+
+.TitleBar-HeaderButton__close .HeaderButton_state_hover {
+    background-color: #ec6060;
+}
+
+.TitleBar-HeaderButton__close .HeaderButton_state_down {
+    background-color: #bc4040;
+}
+
+.TitleBar-HeaderButton__minimize {
+	line-height: 22px;
+	background-color: var(--title-bar-color);
+}
+
+.TitleBar-HeaderButton__minimize .HeaderButton_state_hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.TitleBar-HeaderButton__minimize .HeaderButton_state_down {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.TitleBar-HeaderButton__maximize {
+	line-height: 12px;
+	background-color: var(--title-bar-color);
+}
+
+.TitleBar-HeaderButton__maximize .HeaderButton_state_hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.TitleBar-HeaderButton__maximize .HeaderButton_state_down {
+    background-color: rgba(0, 0, 0, 0.2);
+}

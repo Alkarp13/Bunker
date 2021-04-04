@@ -1,8 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Pane, Strong, Text } from 'evergreen-ui'
 
-function Legend(props) {
+export interface LegendInfo {
+    square          : number;
+    await_time      : number;
+    medicines       : number;
+    armor           : number;
+    additional_info : string;
+}
+
+export interface LegendInterface {
+    story           : string;
+    legend          : LegendInfo;
+    number_of_seats : number;
+    turn            : number;
+}
+
+export default function Legend(props: LegendInterface) {
     return (
         <div className='legend'>
             <Pane width='100%'>
@@ -47,12 +61,3 @@ function Legend(props) {
         </div>
     );
 }
-
-Legend.propTypes = {
-    story: PropTypes.string.isRequired,
-    legend: PropTypes.object.isRequired,
-    number_of_seats: PropTypes.number.isRequired,
-    turn: PropTypes.number.isRequired
-}
-
-export default Legend;

@@ -1,25 +1,41 @@
 import React from 'react';
 import { Spinner } from 'evergreen-ui'
 import ReconnectingWebSocket from 'reconnecting-websocket';
-import CurrentPerson from './CurrentPerson';
-import OtherPersons from './OtherPersons';
-import Legend from './Legend';
-import CornerAlert from './CornerAlert';
-import PersonsRow from './PersonsRow';
-import ActionDialog from './ActionDialog';
-import KickDialog from './KickDialog';
+import Legend, { LegendInterface, LegendInfo } from './Legend';
+import PersonsRow, { PersonsQueryArray } from './PersonsRow';
+import { PersonInfo } from './PersonCard';
 
-class Persons extends React.Component {
-    constructor(props) {
+const CurrentPerson = React.lazy(() => import('./CurrentPerson'));
+const OtherPersons = React.lazy(() => import('./OtherPersons'));
+const CornerAlert = React.lazy(() => import('./CornerAlert'));
+const ActionDialog = React.lazy(() => import('./ActionDialog'));
+const KickDialog = React.lazy(() => import('./KickDialog'));
+
+interface Props {}
+interface State extends LegendInterface {
+    error: any;
+    isLoaded: boolean;
+    person: PersonInfo;
+    other_persons: Array<PersonInfo>;
+    lobby_state: string;
+    is_round_over: boolean;
+    is_anyperson_shown: boolean;
+    is_anycard_shown: boolean;
+    current_person: number;
+    persons_query: PersonsQueryArray;
+}
+
+export default class Persons extends React.Component<Props, State> {
+    constructor(props: Props) {
         super(props);
         this.state = {
             error: null,
             isLoaded: false,
-            person: {},
+            person: {} as PersonInfo,
 			other_persons: [],
             lobby_state: '',
             story: '',
-            legend: {},
+            legend: {} as LegendInfo,
             number_of_seats: 1,
             turn: 1,
             is_round_over: false,
@@ -29,7 +45,6 @@ class Persons extends React.Component {
             persons_query: []
         };
 
-        this.selected_field = '';
         this.passMove = this.passMove.bind(this);
         this.showOtherPerson = this.showOtherPerson.bind(this);
         this.hideOtherPerson = this.hideOtherPerson.bind(this);
@@ -39,14 +54,11 @@ class Persons extends React.Component {
         this.changeNoteHandler = this.changeNoteHandler.bind(this); 
     }
 
+    selected_field: string = '';
+    connection: ReconnectingWebSocket = new ReconnectingWebSocket(((window.location.protocol == "https:") ? "wss://" : "ws://") + window.location.host + '/persons');
+
     componentDidMount() {
         if (/person/i.test(window.location.href)) {
-            if (window.location.protocol == "https:") {
-                var ws_scheme = "wss://";
-            } else {
-                var ws_scheme = "ws://"
-            };
-            this.connection = new ReconnectingWebSocket(ws_scheme + window.location.host + '/persons');
             this.connection.onmessage = evt => {
                 if (evt.data === 'update_fields') {
                     fetch("/get_all_persons", { method: 'GET' })
@@ -108,7 +120,7 @@ class Persons extends React.Component {
         }
     }
 
-    sendCharacteristicToSocked(selected_field) {
+    sendCharacteristicToSocked(selected_field: string) {
         if (selected_field !== '') {
             this.selected_field = selected_field;
             if ((selected_field === 'action_1') || (selected_field === 'action_2')) {
@@ -138,7 +150,7 @@ class Persons extends React.Component {
         }
     }
 
-    someoneSelected(anyone_person, anyone_card) {
+    someoneSelected(anyone_person: PersonInfo, anyone_card: string) {
         if (this.state.is_anycard_shown) {
             this.connection.send(JSON.stringify({ value: this.selected_field, someone: anyone_person, card: anyone_card }));
             this.setState({ is_anyperson_shown: false, is_anycard_shown: false });
@@ -148,7 +160,7 @@ class Persons extends React.Component {
         }
     }
 
-    showOtherPerson(e) {
+    showOtherPerson(e: React.MouseEvent<HTMLElement>) {
         let other_persons = this.state.other_persons;
         const username = e.currentTarget.title;
  
@@ -164,7 +176,7 @@ class Persons extends React.Component {
         this.setState({ other_persons: other_persons });
     }
 
-    hideOtherPerson(username) {
+    hideOtherPerson(username: string) {
         let other_persons = this.state.other_persons;
         other_persons.forEach(function (other) {
             if (other.username === username) {
@@ -180,11 +192,11 @@ class Persons extends React.Component {
         this.connection.send(JSON.stringify({ current_person: this.state.current_person }));
     }
 
-    kickSelectedPlayer(person_to_kick) {
+    kickSelectedPlayer(person_to_kick: string) {
         this.connection.send(JSON.stringify({ kick_person: person_to_kick, username: this.state.person.username}));
     }
 
-    changeNoteHandler(text, username) {
+    changeNoteHandler(text: string, username: string) {
         let other_persons = this.state.other_persons;
 
         other_persons.forEach(function (other) {
@@ -227,23 +239,31 @@ class Persons extends React.Component {
             return <Spinner size={32} />;
         } else {
             return (
-                <div width="100%" height="100%">
+                <div data-width="100%" data-height="100%">
                     <PersonsRow other_persons={other_persons} persons_query={persons_query} current_person={current_person} showOtherPerson={this.showOtherPerson} />
                     <Legend story={story} legend={legend} number_of_seats={number_of_seats} turn={turn} />
-                    <CornerAlert
-                        username={person.username}
-                        duration={person.speak_time}
-                        isShown={((persons_query[current_person - 1].username === person.username) && !is_round_over) ? true : false}
-                        passMove={() => this.passMove()}
-                    />
-                    <KickDialog persons_query={persons_query} is_round_over={is_round_over} kickSelectedPlayer={this.kickSelectedPlayer} />
-                    <ActionDialog persons_query={persons_query} is_anyperson_shown={is_anyperson_shown} is_anycard_shown={is_anycard_shown} someoneSelected={this.someoneSelected} />
-                    <CurrentPerson person={person} sendCharacteristicToSocked={this.sendCharacteristicToSocked} />
-                    <OtherPersons other_persons={other_persons} changeNoteHandler={this.changeNoteHandler} hideOtherPerson={this.hideOtherPerson} />
+                    <React.Suspense fallback={<Spinner size={32} />} >
+                        <CornerAlert
+                            username={person.username}
+                            duration={person.speak_time}
+                            isShown={((persons_query[current_person - 1].username === person.username) && !is_round_over) ? true : false}
+                            passMove={() => this.passMove()}
+                        />
+                    </React.Suspense>
+                    <React.Suspense fallback={<Spinner size={32} />} >
+                        <KickDialog persons_query={persons_query} is_round_over={is_round_over} kickSelectedPlayer={this.kickSelectedPlayer} />
+                    </React.Suspense>
+                    <React.Suspense fallback={<Spinner size={32} />} >
+                        <ActionDialog persons_query={persons_query} is_anyperson_shown={is_anyperson_shown} is_anycard_shown={is_anycard_shown} someoneSelected={this.someoneSelected} />
+                    </React.Suspense>
+                    <React.Suspense fallback={<Spinner size={32} />} >
+                        <CurrentPerson person={person} sendCharacteristicToSocked={this.sendCharacteristicToSocked} />
+                    </React.Suspense>
+                    <React.Suspense fallback={<Spinner size={32} />} >
+                        <OtherPersons other_persons={other_persons} changeNoteHandler={this.changeNoteHandler} hideOtherPerson={this.hideOtherPerson} />
+                    </React.Suspense>
                 </div>
             );
         }
     }
 }
-
-export default Persons;

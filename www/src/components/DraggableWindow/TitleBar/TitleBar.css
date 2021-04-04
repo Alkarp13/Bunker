@@ -1,0 +1,39 @@
+:root {
+    --title-height  : 25;
+    --button-radius : 6;
+    --font-size  : 14;
+    --font-family   : 'Helvetica, sans-serif';
+}
+
+.TitleBar {
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    overflow: hidden;
+    width: 100%;
+    height: 25;
+    font-family: var(--font-family);
+	background: titleBarColor;
+	color: rgba(0, 0, 0, 0.7);
+	font-size: var(--font-size);
+    height: var(--title-height);
+}
+
+.TitleBar_buttons_group {
+    height: var(--title-height);
+	position: 'absolute';
+	right: 0;
+	margin: 0;
+	display: 'flex';
+	align-items: 'center';
+	vertical-align: 'baseline';
+}
+
+.TitleBar_title {
+    width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

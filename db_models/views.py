@@ -51,7 +51,7 @@ class PersonCardView(LoginRequiredMixin, generic.ListView):
                             character=getRandomCharacter(), skill=getRandomSkill(), inventar=getRandomInventar(), \
                             action_1=first_action, action_2=getRandomActionCard(first_action))
         new_person.save()
-        return new_person;
+        return new_person
 
     def get_queryset(self):
         lobby = Lobby.objects.first()

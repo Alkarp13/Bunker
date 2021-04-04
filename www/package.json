@@ -2,11 +2,11 @@
   "name": "www",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./src/components/App.tsx",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack --mode development ./src/index.js",
-    "build": "webpack --mode production ./src/index.js"
+    "dev": "webpack --mode development ./src/components/App.tsx",
+    "build": "webpack --mode production ./src/components/App.tsx"
   },
   "keywords": [],
   "author": "",
@@ -15,7 +15,10 @@
     "@babel/core": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
+    "@types/classnames": "^2.2.11",
+    "@types/react-dom": "^17.0.3",
     "babel-loader": "^8.1.0",
+    "csstype": "^3.0.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "webpack": "^4.43.0",
@@ -24,11 +27,12 @@
   "dependencies": {
     "evergreen-ui": "^4.28.1",
     "html-webpack-plugin": "^4.5.0",
+    "prebuild-install": "^6.0.1",
     "prop-types": "^15.7.2",
     "raw-loader": "^4.0.2",
     "react-countdown-circle-timer": "^2.3.7",
     "react-dnr": "^0.4.0",
-    "react-native": "^0.63.2",
+    "react-native": "^0.64.0",
     "react-router-dom": "^5.2.0"
   }
 }

@@ -1,13 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { CornerDialog, Combobox, Button } from 'evergreen-ui';
+import { PersonsQueryArray } from './PersonsRow';
 
-class KickDialog extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            person_to_kick: ''
-        };
+interface State {
+    person_to_kick: string;
+}
+
+interface Props {
+    is_round_over       : boolean;
+    persons_query       : PersonsQueryArray;
+    kickSelectedPlayer(person_to_kick: string): void;
+}
+
+export default class KickDialog extends React.Component<Props, State> {
+    state: Readonly<State> = {
+        person_to_kick: ''
     }
 
     render() {
@@ -32,11 +39,3 @@ class KickDialog extends React.Component {
         );
     }
 }
-
-KickDialog.propTypes = {
-    persons_query: PropTypes.array.isRequired,
-    is_round_over: PropTypes.bool.isRequired,
-    kickSelectedPlayer: PropTypes.func.isRequired
-}
-
-export default KickDialog;

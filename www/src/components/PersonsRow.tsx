@@ -1,11 +1,27 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Pane, Avatar } from 'evergreen-ui'
-import ReactHintFactory from 'react-hint'
+import { Pane, Avatar } from 'evergreen-ui';
+import { PersonInfo } from './PersonCard';
+//import ReactHintFactory from 'react-hint'
 
-const ReactHint = ReactHintFactory(React)
+const ReactHintFactory = require('react-hint');
+const ReactHint = ReactHintFactory(React);
 
-function PersonsRow(props) {
+interface PersonsQuery {
+    id      : number;
+    username: string;
+}
+
+export type PersonsQueryArray = Array<PersonsQuery>;
+export type PersonInfoArray = Array<PersonInfo>;
+
+interface Props{
+    other_persons   : PersonInfoArray;
+    persons_query   : PersonsQueryArray;
+    current_person  : number;
+    showOtherPerson(e: React.MouseEvent<HTMLElement>): void;
+}
+
+export default function PersonsRow(props: Props) {
     return (
         <Pane
             display="flex"
@@ -22,7 +38,7 @@ function PersonsRow(props) {
                 justifyContent="left"
                 alignItems="center"
                 flexDirection="row">
-                {props.other_persons.map(function (person, index) {
+                {props.other_persons.map((person: PersonInfo, index: number) => {
                     return <div key={index}>
                         <ReactHint autoPosition events />
                         <Avatar
@@ -31,20 +47,11 @@ function PersonsRow(props) {
                             data-rh={person.username + ", " + person.first_name}
                             marginRight={16}
                             isSolid={(props.persons_query[props.current_person - 1].username === person.username) ? true : false}
-                            onClick={(e) => props.showOtherPerson(e)}
+                            onClick={(e: React.MouseEvent<HTMLElement>) => props.showOtherPerson(e)}
                         />
                     </div>
-                }, this)}
+                })}
             </Pane>
         </Pane>
     );
 }
-
-PersonsRow.propTypes = {
-    other_persons: PropTypes.array.isRequired,
-    persons_query: PropTypes.array.isRequired,
-    current_person: PropTypes.number.isRequired,
-    showOtherPerson: PropTypes.func.isRequired
-}
-
-export default PersonsRow;

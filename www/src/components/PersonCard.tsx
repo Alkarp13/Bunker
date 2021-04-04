@@ -1,15 +1,47 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Pane, Strong, Text, TextareaField } from 'evergreen-ui'
 
-function PersonCard(props) {
-    function getIMTString(weight, growth) {
-        if ((typeof weight === 'undefined') || (typeof growth === 'undefined')) {
-            return '';
-        }
+type Male = 'M' | 'F';
 
-        let IMT = weight / ((growth / 100) * (growth / 100));
-        let comment = '';
+export interface UserInfoInterface {
+    username     : string;
+    first_name   : string;
+    last_name    : string;
+    speak_time   : number;
+}
+
+export interface PersonInfoInterface {
+    male?        : Male;
+    age?         : number;
+    growth?      : number;
+    weight?      : number;
+    profession?  : string;
+    life?        : string;
+    phobia?      : string;
+    hobbi?       : string;
+    character?   : string;
+    skill?       : string;
+    inventar?    : string;
+    action_1?    : string;
+    action_2?    : string;
+}
+
+export interface PersonInfo extends UserInfoInterface, PersonInfoInterface {
+    note?         : string;
+    is_shown?     : boolean;
+    shown_fields? : Array<string>;
+}
+
+interface Props {
+    person: PersonInfo;
+    other: boolean;
+    changeNoteHandler(text: string, username: string): void;
+}
+
+export default function PersonCard(props: Props) {
+    function getIMTString(weight: number = 0, growth: number = 0): string {
+        let IMT: number = weight / ((growth / 100) * (growth / 100));
+        let comment: string = '';
 
         if (IMT > 35) {
             comment = ' (you are very obese so you cannot have children)';
@@ -26,7 +58,7 @@ function PersonCard(props) {
         return 'weight - ' + weight + 'kg, growth - ' + growth + 'cm, imt - ' + IMT.toFixed(1) + comment;
     }
 
-    const username = props.person.username;
+    const username: string = props.person.username;
 
     return (
         <Pane paddingLeft={5} paddingRight={5} paddingBottom={5}>
@@ -78,15 +110,7 @@ function PersonCard(props) {
                 <Strong color='#FBE6A2' size={400}>Second action card: </Strong>
                 <Text color='#DDEBF7'>{props.person.action_2}</Text>
             </Pane>
-            {(props.other) ? <TextareaField label="Notes" value={props.person.note} className='black-theme' onChange={(e) => props.changeNoteHandler(e.target.value, username)}/> : null}
+            {(props.other) ? <TextareaField label="Notes" value={props.person.note} className='black-theme' onChange={(e: React.ChangeEvent<HTMLInputElement>) => props.changeNoteHandler(e.currentTarget.value, username)}/> : null}
         </Pane>
     );
 }
-
-PersonCard.propTypes = {
-    person: PropTypes.object.isRequired,
-    other: PropTypes.bool.isRequired,
-    changeNoteHandler: PropTypes.func
-}
-
-export default PersonCard;

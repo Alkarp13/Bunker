@@ -1,15 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Button, CornerDialog } from 'evergreen-ui'
-import Timer from "./Timer";
 
-class CornerAlert extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isPlaying: false
-        };
-    }
+const Timer = React.lazy(() => import('./Timer'));
+
+interface Props {
+    username    : string;
+    duration    : number;
+    isShown     : boolean;
+    passMove()  : void;
+}
+
+interface State {
+    isPlaying: boolean;
+}
+
+export default class CornerAlert extends React.Component<Props, State> {
+    state: Readonly<State> = {
+        isPlaying: false
+    };
+
     render() {
         const { isPlaying } = this.state;
         return (
@@ -19,7 +28,9 @@ class CornerAlert extends React.Component {
                 width={270}
                 hasFooter={false}
                 hasClose={false}>
-                <Timer isPlaying={isPlaying} duration={this.props.duration} />
+                <React.Suspense fallback="Loading..." >
+                    <Timer isPlaying={isPlaying} duration={this.props.duration} />
+                </React.Suspense>
                 <div className='bottom-alert-footer'>
                     <Button intent="success" disabled={isPlaying} onClick={() => this.setState({ isPlaying: true})}>Start speech</Button>
                     <Button appearance="primary" intent="danger" onClick={() => this.props.passMove()}>Stop speech</Button>
@@ -28,12 +39,3 @@ class CornerAlert extends React.Component {
         );
     }
 }
-
-CornerAlert.propTypes = {
-    username: PropTypes.string,
-    duration: PropTypes.number.isRequired,
-    isShown:  PropTypes.bool,
-    passMove: PropTypes.func.isRequired
-}
-
-export default CornerAlert;

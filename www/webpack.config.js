@@ -3,6 +3,9 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+    resolve: {
+        extensions: [".ts", ".tsx", ".js", ".jsx"],
+    },
     entry: {
         main: path.resolve(__dirname, 'src/input.js'),
     },
@@ -31,6 +34,13 @@ module.exports = {
             {
                 test: /(\.tsx?)$/,
                 loader: 'awesome-typescript-loader'
+            },
+            { 
+                test: /\.css$/, 
+                use: [
+                    'style-loader',
+                    'css-loader'
+                ]
             }
         ]
     },

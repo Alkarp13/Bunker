@@ -1,14 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Dialog, Combobox, Button } from 'evergreen-ui';
+import { PersonsQueryArray } from './PersonsRow';
+import { PersonInfo } from './PersonCard';
 
-class ActionDialog extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            anyone_person: '',
-            anyone_card: 'male'
-        };
+interface State {
+    anyone_person   : PersonInfo;
+    anyone_card     : string;
+}
+
+interface Props {
+    persons_query       : PersonsQueryArray;
+    is_anyperson_shown  : boolean;
+    is_anycard_shown    : boolean;
+    someoneSelected(anyone_person: PersonInfo, anyone_card: string): void;
+}
+
+export default class ActionDialog extends React.Component<Props, State> {
+    state: Readonly<State> = {
+        anyone_person: {} as PersonInfo,
+        anyone_card: 'male'
     }
 
     render() {
@@ -41,12 +51,3 @@ class ActionDialog extends React.Component {
         );
     }
 }
-
-ActionDialog.propTypes = {
-    persons_query: PropTypes.array.isRequired,
-    is_anyperson_shown: PropTypes.bool.isRequired,
-    is_anycard_shown: PropTypes.bool.isRequired,
-    someoneSelected: PropTypes.func.isRequired
-}
-
-export default ActionDialog;

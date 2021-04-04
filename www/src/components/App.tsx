@@ -2,40 +2,34 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Spinner } from 'evergreen-ui';
 import ReconnectingWebSocket from 'reconnecting-websocket';
-import Lobby from './Lobby'
-import Persons from './Persons'
-//import BunkerAPI from './API';
+import Lobby, { UsersArray } from './Lobby'
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLoaded: false,
-            lobby_state: '',
-            users: []
-        };
+const Persons = React.lazy(() => import('./Persons'));
+
+interface Props {}
+
+interface State {
+    isLoaded    : boolean;
+    lobby_state : string;
+    users       : UsersArray;
+}
+
+class App extends React.Component<Props, State> {
+    state: Readonly<State> = {
+        isLoaded: false,
+        lobby_state: '',
+        users: []
     }
 
+    connection: ReconnectingWebSocket = new ReconnectingWebSocket(
+        ((window.location.protocol == "https:") ? "wss://" : "ws://") 
+        + window.location.host 
+        + ((window.location.pathname == '/lobby/') ? '/lobby' : '/persons')
+    )
+
     componentDidMount() {
-        var ws_scheme, ws_location;
-        if (window.location.protocol == "https:") {
-            ws_scheme = "wss://";
-        } else {
-            ws_scheme = "ws://"
-        };
-
-        console.log(window.location.pathname);
-        if (window.location.pathname == '/lobby/') {
-            ws_location = '/lobby'
-        } else {
-            ws_location = '/persons'
-        }
-
-        this.connection = new ReconnectingWebSocket(ws_scheme + window.location.host + ws_location);
-        this.connection.onmessage = evt => {
+        this.connection.onmessage = (evt) => {
             let result = JSON.parse(evt.data);
-
-            console.log(result);
 
             if (result.lobby_state) {
                 this.setState({
@@ -54,7 +48,9 @@ class App extends React.Component {
             return <Spinner size={32} />;
         } else if (lobby_state === 'S') {
             return (
-                <Persons />
+                <React.Suspense fallback={<Spinner size={32} />} >
+                    <Persons />
+                </React.Suspense>
             );
         } else if (lobby_state === 'R') {
             return (

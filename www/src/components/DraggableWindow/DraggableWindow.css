@@ -1,0 +1,17 @@
+.DraggableWindow {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+}
+
+.DraggableWindow__content {
+    position: absolute; 
+    width: 100%;
+    top: 25;
+    bottom: 0;
+}

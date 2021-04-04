@@ -1,11 +1,22 @@
 import React, { useRef, useState } from 'react';
-import PropTypes from 'prop-types';
-import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import { CountdownCircleTimer, Colors } from "react-countdown-circle-timer";
 
-const renderTime = ({ remainingTime }) => {
-    const currentTime = useRef(remainingTime);
-    const prevTime = useRef(null);
-    const isNewTimeFirstTick = useRef(false);
+interface TimerProps {
+    duration : number;
+    isPlaying: boolean;
+}
+
+interface TimeProps {
+    remainingTime: number;
+}
+
+const timerColors: Colors = [["#004777", 0.33], ["#F7B801", 0.33], ["#A30000", 1]];
+
+const renderTime = (props: TimeProps) => {
+    const remainingTime = props.remainingTime;
+    const currentTime: React.MutableRefObject<number> = useRef(remainingTime);
+    const prevTime: React.MutableRefObject<number | null> = useRef(null);
+    const isNewTimeFirstTick: React.MutableRefObject<boolean> = useRef(false);
     const [, setOneLastRerender] = useState(0);
 
     if (currentTime.current !== remainingTime) {
@@ -41,22 +52,15 @@ const renderTime = ({ remainingTime }) => {
     );
 };
 
-function Timer(props) {
+export default function Timer(props: TimerProps) {
     return (
         <div className="timer-wrapper">
             <CountdownCircleTimer
                 isPlaying={props.isPlaying}
                 duration={props.duration}
-                colors={[["#004777", 0.33], ["#F7B801", 0.33], ["#A30000"]]}>
+                colors={timerColors}>
                 {renderTime}
             </CountdownCircleTimer>
         </div>
     );
 }
-
-Timer.propTypes = {
-    duration: PropTypes.number.isRequired,
-    isPlaying: PropTypes.bool.isRequired
-}
-
-export default Timer;
