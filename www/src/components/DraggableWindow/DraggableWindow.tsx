@@ -70,13 +70,13 @@ export default class DraggableWindow extends React.Component<Props, State> {
         this.title = React.createRef();
     }
 
-    private mouseMoveListener = () => (e: React.MouseEvent<Element, MouseEvent>) : void => {
+    private mouseMoveListener = () => (e: React.MouseEvent) : void => {
         this.checkCursorStatus(e)
         if (this.clicked !== null) {
           this.forceUpdate()
         }
     }
-    private mouseUpListener = () => (e: React.MouseEvent<Element, MouseEvent>) : void => {
+    private mouseUpListener = () => (e: React.MouseEvent) : void => {
         this.clicked = null
         this.checkCursorStatus(e)
     }
