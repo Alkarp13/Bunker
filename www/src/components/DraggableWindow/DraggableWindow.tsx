@@ -284,7 +284,8 @@ export default class DraggableWindow extends React.Component<Props, State> {
   
         let cursor = this.state.cursor;
         return (
-            <div className={ windowClass('main') }
+            <div ref={ this.frame } 
+                className={ windowClass('main') }
                 style={{ cursor: cursor, ...style, ...windowRect }}
                 onMouseDownCapture={this.mouseDownListener.bind(this)}
                 onMouseMoveCapture={(e) => {
