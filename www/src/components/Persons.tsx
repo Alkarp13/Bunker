@@ -59,7 +59,7 @@ export default class Persons extends React.Component<Props, State> {
 
     componentDidMount() {
         if (/person/i.test(window.location.href)) {
-            this.connection = new ReconnectingWebSocket(((window.location.protocol == "https:") ? "wss://" : "ws://") + window.location.host + '/persons');
+            this.connection = new ReconnectingWebSocket(((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.host + '/persons');
             this.connection.onmessage = evt => {
                 if ((evt.data as string) === 'update_fields') {
                     fetch("/get_all_persons", { method: 'GET' })
