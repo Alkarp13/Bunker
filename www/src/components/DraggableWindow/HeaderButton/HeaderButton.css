@@ -23,11 +23,11 @@
 	background-color: var(--title-bar-color);
 }
 
-.TitleBar-HeaderButton__close .HeaderButton_state_hover {
+.TitleBar-HeaderButton__close.HeaderButton_state_hover {
     background-color: #ec6060;
 }
 
-.TitleBar-HeaderButton__close .HeaderButton_state_down {
+.TitleBar-HeaderButton__close.HeaderButton_state_down {
     background-color: #bc4040;
 }
 
@@ -36,11 +36,11 @@
 	background-color: var(--title-bar-color);
 }
 
-.TitleBar-HeaderButton__minimize .HeaderButton_state_hover {
+.TitleBar-HeaderButton__minimize.HeaderButton_state_hover {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
-.TitleBar-HeaderButton__minimize .HeaderButton_state_down {
+.TitleBar-HeaderButton__minimize.HeaderButton_state_down {
     background-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -49,10 +49,10 @@
 	background-color: var(--title-bar-color);
 }
 
-.TitleBar-HeaderButton__maximize .HeaderButton_state_hover {
+.TitleBar-HeaderButton__maximize.HeaderButton_state_hover {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
-.TitleBar-HeaderButton__maximize .HeaderButton_state_down {
+.TitleBar-HeaderButton__maximize.HeaderButton_state_down {
     background-color: rgba(0, 0, 0, 0.2);
 }
