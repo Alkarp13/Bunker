@@ -58,7 +58,9 @@ export default class Persons extends React.Component<Props, State> {
     private connection: ReconnectingWebSocket = {} as ReconnectingWebSocket;
 
     componentDidMount() {
+        console.log(window.location.href)
         if (/person/i.test(window.location.href)) {
+            console.log('tyt???', (((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.host + '/persons'))
             this.connection = new ReconnectingWebSocket((((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.host + '/persons'));
             this.connection.onmessage = evt => {
                 if (evt.data === 'update_fields') {
