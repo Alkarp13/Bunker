@@ -46,6 +46,7 @@ class App extends React.Component<Props, State> {
         if (!isLoaded) {
             return <Spinner size={32} />;
         } else if (lobby_state === 'S') {
+            this.connection.close();
             return (
                 <React.Suspense fallback={<Spinner size={32} />} >
                     <Persons />
