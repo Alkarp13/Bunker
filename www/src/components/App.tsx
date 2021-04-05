@@ -21,9 +21,9 @@ class App extends React.Component<Props, State> {
         users: []
     }
 
-    private connection: ReconnectingWebSocket = new ReconnectingWebSocket(
-        ((window.location.protocol == "https:") ? "wss://" : "ws://") 
-        + window.location.host + '/lobby/'
+    public connection: ReconnectingWebSocket = new ReconnectingWebSocket(
+        (((window.location.protocol == "https:") ? "wss://" : "ws://") 
+        + window.location.host + '/lobby/'), undefined, {debug: true}
     );
 
     componentDidMount() {
