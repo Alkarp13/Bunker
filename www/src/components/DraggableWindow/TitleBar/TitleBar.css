@@ -1,8 +1,9 @@
 :root {
-    --title-height  : 25;
+    --title-height  : 25px;
     --button-radius : 6;
-    --font-size  : 14;
-    --font-family   : 'Helvetica, sans-serif';
+    --font-size  : 14px;
+    --font-family   : Helvetica, sans-serif;
+    --title-bar-color: #0095ff;
 }
 
 .TitleBar {
@@ -12,9 +13,9 @@
     -moz-user-select: none;
     overflow: hidden;
     width: 100%;
-    height: 25;
+    height: 25px;
     font-family: var(--font-family);
-	background: titleBarColor;
+	background: var(--title-bar-color);
 	color: rgba(0, 0, 0, 0.7);
 	font-size: var(--font-size);
     height: var(--title-height);
