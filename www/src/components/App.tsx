@@ -26,8 +26,7 @@ class App extends React.Component<Props, State> {
     componentDidMount() {
         this.connection = new ReconnectingWebSocket(
             ((window.location.protocol == "https:") ? "wss://" : "ws://") 
-            + window.location.host 
-            + ((window.location.pathname == '/lobby/') ? '/lobby' : '/persons')
+            + window.location.host + '/lobby/'
         );
         this.connection.onmessage = (evt) => {
             let result = JSON.parse(evt.data);
@@ -48,7 +47,6 @@ class App extends React.Component<Props, State> {
         if (!isLoaded) {
             return <Spinner size={32} />;
         } else if (lobby_state === 'S') {
-            this.connection.close();
             return (
                 <React.Suspense fallback={<Spinner size={32} />} >
                     <Persons />
