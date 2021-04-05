@@ -74,8 +74,8 @@ export default class DraggableWindow extends React.Component<Props, State> {
         this.mouseUpListener = this.mouseUpListener.bind(this);
     }
 
-    private frame: React.RefObject<HTMLInputElement>;
-    private title: React.RefObject<HTMLInputElement>;
+    private frame: React.RefObject<HTMLDivElement>;
+    private title: React.RefObject<HTMLDivElement>;
 
     public static defaultProps = {
         minWidth: 20,
@@ -163,6 +163,8 @@ export default class DraggableWindow extends React.Component<Props, State> {
     }
 
     private getTitleRect(): ClientRect {
+        console.log(this.title);
+        console.log(this.title.current);
         return (this.title.current) ? this.title.current!.getBoundingClientRect() : {} as ClientRect;
     }
 
@@ -196,7 +198,6 @@ export default class DraggableWindow extends React.Component<Props, State> {
         }
         else {
             const titleBounding = this.getTitleRect();
-            console.log(this.cursorX, this.cursorY, titleBounding.left, titleBounding.right, titleBounding.top, titleBounding.bottom);
             if (this.cursorX > titleBounding.left && this.cursorX < titleBounding.right &&
                 this.cursorY > titleBounding.top && this.cursorY < titleBounding.bottom) {
                 cursor = 'move';
