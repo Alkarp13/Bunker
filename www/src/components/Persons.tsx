@@ -55,10 +55,11 @@ export default class Persons extends React.Component<Props, State> {
     }
 
     selected_field: string = '';
-    connection: ReconnectingWebSocket = new ReconnectingWebSocket(((window.location.protocol == "https:") ? "wss://" : "ws://") + window.location.host + '/persons');
+    private connection: ReconnectingWebSocket = {} as ReconnectingWebSocket;
 
     componentDidMount() {
         if (/person/i.test(window.location.href)) {
+            this.connection = new ReconnectingWebSocket(((window.location.protocol == "https:") ? "wss://" : "ws://") + window.location.host + '/persons');
             this.connection.onmessage = evt => {
                 if (evt.data === 'update_fields') {
                     fetch("/get_all_persons", { method: 'GET' })
