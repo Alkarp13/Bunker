@@ -35,7 +35,7 @@ export default function HeaderButton(props: ButtonInterface) {
 			onMouseDown={ () => setDown(true) }
 			onMouseUp={ () => setDown(false) }
 			onClick={ (typeof onAction === "function") ? onAction : () => {} }
-			style={ {cursor: cursor} }>
+			style={ {cursor: "pointer"} }>
 			{children}
 		</button>
 	)
