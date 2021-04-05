@@ -160,11 +160,11 @@ export default class DraggableWindow extends React.Component<Props, State> {
     }
 
     private getFrameRect(): ClientRect {
-        return this.frame.current!.getBoundingClientRect();
+        return this.frame && this.frame.current!.getBoundingClientRect();
     }
 
     private getTitleRect() {
-        return this.title.current!.getBoundingClientRect();
+        return this.title && this.title.current!.getBoundingClientRect();
     }
 
     checkCursorStatus(e: React.MouseEvent){
@@ -284,7 +284,7 @@ export default class DraggableWindow extends React.Component<Props, State> {
   
         let cursor = this.state.cursor;
         return (
-            <div ref={ this.frame } 
+            <div ref={this.frame} 
                 className={ windowClass('main') }
                 style={{ cursor: cursor, ...style, ...windowRect }}
                 onMouseDownCapture={this.mouseDownListener.bind(this)}
