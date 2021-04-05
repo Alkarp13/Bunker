@@ -2,7 +2,7 @@ import React from "react";
 import HeaderButton, { ButtonInterface } from "../HeaderButton/HeaderButton";
 
 const css = require('./TitleBar.css');
-let classNames = require('classnames');
+let classNames = require('classnames/bind');
 
 export interface ButtonFunctions {
     onClose?(): any;

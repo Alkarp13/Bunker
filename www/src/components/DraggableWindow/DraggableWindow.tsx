@@ -3,7 +3,7 @@ import TitleBar, { ButtonFunctions } from "./TitleBar/TitleBar";
 import CSS from 'csstype';
 
 const css = require('./DraggableWindow.css');
-let classNames = require('classnames');
+let classNames = require('classnames/bind');
 
 interface Props extends ButtonFunctions {
     style: CSS.Properties;
@@ -160,11 +160,11 @@ export default class DraggableWindow extends React.Component<Props, State> {
     }
 
     private getFrameRect(): ClientRect {
-        return this.frame && this.frame.current!.getBoundingClientRect();
+        return (this.frame.current) ? this.frame.current!.getBoundingClientRect() : {} as ClientRect;
     }
 
-    private getTitleRect() {
-        return this.title && this.title.current!.getBoundingClientRect();
+    private getTitleRect(): ClientRect {
+        return (this.title.current) ? this.title.current!.getBoundingClientRect() : {} as ClientRect;
     }
 
     checkCursorStatus(e: React.MouseEvent){
