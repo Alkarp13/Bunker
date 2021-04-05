@@ -95,6 +95,7 @@ export default class DraggableWindow extends React.Component<Props, State> {
     frameRect: FrameRect = {} as FrameRect;
     prevState: FrameRect = {} as FrameRect;
     hitEdges : HitEdges = {} as HitEdges;
+    windowRect: WindowRect = {} as WindowRect;
 
     componentDidMount() {
         const { initialWidth, initialHeight, initialTop, initialLeft, attachedTo } = this.props;
@@ -235,7 +236,6 @@ export default class DraggableWindow extends React.Component<Props, State> {
 
     render() {
         const { title, onClose, onMaximize, onMinimize, minWidth, minHeight, children} = this.props;
-        let windowRect: WindowRect = {} as WindowRect;
   
         if (this.clicked) {
             let hits = this.hitEdges;
@@ -244,12 +244,12 @@ export default class DraggableWindow extends React.Component<Props, State> {
             if (hits.top || hits.bottom || hits.left || hits.right) {
                 if (hits.right) {
                     this.frameRect.width = Math.max(this.cursorX - boundingBox.left, minWidth);
-                    windowRect.width = this.frameRect.width + 'px';
+                    this.windowRect.width = this.frameRect.width + 'px';
                 }
 
                 if (hits.bottom) {
                     this.frameRect.height = Math.max(this.cursorY - boundingBox.top, minHeight);
-                    windowRect.height = this.frameRect.height + 'px';
+                    this.windowRect.height = this.frameRect.height + 'px';
                 }
     
                 if (hits.left) {
@@ -257,8 +257,8 @@ export default class DraggableWindow extends React.Component<Props, State> {
                     if (currentWidth > minWidth) {
                         this.frameRect.width = currentWidth;
                         this.frameRect.left = this.clicked.frameLeft + this.cursorX - this.clicked.x;
-                        windowRect.width = currentWidth + 'px';
-                        windowRect.left = this.frameRect.left + 'px';
+                        this.windowRect.width = currentWidth + 'px';
+                        this.windowRect.left = this.frameRect.left + 'px';
                     }
                 }
     
@@ -267,16 +267,16 @@ export default class DraggableWindow extends React.Component<Props, State> {
                     if (currentHeight > minHeight) {
                         this.frameRect.height = currentHeight;
                         this.frameRect.top = this.clicked.frameTop + this.cursorY - this.clicked.y;
-                        windowRect.height = currentHeight + 'px';
-                        windowRect.top = this.frameRect.top + 'px';
+                        this.windowRect.height = currentHeight + 'px';
+                        this.windowRect.top = this.frameRect.top + 'px';
                     }
                 }
             }
             else if (this.state.cursor === 'move'){
                 this.frameRect.top = this.clicked.frameTop + this.cursorY - this.clicked.y;
                 this.frameRect.left = this.clicked.frameLeft + this.cursorX - this.clicked.x;
-                windowRect.top = this.frameRect.top + 'px';
-                windowRect.left = this.frameRect.left + 'px';
+                this.windowRect.top = this.frameRect.top + 'px';
+                this.windowRect.left = this.frameRect.left + 'px';
             }
         }
 
@@ -286,7 +286,7 @@ export default class DraggableWindow extends React.Component<Props, State> {
         return (
             <div ref={this.frame} 
                 className={ windowClass('main') }
-                style={{ cursor: cursor, ...windowRect }}
+                style={{ cursor: cursor, ...this.windowRect }}
                 onMouseDownCapture={this.mouseDownListener.bind(this)}
                 onMouseMoveCapture={(e) => {
                     if (this.clicked !== null) {
