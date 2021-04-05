@@ -17,6 +17,6 @@
 .DraggableWindow__content {
     position: absolute; 
     width: 100%;
-    top: 25;
+    top: 25px;
     bottom: 0;
 }

@@ -40,8 +40,8 @@ interface FrameRect {
 
 interface WindowRect {
     height  : string;
-    left    : number;
-    top     : number;
+    left    : string;
+    top     : string;
     width   : string;
 }
 
@@ -258,7 +258,7 @@ export default class DraggableWindow extends React.Component<Props, State> {
                         this.frameRect.width = currentWidth;
                         this.frameRect.left = this.clicked.frameLeft + this.cursorX - this.clicked.x;
                         windowRect.width = currentWidth + 'px';
-                        windowRect.left = this.frameRect.left;
+                        windowRect.left = this.frameRect.left + 'px';
                     }
                 }
     
@@ -268,15 +268,15 @@ export default class DraggableWindow extends React.Component<Props, State> {
                         this.frameRect.height = currentHeight;
                         this.frameRect.top = this.clicked.frameTop + this.cursorY - this.clicked.y;
                         windowRect.height = currentHeight + 'px';
-                        windowRect.top = this.frameRect.top;
+                        windowRect.top = this.frameRect.top + 'px';
                     }
                 }
             }
             else if (this.state.cursor === 'move'){
                 this.frameRect.top = this.clicked.frameTop + this.cursorY - this.clicked.y;
                 this.frameRect.left = this.clicked.frameLeft + this.cursorX - this.clicked.x;
-                windowRect.top = this.frameRect.top;
-                windowRect.left = this.frameRect.left;
+                windowRect.top = this.frameRect.top + 'px';
+                windowRect.left = this.frameRect.left + 'px';
             }
         }
   
