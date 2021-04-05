@@ -1,16 +1,16 @@
 :root {
-    --title-height   : 25;
+    --title-height   : 25px;
     --title-bar-color: #0095ff;
     --button-radius  : 6;
-    --font-size-14   : 14;
+    --font-size-14   : 14px;
     --font-family    : Helvetica, sans-serif;
 }
 
 .TitleBar-HeaderButton {
     padding: 0;
 	margin: 0;
-	width: 25;
-	height: 25;
+	width: 25px;
+	height: 25px;
 	outline: none;
 	border: none;
 	text-align: center;
