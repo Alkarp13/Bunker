@@ -21,13 +21,12 @@ class App extends React.Component<Props, State> {
         users: []
     }
 
-    private connection: ReconnectingWebSocket = {} as ReconnectingWebSocket;
+    private connection: ReconnectingWebSocket = new ReconnectingWebSocket(
+        ((window.location.protocol == "https:") ? "wss://" : "ws://") 
+        + window.location.host + '/lobby/'
+    );
 
     componentDidMount() {
-        this.connection = new ReconnectingWebSocket(
-            ((window.location.protocol == "https:") ? "wss://" : "ws://") 
-            + window.location.host + '/lobby/'
-        );
         this.connection.onmessage = (evt) => {
             let result = JSON.parse(evt.data);
 
