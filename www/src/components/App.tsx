@@ -23,7 +23,7 @@ class App extends React.Component<Props, State> {
 
     public connection: ReconnectingWebSocket = new ReconnectingWebSocket(
         (((window.location.protocol === "https:") ? "wss://" : "ws://") 
-        + window.location.host + '/lobby/')
+        + window.location.host + '/lobby')
     );
 
     componentDidMount() {
