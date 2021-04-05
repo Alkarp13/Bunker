@@ -21,13 +21,15 @@ class App extends React.Component<Props, State> {
         users: []
     }
 
-    public connection: ReconnectingWebSocket = new ReconnectingWebSocket(
-        (((window.location.protocol === "https:") ? "wss://" : "ws://") 
-        + window.location.host + '/lobby')
-    );
+    public connection: ReconnectingWebSocket = {} as ReconnectingWebSocket;
 
     componentDidMount() {
-        this.connection.onmessage = (evt) => {
+        if (/lobby/i.test(window.location.href)) {
+            this.connection = new ReconnectingWebSocket(
+                (((window.location.protocol === "https:") ? "wss://" : "ws://") 
+                + window.location.host + '/lobby')
+            );
+            this.connection.onmessage = (evt) => {
             let result = JSON.parse(evt.data);
 
             if (result.lobby_state) {
@@ -39,6 +41,8 @@ class App extends React.Component<Props, State> {
             }
         };
         this.connection.send(JSON.stringify({ update_lobby: true }));
+        }
+        
     }
 
     render() {
