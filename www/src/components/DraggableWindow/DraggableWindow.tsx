@@ -163,8 +163,6 @@ export default class DraggableWindow extends React.Component<Props, State> {
     }
 
     private getTitleRect(): ClientRect {
-        console.log(this.title);
-        console.log(this.title.current);
         return (this.title.current) ? this.title.current!.getBoundingClientRect() : {} as ClientRect;
     }
 
@@ -281,8 +279,6 @@ export default class DraggableWindow extends React.Component<Props, State> {
                 this.windowRect.left = this.frameRect.left + 'px';
             }
         }
-
-        console.log('RENDER');
   
         let cursor = this.state.cursor;
         return (
