@@ -60,8 +60,8 @@ export default class Persons extends React.Component<Props, State> {
     componentDidMount() {
         console.log(window.location.href)
         if (/person/i.test(window.location.href)) {
-            console.log('tyt???', (((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.host + '/persons'))
-            this.connection = new ReconnectingWebSocket((((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.host + '/persons'));
+            console.log('tyt???', (((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.host + '/person'))
+            this.connection = new ReconnectingWebSocket((((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.host + '/person'));
             this.connection.onmessage = evt => {
                 if (evt.data === 'update_fields') {
                     fetch("/get_all_persons", { method: 'GET' })
@@ -119,7 +119,7 @@ export default class Persons extends React.Component<Props, State> {
                     }
                 )
         } else {
-            window.location.href = '/person/';
+            window.location.href = '/person';
         }
     }
 
