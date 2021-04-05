@@ -30,7 +30,6 @@ class App extends React.Component<Props, State> {
             + ((window.location.pathname == '/lobby/') ? '/lobby' : '/persons')
         );
         this.connection.onmessage = (evt) => {
-            console.log(evt.data);
             let result = JSON.parse(evt.data);
 
             if (result.lobby_state) {
