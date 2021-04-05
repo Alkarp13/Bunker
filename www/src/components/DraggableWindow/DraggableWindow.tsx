@@ -196,6 +196,7 @@ export default class DraggableWindow extends React.Component<Props, State> {
         }
         else {
             const titleBounding = this.getTitleRect();
+            console.log(this.cursorX, this.cursorY, titleBounding.left, titleBounding.right, titleBounding.top, titleBounding.bottom);
             if (this.cursorX > titleBounding.left && this.cursorX < titleBounding.right &&
                 this.cursorY > titleBounding.top && this.cursorY < titleBounding.bottom) {
                 cursor = 'move';
