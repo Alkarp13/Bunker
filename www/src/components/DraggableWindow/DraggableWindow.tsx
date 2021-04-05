@@ -160,6 +160,7 @@ export default class DraggableWindow extends React.Component<Props, State> {
     }
 
     private getFrameRect(): ClientRect {
+        console.log('frame', this.frame.current)
         return (this.frame.current) ? this.frame.current!.getBoundingClientRect() : {} as ClientRect;
     }
 
@@ -169,6 +170,7 @@ export default class DraggableWindow extends React.Component<Props, State> {
 
     checkCursorStatus(e: React.MouseEvent){
         const boundingBox = this.getFrameRect();
+        console.log(boundingBox);
         this.cursorX = e.clientX;
         this.cursorY = e.clientY;
   
