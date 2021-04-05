@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom';
 import { Spinner } from 'evergreen-ui';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 import Lobby, { UsersArray } from './Lobby'
-
-const Persons = React.lazy(() => import('./Persons'));
+import Persons from './Persons';
 
 interface Props {}
 
@@ -52,9 +51,7 @@ class App extends React.Component<Props, State> {
         } else if (lobby_state === 'S') {
             this.connection.close();
             return (
-                <React.Suspense fallback={<Spinner size={32} />} >
-                    <Persons />
-                </React.Suspense>
+                <Persons />
             );
         } else if (lobby_state === 'R') {
             return (
