@@ -279,6 +279,8 @@ export default class DraggableWindow extends React.Component<Props, State> {
                 windowRect.left = this.frameRect.left + 'px';
             }
         }
+
+        console.log('RENDER');
   
         let cursor = this.state.cursor;
         return (
