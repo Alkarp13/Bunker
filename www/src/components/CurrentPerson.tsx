@@ -4,14 +4,6 @@ import PersonCard, { PersonInfo } from './PersonCard';
 
 const DraggableWindow = React.lazy(() => import('./DraggableWindow/DraggableWindow'));
 
-const paneStyle = {
-    width: '300px',
-    height: '550px',
-    top: '30%',
-    left: '50%',
-    backgroundColor: 'rgba(0, 0, 0, 0.8)'
-};
-
 interface Props {
     person: PersonInfo;
     sendCharacteristicToSocked(selected_field: string): void;
@@ -43,7 +35,7 @@ export default class CurrentPerson extends React.Component<Props, State> {
     render() {
         return (
             <React.Suspense fallback={<Spinner size={32} />} >
-                <DraggableWindow title={ 'My person card' } style={paneStyle}>
+                <DraggableWindow title={ 'My person card' } >
                     <PersonCard person={this.props.person} other={false} changeNoteHandler={(text: string, username: string) => {}}/>
                     <Pane
                         display="flex"

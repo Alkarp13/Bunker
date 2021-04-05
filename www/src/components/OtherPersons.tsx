@@ -4,14 +4,6 @@ import PersonCard, { PersonInfo } from './PersonCard';
 
 const DraggableWindow = React.lazy(() => import('./DraggableWindow/DraggableWindow'));
 
-const paneStyle = {
-    width: '300px',
-    height: '550px',
-    top: '30%',
-    left: '50%',
-    backgroundColor: 'rgba(0, 0, 0, 0.8)'
-};
-
 interface Props {
     other_persons: Array<PersonInfo>;
     changeNoteHandler(text: string, username: string): void;
@@ -28,7 +20,7 @@ export default class OtherPersons extends React.Component<Props> {
                         return (
                             <React.Suspense fallback={<Spinner size={32} />} >
                                 <DraggableWindow
-                                    key={index} title={other.first_name + ' ' + other.last_name} style={paneStyle}
+                                    key={index} title={other.first_name + ' ' + other.last_name}
                                     onClose={ () => this.props.hideOtherPerson(other.username) }
                                     onMinimize={ () => this.props.hideOtherPerson(other.username) }
                                 >

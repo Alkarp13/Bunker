@@ -1,12 +1,10 @@
 import React from "react";
 import TitleBar, { ButtonFunctions } from "./TitleBar/TitleBar";
-import CSS from 'csstype';
 
 const css = require('./DraggableWindow.css');
 let classNames = require('classnames/bind');
 
 interface Props extends ButtonFunctions {
-    style: CSS.Properties;
     title: string;
     minWidth: number;
     minHeight: number;
@@ -160,7 +158,6 @@ export default class DraggableWindow extends React.Component<Props, State> {
     }
 
     private getFrameRect(): ClientRect {
-        console.log('frame', this.frame.current)
         return (this.frame.current) ? this.frame.current!.getBoundingClientRect() : {} as ClientRect;
     }
 
@@ -170,7 +167,7 @@ export default class DraggableWindow extends React.Component<Props, State> {
 
     checkCursorStatus(e: React.MouseEvent){
         const boundingBox = this.getFrameRect();
-        console.log(boundingBox);
+
         this.cursorX = e.clientX;
         this.cursorY = e.clientY;
   
@@ -214,7 +211,6 @@ export default class DraggableWindow extends React.Component<Props, State> {
         if (cursor !== this.state.cursor){
             this.setState({cursor:cursor})
         }
-  
     }
 
     mouseDownListener(e: React.MouseEvent) {
@@ -238,7 +234,7 @@ export default class DraggableWindow extends React.Component<Props, State> {
     }
 
     render() {
-        const { style, title, onClose, onMaximize, onMinimize, minWidth, minHeight, children} = this.props;
+        const { title, onClose, onMaximize, onMinimize, minWidth, minHeight, children} = this.props;
         let windowRect: WindowRect = {} as WindowRect;
   
         if (this.clicked) {
@@ -288,7 +284,7 @@ export default class DraggableWindow extends React.Component<Props, State> {
         return (
             <div ref={this.frame} 
                 className={ windowClass('main') }
-                style={{ cursor: cursor, ...style, ...windowRect }}
+                style={{ cursor: cursor, ...windowRect }}
                 onMouseDownCapture={this.mouseDownListener.bind(this)}
                 onMouseMoveCapture={(e) => {
                     if (this.clicked !== null) {
