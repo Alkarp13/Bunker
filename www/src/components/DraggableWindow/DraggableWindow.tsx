@@ -70,25 +70,25 @@ export default class DraggableWindow extends React.Component<Props, State> {
         this.title = React.createRef();
     }
 
-    private mouseMoveListener: EventListener = this.onMove.bind(this);
-    private mouseUpListener: EventListener = this.onUp.bind(this);
-
-    onMove() {
-        return (e: React.MouseEvent) : void => {
-            this.checkCursorStatus(e);
-            console.log(this);
-            if (this.clicked !== null) {
-                this.forceUpdate();
-            }
+    private mouseMoveListener = (e: MouseEvent) => {
+        this.checkCursorStatus(e);
+        if (this.clicked !== null) {
+            this.forceUpdate();
         }
     }
 
-    onUp() {
-        return (e: React.MouseEvent) : void => {
-            this.clicked = null;
-            this.checkCursorStatus(e);
-        }
+    private mouseUpListener = (e: MouseEvent) => {
+        this.clicked = null;
+        this.checkCursorStatus(e);
     }
+
+    // private mouseDownListener = (e: MouseEvent) => {
+    //     this.allowTransition = false;
+    //     this.checkCursorStatus(e);
+    //     const boundingBox = this.getFrameRect();
+    //     this.clicked = {x: e.clientX, y: e.clientY, boundingBox: boundingBox,
+    //                     frameTop: this.frame.current!.offsetTop, frameLeft: this.frame.current!.offsetLeft};
+    // }
 
     private frame: React.RefObject<HTMLDivElement>;
     private title: React.RefObject<HTMLDivElement>;
@@ -126,8 +126,8 @@ export default class DraggableWindow extends React.Component<Props, State> {
     }
 
     componentWillUnmount() {
-      window.removeEventListener('mousemove', this.mouseMoveListener);
-      window.removeEventListener('mouseup', this.mouseUpListener);
+        window.removeEventListener('mousemove', this.mouseMoveListener);
+        window.removeEventListener('mouseup', this.mouseUpListener);
     }
 
     private transform(state: FrameRect, allowTransition: boolean = true) {
@@ -181,7 +181,7 @@ export default class DraggableWindow extends React.Component<Props, State> {
         return (this.title.current) ? this.title.current!.getBoundingClientRect() : {} as ClientRect;
     }
 
-    checkCursorStatus(e: React.MouseEvent){
+    checkCursorStatus(e: MouseEvent){
         const boundingBox = this.getFrameRect();
 
         this.cursorX = e.clientX;
@@ -227,14 +227,6 @@ export default class DraggableWindow extends React.Component<Props, State> {
         if (cursor !== this.state.cursor){
             this.setState({cursor:cursor})
         }
-    }
-
-    mouseDownListener(e: React.MouseEvent) {
-        this.allowTransition = false;
-        this.checkCursorStatus(e);
-        const boundingBox = this.getFrameRect();
-        this.clicked = {x: e.clientX, y: e.clientY, boundingBox: boundingBox,
-                        frameTop: this.frame.current!.offsetTop, frameLeft: this.frame.current!.offsetLeft};
     }
 
     render() {
@@ -288,7 +280,13 @@ export default class DraggableWindow extends React.Component<Props, State> {
             <div ref={this.frame} 
                 className={ windowClass('main') }
                 style={{ cursor: cursor, ...this.windowRect }}
-                onMouseDownCapture={this.mouseDownListener.bind(this)}
+                onMouseDownCapture={(e: any) => {
+                    this.allowTransition = false;
+                    this.checkCursorStatus(e);
+                    const boundingBox = this.getFrameRect();
+                    this.clicked = {x: e.clientX, y: e.clientY, boundingBox: boundingBox,
+                                    frameTop: this.frame.current!.offsetTop, frameLeft: this.frame.current!.offsetLeft};
+                }}
                 onMouseMoveCapture={(e) => {
                     if (this.clicked !== null) {
                         e.preventDefault()
