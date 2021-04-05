@@ -13,7 +13,6 @@ interface Props extends ButtonFunctions {
     initialHeight: number;
     initialTop: number;
     initialLeft: number;
-    attachedTo: any;
     children: any;
 }
 
@@ -71,9 +70,17 @@ export default class DraggableWindow extends React.Component<Props, State> {
         this.title = React.createRef();
     }
 
-    private mouseMoveListener = this.onMove.bind(this);
-    private mouseUpListener = this.onUp.bind(this);
-    
+    private mouseMoveListener = () => (e: React.MouseEvent<Element, MouseEvent>) : void => {
+        this.checkCursorStatus(e)
+        if (this.clicked !== null) {
+          this.forceUpdate()
+        }
+    }
+    private mouseUpListener = () => (e: React.MouseEvent<Element, MouseEvent>) : void => {
+        this.clicked = null
+        this.checkCursorStatus(e)
+    }
+
     private frame: React.RefObject<HTMLDivElement>;
     private title: React.RefObject<HTMLDivElement>;
 
@@ -84,8 +91,7 @@ export default class DraggableWindow extends React.Component<Props, State> {
         initialWidth: null,
         initialHeight: null,
         initialTop: null,
-        initialLeft: null,
-        attachedTo: window,
+        initialLeft: null
     }
 
     cursorX: number = 0;
@@ -98,7 +104,7 @@ export default class DraggableWindow extends React.Component<Props, State> {
     windowRect: WindowRect = {} as WindowRect;
 
     componentDidMount() {
-        const { initialWidth, initialHeight, initialTop, initialLeft, attachedTo } = this.props;
+        const { initialWidth, initialHeight, initialTop, initialLeft } = this.props;
 
         const boundingBox = this.getFrameRect();
         this.frameRect.width = initialWidth || boundingBox.width;
@@ -106,13 +112,13 @@ export default class DraggableWindow extends React.Component<Props, State> {
         this.frameRect.top = initialTop || this.frame.current!.offsetTop;
         this.frameRect.left = initialLeft || this.frame.current!.offsetLeft;
 
-        attachedTo.addEventListener('mousemove', this.mouseMoveListener);
-        attachedTo.addEventListener('mouseup', this.mouseUpListener);
+        window.addEventListener('mousemove', this.mouseMoveListener);
+        window.addEventListener('mouseup', this.mouseUpListener);
     }
 
     componentWillUnmount() {
-      this.props.attachedTo.removeEventListener('mousemove', this.mouseMoveListener);
-      this.props.attachedTo.removeEventListener('mouseup', this.mouseUpListener);
+      window.removeEventListener('mousemove', this.mouseMoveListener);
+      window.removeEventListener('mouseup', this.mouseUpListener);
     }
 
     private transform(state: FrameRect, allowTransition: boolean = true) {
@@ -155,7 +161,7 @@ export default class DraggableWindow extends React.Component<Props, State> {
     }
     
     maximize(allowTransition = true) {
-        this.transform({top: 0, left: 0, width: this.props.attachedTo.innerWidth, height: this.props.attachedTo.innerHeight}, allowTransition)
+        this.transform({top: 0, left: 0, width: window.innerWidth, height: window.innerHeight}, allowTransition)
     }
 
     private getFrameRect(): ClientRect {
@@ -220,18 +226,6 @@ export default class DraggableWindow extends React.Component<Props, State> {
         const boundingBox = this.getFrameRect();
         this.clicked = {x: e.clientX, y: e.clientY, boundingBox: boundingBox,
                         frameTop: this.frame.current!.offsetTop, frameLeft: this.frame.current!.offsetLeft};
-    }
-
-    onUp(e: React.MouseEvent) {
-        this.clicked = null
-        this.checkCursorStatus(e)
-    }
-
-    onMove(e: React.MouseEvent) {
-        this.checkCursorStatus(e)
-        if (this.clicked !== null) {
-          this.forceUpdate()
-        }
     }
 
     render() {
