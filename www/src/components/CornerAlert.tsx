@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, CornerDialog } from 'evergreen-ui'
+import { CornerDialog } from 'evergreen-ui';
+import Button from './Button/Button';
 
 const Timer = React.lazy(() => import('./Timer'));
 

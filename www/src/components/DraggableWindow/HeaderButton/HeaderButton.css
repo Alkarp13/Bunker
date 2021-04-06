@@ -11,8 +11,8 @@
 	margin: 0;
 	width: 25px;
 	height: 25px;
-	outline: none;
-	border: none;
+	outline: none !important;
+	border: none !important;
 	text-align: center;
 }
 

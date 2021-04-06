@@ -1,6 +1,7 @@
 import React from 'react';
-import { Pane, SelectField, Button, Spinner } from 'evergreen-ui';
+import { Pane, SelectField, Spinner } from 'evergreen-ui';
 import PersonCard, { PersonInfo } from './PersonCard';
+import Button from './Button/Button';
 
 const DraggableWindow = React.lazy(() => import('./DraggableWindow/DraggableWindow'));
 

@@ -82,14 +82,6 @@ export default class DraggableWindow extends React.Component<Props, State> {
         this.checkCursorStatus(e);
     }
 
-    // private mouseDownListener = (e: MouseEvent) => {
-    //     this.allowTransition = false;
-    //     this.checkCursorStatus(e);
-    //     const boundingBox = this.getFrameRect();
-    //     this.clicked = {x: e.clientX, y: e.clientY, boundingBox: boundingBox,
-    //                     frameTop: this.frame.current!.offsetTop, frameLeft: this.frame.current!.offsetLeft};
-    // }
-
     private frame: React.RefObject<HTMLDivElement>;
     private title: React.RefObject<HTMLDivElement>;
 

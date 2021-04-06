@@ -1,6 +1,7 @@
 import React from 'react';
-import { Avatar, Pane, Button } from 'evergreen-ui';
+import { Avatar, Pane } from 'evergreen-ui';
 import ReconnectingWebSocket from 'reconnecting-websocket';
+import Button from './Button/Button';
 
 interface Users {
     username     : string;
