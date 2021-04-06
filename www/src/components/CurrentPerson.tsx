@@ -1,7 +1,8 @@
 import React from 'react';
-import { Pane, SelectField, Spinner } from 'evergreen-ui';
+import { Pane, SelectField } from 'evergreen-ui';
 import PersonCard, { PersonInfo } from './PersonCard';
-import Button from './Button/Button';
+import Button from './Primitives/Button/Button';
+import Spinner from './Primitives/Spinner/Spinner';
 
 const DraggableWindow = React.lazy(() => import('./DraggableWindow/DraggableWindow'));
 
@@ -68,7 +69,7 @@ export default class CurrentPerson extends React.Component<Props, State> {
                             marginTop={34}
                             marginLeft={10}
                             intent="success"
-                            className='black-theme'
+                            appearance="dark"
                             onClick={() => this.props.sendCharacteristicToSocked(this.state.selected_field)}>
                             Show
                         </Button>

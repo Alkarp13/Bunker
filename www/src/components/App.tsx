@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Spinner } from 'evergreen-ui';
+import Spinner from './Primitives/Spinner/Spinner';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 import Lobby, { UsersArray } from './Lobby'
 

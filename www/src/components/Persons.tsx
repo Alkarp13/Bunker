@@ -1,5 +1,5 @@
 import React from 'react';
-import { Spinner } from 'evergreen-ui'
+import Spinner from './Primitives/Spinner/Spinner';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 import Legend, { LegendInterface, LegendInfo } from './Legend';
 import PersonsRow, { PersonsQueryArray } from './PersonsRow';

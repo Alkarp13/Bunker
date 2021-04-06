@@ -2,7 +2,7 @@ import React from 'react';
 import { Dialog, Combobox } from 'evergreen-ui';
 import { PersonsQueryArray } from './PersonsRow';
 import { PersonInfo } from './PersonCard';
-import Button from './Button/Button'
+import Button from './Primitives/Button/Button'
 
 interface State {
     anyone_person   : PersonInfo;

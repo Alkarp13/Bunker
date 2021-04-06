@@ -1,5 +1,5 @@
 import React from 'react';
-import { Spinner } from 'evergreen-ui';
+import Spinner from './Primitives/Spinner/Spinner';
 import PersonCard, { PersonInfo } from './PersonCard';
 
 const DraggableWindow = React.lazy(() => import('./DraggableWindow/DraggableWindow'));

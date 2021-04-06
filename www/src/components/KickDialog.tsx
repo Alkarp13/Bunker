@@ -1,7 +1,7 @@
 import React from 'react';
 import { CornerDialog, Combobox } from 'evergreen-ui';
 import { PersonsQueryArray } from './PersonsRow';
-import Button from './Button/Button';
+import Button from './Primitives/Button/Button';
 
 interface State {
     person_to_kick: string;

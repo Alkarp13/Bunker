@@ -2,10 +2,10 @@
     --button-height  : 32px;
     --button-radius  : 3;
     --font-size      : 12px;
-    --font-family    :"SF UI Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    --font-family    : -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
 }
 
-.Button {
+.Primitives-Button {
     position: relative;
     display: inline-flex;
     box-sizing: border-box;
@@ -34,7 +34,7 @@
     background-image: linear-gradient(rgb(255, 255, 255), rgb(244, 245, 247));
 }
 
-.Button.Button__disabled {
+.Primitives-Button.Primitives-Button__disabled {
     cursor: not-allowed;
     opacity: 0.8;
     background-image: none;
@@ -44,33 +44,39 @@
     pointer-events: none;
 }
 
-.Button.Button__intent_none {
+.Primitives-Button.Primitives-Button__intent_none {
     color: white;
     background-image: linear-gradient(rgb(7, 136, 222), rgb(17, 106, 184));
 }
 
-.Button.Button__intent_success {
+.Primitives-Button.Primitives-Button__intent_success {
     color: rgb(0, 120, 62);
 }
 
-.Button.Button__intent_danger {
+.Primitives-Button.Primitives-Button__intent_danger {
     color: rgb(191, 14, 8);
 }
 
-.Button.Button__intent_none.Button__primary {
+.Primitives-Button.Primitives-Button__intent_none.Primitives-Button__primary {
     color: white;
     background-color: white;
     background-image: linear-gradient(rgb(7, 136, 222), rgb(17, 106, 184));
 }
 
-.Button.Button__intent_success.Button__primary {
+.Primitives-Button.Primitives-Button__intent_success.Primitives-Button__primary {
     color: white;
     background-color: white;
     background-image: linear-gradient(rgb(35, 194, 119), rgb(57, 157, 108));
 }
 
-.Button.Button__intent_danger.Button__primary {
+.Primitives-Button.Primitives-Button__intent_danger.Primitives-Button__primary {
     color: white;
     background-color: white;
     background-image: linear-gradient(rgb(236, 76, 71), rgb(214, 69, 64));
+}
+
+.Primitives-Button.Primitives-Button__intent_danger.Primitives-Button__dark {
+    background-color: rgba(128, 128, 128, 0.3);
+    color: white;
+    background-image: none;
 }

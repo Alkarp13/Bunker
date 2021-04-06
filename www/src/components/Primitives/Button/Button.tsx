@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 
 const css = require('./Button.css');
 let classNames = require('classnames');
 
 interface VisualProps {
-    appearance?	: 'default' | 'primary';
+    appearance?	: 'default' | 'primary' | 'dark';
     intent?     : 'none' | 'success' | 'danger';
     disabled?   : boolean;
     width?      : number;
@@ -28,13 +28,14 @@ export default function Button(props: Props) {
     const { appearance, intent, disabled, children, onClick } = props;
 
 	let btnClass = classNames({
-		'Button'                : true,
-        'Button__disabled'		: disabled,
-		'Button__default'		: !disabled && (appearance === 'default'),
-        'Button__primary'		: !disabled && (appearance === 'primary'),
-        'Button__intent_none'	: !disabled && (intent === 'none'),
-        'Button__intent_success': !disabled && (intent === 'success'),
-        'Button__intent_danger'	: !disabled && (intent === 'danger')
+		'Primitives-Button'                : true,
+        'Primitives-Button__disabled'		: disabled,
+		'Primitives-Button__default'		: !disabled && (appearance === 'default'),
+        'Primitives-Button__primary'		: !disabled && (appearance === 'primary'),
+        'Primitives-Button__dark'		    : !disabled && (appearance === 'dark'),
+        'Primitives-Button__intent_none'	: !disabled && (intent === 'none'),
+        'Primitives-Button__intent_success': !disabled && (intent === 'success'),
+        'Primitives-Button__intent_danger'	: !disabled && (intent === 'danger')
 	});
 
 	return (
