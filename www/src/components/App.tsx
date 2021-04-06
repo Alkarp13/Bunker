@@ -26,34 +26,48 @@ class App extends React.Component<Props, State> {
     public connection: ReconnectingWebSocket = {} as ReconnectingWebSocket;
 
     componentDidMount() {
-        fetch("/lobby_state", { method: 'GET' })
-            .then((response) => response.json())
-            .then((result: LobbyState) => {
-                if (result.lobby_state === 'S') {
+        this.tryToLobbyConnect();
+    }
+
+    tryToLobbyConnect (n: number = 5) {
+        if (n > 0) {
+            fetch("/lobby_state", { method: 'GET' })
+                .then((response) => response.json())
+                .then((result: LobbyState) => {
+                    this.setupConnection(result);
+                },
+                (error) => {
+                    console.log(error);
+                    this.tryToLobbyConnect(n - 1);
+                });
+        }
+    }
+
+    setupConnection (result: LobbyState) {
+        if (result.lobby_state === 'S') {
+            this.setState({
+                isLoaded: true,
+                lobby_state: result.lobby_state,
+                users: result.users
+            });
+        } else {
+            this.connection = new ReconnectingWebSocket(
+                (((window.location.protocol === "https:") ? "wss://" : "ws://") 
+                + window.location.host + '/lobby')
+            );
+            this.connection.onmessage = (evt) => {
+                let result: LobbyState = JSON.parse(evt.data);
+    
+                if (result.lobby_state) {
                     this.setState({
                         isLoaded: true,
                         lobby_state: result.lobby_state,
                         users: result.users
                     });
-                } else {
-                    this.connection = new ReconnectingWebSocket(
-                        (((window.location.protocol === "https:") ? "wss://" : "ws://") 
-                        + window.location.host + '/lobby')
-                    );
-                    this.connection.onmessage = (evt) => {
-                        let result: LobbyState = JSON.parse(evt.data);
-            
-                        if (result.lobby_state) {
-                            this.setState({
-                                isLoaded: true,
-                                lobby_state: result.lobby_state,
-                                users: result.users
-                            });
-                        }
-                    };
-                    this.connection.send(JSON.stringify({ update_lobby: true }));
                 }
-            });
+            };
+            this.connection.send(JSON.stringify({ update_lobby: true }));
+        }
     }
 
     render() {
