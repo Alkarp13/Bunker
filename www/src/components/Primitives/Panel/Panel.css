@@ -1,0 +1,15 @@
+.Primitives-Panel {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    -webkit-box-align: center;
+    box-sizing: border-box;
+    justify-content: center;
+    -webkit-box-pack: center;
+
+}
+
+.Primitives-Panel.Primitives-Panel__dark {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+}

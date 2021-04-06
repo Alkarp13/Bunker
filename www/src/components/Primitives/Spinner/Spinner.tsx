@@ -10,8 +10,8 @@ interface Props {
 export default function Spinner(props: Props) {
 
 	let spinnerClass = classNames({
-		'Spinner-Button'           : true,
-		'Spinner-Button__default'  : true
+		'Primitives-Spinner'           : true,
+		'Primitives-Spinner__default'  : true
 	});
 
     const dimentions = {

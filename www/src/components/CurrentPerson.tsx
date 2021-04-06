@@ -1,8 +1,10 @@
 import React from 'react';
-import { Pane, SelectField } from 'evergreen-ui';
+import { SelectField } from 'evergreen-ui';
 import PersonCard, { PersonInfo } from './PersonCard';
+import CSS from 'csstype';
 import Button from './Primitives/Button/Button';
 import Spinner from './Primitives/Spinner/Spinner';
+import Panel from './Primitives/Panel/Panel';
 
 const DraggableWindow = React.lazy(() => import('./DraggableWindow/DraggableWindow'));
 
@@ -39,10 +41,10 @@ export default class CurrentPerson extends React.Component<Props, State> {
             <React.Suspense fallback={<Spinner size={32} />} >
                 <DraggableWindow title={ 'My person card' } >
                     <PersonCard person={this.props.person} other={false} changeNoteHandler={(text: string, username: string) => {}}/>
-                    <Pane
-                        display="flex"
-                        width="100%"
-                        float="left">
+                    <Panel style={{
+                        width: "100%", 
+                        float: "left"
+                    }}>
                         <SelectField
                             width={200}
                             className='black-theme'
@@ -65,15 +67,17 @@ export default class CurrentPerson extends React.Component<Props, State> {
                             <option disabled={this.checkDisabled(this.props.person.shown_fields, 'action_2')} value='action_2'>Second action card</option>
                         </SelectField>
                         <Button
-                            width={70}
-                            marginTop={34}
-                            marginLeft={10}
+                            style={{
+                                width: "70px", 
+                                marginTop: '34px', 
+                                marginLeft: '10px'
+                            }}
                             intent="success"
                             appearance="dark"
                             onClick={() => this.props.sendCharacteristicToSocked(this.state.selected_field)}>
                             Show
                         </Button>
-                    </Pane>
+                    </Panel>
                 </DraggableWindow>
             </React.Suspense>
         );

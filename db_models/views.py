@@ -70,21 +70,8 @@ class PersonCardView(LoginRequiredMixin, generic.ListView):
 @csrf_exempt
 def lobbyState(request):
     if request.method == 'GET':
-        users_data = []
         lobby = Lobby.objects.first()
-        users = list(lobby.userinfo_set.values_list('username', 'first_name', 'last_name', 'ready_state', named=True))
-        if users:
-            for i, user in enumerate(users):
-                users_data.append({
-                    'username': user.username,
-                    'first_name': user.first_name,
-                    'last_name': user.last_name,
-                    'ready_state': user.ready_state
-                })
-        result = {
-            'lobby_state': lobby.game_state,
-            'users': users_data
-        }
+        result = { 'lobby_state': lobby.game_state }
         return HttpResponse(json.dumps(result))
 
 @csrf_exempt

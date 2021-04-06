@@ -1,7 +1,7 @@
 import React from 'react';
-import { Pane, Avatar } from 'evergreen-ui';
+import { Avatar } from 'evergreen-ui';
 import { PersonInfo } from './PersonCard';
-//import ReactHintFactory from 'react-hint'
+import Panel from './Primitives/Panel/Panel';
 
 const ReactHintFactory = require('react-hint');
 const ReactHint = ReactHintFactory(React);
@@ -23,21 +23,22 @@ interface Props{
 
 export default function PersonsRow(props: Props) {
     return (
-        <Pane
-            display="flex"
-            height={100}
-            width="100%"
-            float="left"
-            padding={16}
-            borderRadius={5}
-            background="rgba(0, 0, 0, 0.3)">
-            <Pane
-                float="left"
-                display="flex"
-                flex={1}
-                justifyContent="left"
-                alignItems="center"
-                flexDirection="row">
+        <Panel
+            style={{
+                height: "100px",
+                width: "100%",
+                float: "left",
+                padding: "16px",
+                borderRadius: "5px",
+                background: "rgba(0, 0, 0, 0.3)"
+            }}>
+            <Panel
+                style={{
+                    float: "left",
+                    justifyContent: "left",
+                    alignItems: "center",
+                    flexDirection: "row"
+                }}>
                 {props.other_persons.map((person: PersonInfo, index: number) => {
                     return <div key={index}>
                         <ReactHint autoPosition events />
@@ -51,7 +52,7 @@ export default function PersonsRow(props: Props) {
                         />
                     </div>
                 })}
-            </Pane>
-        </Pane>
+            </Panel>
+        </Panel>
     );
 }

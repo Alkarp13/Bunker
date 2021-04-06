@@ -1,4 +1,5 @@
 import React from "react";
+import CSS from "csstype";
 
 const css = require('./Button.css');
 let classNames = require('classnames');
@@ -15,6 +16,7 @@ interface VisualProps {
 interface Props extends VisualProps {
     children?   : React.ReactNode;
     className?  : string;
+    style?      : CSS.Properties;
 	onClick()	: any;
 }
 
@@ -25,7 +27,7 @@ const defaultProps: VisualProps = {
 }
 
 export default function Button(props: Props) {
-    const { appearance, intent, disabled, children, onClick } = props;
+    const { appearance, intent, disabled, children, style, onClick } = props;
 
 	let btnClass = classNames({
 		'Primitives-Button'                : true,
@@ -41,7 +43,8 @@ export default function Button(props: Props) {
 	return (
 		<button 
 			className={btnClass}
-			onClick={ onClick }>
+			onClick={ onClick }
+            style={{...style}} >
             {children}
 		</button>
 	)
