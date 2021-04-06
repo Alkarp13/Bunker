@@ -80,6 +80,7 @@ export default class Lobby extends React.Component<Props, State> {
                 </Panel>
                 <Panel
                     style={{
+                        display: "flex",
                         justifyContent: "flex-end",
                         alignItems: "center"
                     }}>

@@ -42,6 +42,7 @@ export default class CurrentPerson extends React.Component<Props, State> {
                 <DraggableWindow title={ 'My person card' } >
                     <PersonCard person={this.props.person} other={false} changeNoteHandler={(text: string, username: string) => {}}/>
                     <Panel style={{
+                        display: "flex",
                         width: "100%", 
                         float: "left"
                     }}>
@@ -69,7 +70,7 @@ export default class CurrentPerson extends React.Component<Props, State> {
                         <Button
                             style={{
                                 width: "70px", 
-                                marginTop: '34px', 
+                                marginTop: '10px', 
                                 marginLeft: '10px'
                             }}
                             intent="success"
