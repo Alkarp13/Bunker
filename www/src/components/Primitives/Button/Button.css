@@ -80,3 +80,9 @@
     color: white;
     background-image: none;
 }
+
+.Primitives-Button.Primitives-Button__intent_success.Primitives-Button__dark {
+    background-color: rgba(128, 128, 128, 0.3);
+    color: white;
+    background-image: none;
+}

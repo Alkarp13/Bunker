@@ -76,16 +76,18 @@ class App extends React.Component<Props, State> {
         const { isLoaded, users, lobby_state } = this.state;
         if (!isLoaded) {
             return <Spinner size={32} />;
-        } else if (lobby_state === 'S') {
+        } else if (lobby_state === 'R') {
+            return (
+                <Lobby lobby_state={lobby_state} users={users} connection={this.connection} />
+            );
+        } else if (/person/i.test(window.location.href)) {
             return (
                 <React.Suspense fallback={<Spinner size={32} />} >
                     <Persons />
                 </React.Suspense>
             );
-        } else if (lobby_state === 'R') {
-            return (
-                <Lobby lobby_state={lobby_state} users={users} connection={this.connection} />
-            );
+        } else if (lobby_state === 'S') {
+            window.location.href = '/person';
         }
     }
 }

@@ -60,66 +60,62 @@ export default class Persons extends React.Component<Props, State> {
     private connection: ReconnectingWebSocket = {} as ReconnectingWebSocket;
 
     componentDidMount() {
-        if (/person/i.test(window.location.href)) {
-            this.connection.onmessage = evt => {
-                if (evt.data === 'update_fields') {
-                    fetch("/get_all_persons", { method: 'GET' })
-                        .then((response) => response.json())
-                        .then(
-                            (result) => {
-                                this.setState({
-                                    isLoaded: true,
-                                    lobby_state: result.lobby_state,
-                                    person: result.current_user,
-                                    other_persons: result.other_users,
-                                    story: result.story,
-                                    legend: result.legend,
-                                    number_of_seats: result.number_of_seats,
-                                    turn: result.turn,
-                                    current_person: result.current_person,
-                                    persons_query: result.persons_query,
-                                    is_round_over: result.is_round_over
-                                });
+        this.connection.onmessage = evt => {
+            if (evt.data === 'update_fields') {
+                fetch("/get_all_persons", { method: 'GET' })
+                    .then((response) => response.json())
+                    .then(
+                        (result) => {
+                            this.setState({
+                                isLoaded: true,
+                                lobby_state: result.lobby_state,
+                                person: result.current_user,
+                                other_persons: result.other_users,
+                                story: result.story,
+                                legend: result.legend,
+                                number_of_seats: result.number_of_seats,
+                                turn: result.turn,
+                                current_person: result.current_person,
+                                persons_query: result.persons_query,
+                                is_round_over: result.is_round_over
                             });
-                } else {
-                    let result = JSON.parse(evt.data);
-                    if (typeof result.update_turn !== 'undefined') {
-                        this.setState({
-                            turn: result.update_turn.turn,
-                            current_person: result.update_turn.current_person,
-                            is_round_over: result.update_turn.is_round_over
                         });
-                    }
+            } else {
+                let result = JSON.parse(evt.data);
+                if (typeof result.update_turn !== 'undefined') {
+                    this.setState({
+                        turn: result.update_turn.turn,
+                        current_person: result.update_turn.current_person,
+                        is_round_over: result.update_turn.is_round_over
+                    });
                 }
-            };
-            fetch("/get_all_persons", { method: 'GET' })
-                .then((response) => response.json())
-                .then(
-                    (result) => {
-                        this.setState({
-                            isLoaded: true,
-                            lobby_state: result.lobby_state,
-                            person: result.current_user,
-                            other_persons: result.other_users,
-                            story: result.story,
-                            legend: result.legend,
-                            number_of_seats: result.number_of_seats,
-                            turn: result.turn,
-                            current_person: result.current_person,
-                            persons_query: result.persons_query
-                        });
-                    },
-                    (error) => {
-                        console.log(error);
-                        this.setState({
-                            isLoaded: true,
-                            error
-                        });
-                    }
-                )
-        } else {
-            window.location.href = '/person';
-        }
+            }
+        };
+        fetch("/get_all_persons", { method: 'GET' })
+            .then((response) => response.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        lobby_state: result.lobby_state,
+                        person: result.current_user,
+                        other_persons: result.other_users,
+                        story: result.story,
+                        legend: result.legend,
+                        number_of_seats: result.number_of_seats,
+                        turn: result.turn,
+                        current_person: result.current_person,
+                        persons_query: result.persons_query
+                    });
+                },
+                (error) => {
+                    console.log(error);
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
     }
 
     sendCharacteristicToSocked(selected_field: string) {
