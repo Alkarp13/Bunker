@@ -3,14 +3,17 @@ import ReactDOM from 'react-dom';
 import { Spinner } from 'evergreen-ui';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 import Lobby, { UsersArray } from './Lobby'
-import Persons from './Persons';
+
+const Persons = React.lazy(() => import('./Persons'));
 
 interface Props {}
-
-interface State {
-    isLoaded    : boolean;
+interface LobbyState {
     lobby_state : string;
     users       : UsersArray;
+}
+
+interface State extends LobbyState {
+    isLoaded    : boolean;
 }
 
 class App extends React.Component<Props, State> {
@@ -23,36 +26,34 @@ class App extends React.Component<Props, State> {
     public connection: ReconnectingWebSocket = {} as ReconnectingWebSocket;
 
     componentDidMount() {
-        if (/lobby/i.test(window.location.href)) {
-            this.connection = new ReconnectingWebSocket(
-                (((window.location.protocol === "https:") ? "wss://" : "ws://") 
-                + window.location.host + '/lobby')
-            );
-            this.connection.onmessage = (evt) => {
-                let result = JSON.parse(evt.data);
-
-                if (result.lobby_state) {
+        fetch("/lobby_state", { method: 'GET' })
+            .then((response) => response.json())
+            .then((result: LobbyState) => {
+                if (result.lobby_state === 'S') {
                     this.setState({
                         isLoaded: true,
                         lobby_state: result.lobby_state,
                         users: result.users
                     });
+                } else {
+                    this.connection = new ReconnectingWebSocket(
+                        (((window.location.protocol === "https:") ? "wss://" : "ws://") 
+                        + window.location.host + '/lobby')
+                    );
+                    this.connection.onmessage = (evt) => {
+                        let result: LobbyState = JSON.parse(evt.data);
+            
+                        if (result.lobby_state) {
+                            this.setState({
+                                isLoaded: true,
+                                lobby_state: result.lobby_state,
+                                users: result.users
+                            });
+                        }
+                    };
+                    this.connection.send(JSON.stringify({ update_lobby: true }));
                 }
-            };
-            this.connection.send(JSON.stringify({ update_lobby: true }));
-        } else {
-            fetch("/lobby_state", { method: 'GET' })
-                .then((response) => response.json())
-                .then((result) => {
-                    if (result.lobby_state) {
-                        this.setState({
-                            isLoaded: true,
-                            lobby_state: result.lobby_state,
-                            users: result.users
-                        });
-                    }
-                });
-        }
+            });
     }
 
     render() {
@@ -61,7 +62,9 @@ class App extends React.Component<Props, State> {
             return <Spinner size={32} />;
         } else if (lobby_state === 'S') {
             return (
-                <Persons />
+                <React.Suspense fallback={<Spinner size={32} />} >
+                    <Persons />
+                </React.Suspense>
             );
         } else if (lobby_state === 'R') {
             return (
