@@ -8,12 +8,15 @@ const Persons = React.lazy(() => import('./Persons'));
 
 interface Props {}
 interface LobbyState {
-    lobby_state : string;
-    users       : UsersArray;
+    lobby_state: string;
 }
 
-interface State extends LobbyState {
-    isLoaded    : boolean;
+interface LobbyUsers extends LobbyState{
+    users: UsersArray;
+}
+
+interface State extends LobbyUsers {
+    isLoaded: boolean;
 }
 
 class App extends React.Component<Props, State> {
@@ -47,8 +50,7 @@ class App extends React.Component<Props, State> {
         if (result.lobby_state === 'S') {
             this.setState({
                 isLoaded: true,
-                lobby_state: result.lobby_state,
-                users: result.users
+                lobby_state: result.lobby_state
             });
         } else {
             this.connection = new ReconnectingWebSocket(
@@ -56,7 +58,7 @@ class App extends React.Component<Props, State> {
                 + window.location.host + '/lobby')
             );
             this.connection.onmessage = (evt) => {
-                let result: LobbyState = JSON.parse(evt.data);
+                let result: LobbyUsers = JSON.parse(evt.data);
     
                 if (result.lobby_state) {
                     this.setState({
