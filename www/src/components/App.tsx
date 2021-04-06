@@ -24,8 +24,6 @@ class App extends React.Component<Props, State> {
 
     componentDidMount() {
         if (/lobby/i.test(window.location.href)) {
-            console.log((((window.location.protocol === "https:") ? "wss://" : "ws://") 
-                + window.location.host + '/lobby'));
             this.connection = new ReconnectingWebSocket(
                 (((window.location.protocol === "https:") ? "wss://" : "ws://") 
                 + window.location.host + '/lobby')
@@ -42,8 +40,19 @@ class App extends React.Component<Props, State> {
                 }
             };
             this.connection.send(JSON.stringify({ update_lobby: true }));
+        } else {
+            fetch("/lobby_state", { method: 'GET' })
+                .then((response) => response.json())
+                .then((result) => {
+                    if (result.lobby_state) {
+                        this.setState({
+                            isLoaded: true,
+                            lobby_state: result.lobby_state,
+                            users: result.users
+                        });
+                    }
+                });
         }
-        
     }
 
     render() {
@@ -51,7 +60,6 @@ class App extends React.Component<Props, State> {
         if (!isLoaded) {
             return <Spinner size={32} />;
         } else if (lobby_state === 'S') {
-            this.connection.close();
             return (
                 <Persons />
             );
