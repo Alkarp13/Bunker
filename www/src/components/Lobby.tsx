@@ -78,7 +78,11 @@ export default class Lobby extends React.Component<Props, State> {
                         />
                     })}
                 </Panel>
-                <Panel>
+                <Panel
+                    style={{
+                        justifyContent: "flex-end",
+                        alignItems: "center"
+                    }}>
                     <Button appearance="primary" disabled={this.state.is_ready} onClick={() => this.setReadyState()}>Ready</Button>
                 </Panel>
             </Panel>

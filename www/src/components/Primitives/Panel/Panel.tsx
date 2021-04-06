@@ -5,8 +5,8 @@ const css = require('./Panel.css');
 let classNames = require('classnames');
 
 interface Props {
-    style? : CSS.Properties;
-    dark?  : boolean;
+    style?      : CSS.Properties;
+    dark?       : boolean;
     children?   : React.ReactNode;
 }
 
