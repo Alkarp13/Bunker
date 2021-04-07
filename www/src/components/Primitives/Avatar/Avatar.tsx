@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useMemo } from "react";
 import CSS from 'csstype';
 
 const css = require('./Avatar.css');
@@ -65,12 +65,14 @@ export default function Avatar(props: Props) {
         width: size + 'px'
     }
 
+    const avatar_color: Color = useMemo(() => getRandomColor(color), [color]);
+
 	let avatarClass = classNames({
 		'Primitives-Avatar'        : true,
         'Primitives-Avatar__solid' : isSolid
 	});
 
-    function getRandomColor(): Color {
+    function getRandomColor(color?: BaseColor): Color {
         const start: string = 'hsl(';
         const end: string = ',50%,40%)';
 
@@ -78,17 +80,18 @@ export default function Avatar(props: Props) {
         let text_color: number = 0;
 
         if (color && color === 'random') {
-            bg_color = Math.floor(Math.random() * 359);
+            bg_color = Math.floor(Math.floor(Math.random() * 350) / 20) * 20;
         } else {
             bg_color = hueOfBaseColor[color!];
         }
-
+            
         text_color = (bg_color < 180) ? bg_color + 180 : bg_color - 180;
 
-        return {bg_color: start + bg_color + end, text_color: start + text_color + end};
+        return {
+            bg_color: start + bg_color + end, 
+            text_color: (!isSolid) ? start + text_color + end : 'white'
+        };
     }
-
-    let avatar_color: Color = getRandomColor();
 
 	return (
 		<div className={avatarClass} 
@@ -105,7 +108,7 @@ export default function Avatar(props: Props) {
                     ...dimentions,
                     color: avatar_color.text_color
                 }}
-                onClick={onClick}
+                onClick={(e: React.MouseEvent<HTMLElement>) => onClick!(e)}
             >
                 {getDefaultInitials(name!)}
             </span>
