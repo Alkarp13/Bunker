@@ -21,7 +21,7 @@ interface Props {
     isSolid?    : boolean;
     style?      : CSS.Properties;
     marginRight?: number;
-    
+
     getInitials?(name: string): string;
     onClick?(e?: React.MouseEvent<HTMLElement>): void;
 }
@@ -72,7 +72,7 @@ export default function Avatar(props: Props) {
 
     function getRandomColor(): Color {
         const start: string = 'hsl(';
-        const end: string = ',100%,50%)';
+        const end: string = ',50%,40%)';
 
         let bg_color: number = 0;
         let text_color: number = 0;
