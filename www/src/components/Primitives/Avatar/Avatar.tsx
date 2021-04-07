@@ -104,9 +104,9 @@ export default function Avatar(props: Props) {
                  backgroundColor: avatar_color.bg_color, 
                  ...dimentions, 
                  ...style 
-            }} 
-            onClick={(typeof onClick === 'function') ? onClick : () => {}}>
+            }}>
             <span className={'Primitives-Avatar__inner'} 
+                title={name}
                 style={{
                     fontSize: Math.ceil((size * 37) / 96) + 'px',
                     ...dimentions,

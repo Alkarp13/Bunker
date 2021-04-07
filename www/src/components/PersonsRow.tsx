@@ -48,7 +48,7 @@ export default function PersonsRow(props: Props) {
                             data-rh={person.username + ", " + person.first_name}
                             marginRight={16}
                             isSolid={(props.persons_query[props.current_person - 1].username === person.username) ? true : false}
-                            onClick={(e: React.MouseEvent<HTMLElement>) => {console.log('click', e)}}//props.showOtherPerson(e)}
+                            onClick={(e: React.MouseEvent<HTMLElement>) => {props.showOtherPerson(e)}}
                         />
                     </div>
                 })}
