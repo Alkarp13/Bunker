@@ -40,7 +40,13 @@ export default function PersonsRow(props: Props) {
                     flexDirection: "row"
                 }}>
                 {props.other_persons.map((person: PersonInfo, index: number) => {
-                    return <Panel key={index}>
+                    return <Panel key={index}
+                        style={{
+                            float: "left",
+                            justifyContent: "left",
+                            alignItems: "center",
+                            width: "80px"
+                    }}>
                         <ReactHint autoPosition events />
                         <Avatar
                             name={person.username}
