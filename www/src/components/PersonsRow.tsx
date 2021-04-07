@@ -1,7 +1,7 @@
 import React from 'react';
-import { Avatar } from 'evergreen-ui';
 import { PersonInfo } from './PersonCard';
 import Panel from './Primitives/Panel/Panel';
+import Avatar from './Primitives/Avatar/Avatar';
 
 const ReactHintFactory = require('react-hint');
 const ReactHint = ReactHintFactory(React);

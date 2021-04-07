@@ -1,7 +1,6 @@
 import React from 'react';
 import { SelectField } from 'evergreen-ui';
 import PersonCard, { PersonInfo } from './PersonCard';
-import CSS from 'csstype';
 import Button from './Primitives/Button/Button';
 import Spinner from './Primitives/Spinner/Spinner';
 import Panel from './Primitives/Panel/Panel';

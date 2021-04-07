@@ -1,8 +1,8 @@
 import React from 'react';
-import { Avatar } from 'evergreen-ui';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 import Button from './Primitives/Button/Button';
 import Panel from './Primitives/Panel/Panel';
+import Avatar from './Primitives/Avatar/Avatar';
 
 interface Users {
     username     : string;
