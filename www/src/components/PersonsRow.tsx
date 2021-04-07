@@ -2,9 +2,9 @@ import React from 'react';
 import { PersonInfo } from './PersonCard';
 import Panel from './Primitives/Panel/Panel';
 import Avatar from './Primitives/Avatar/Avatar';
-
-const ReactHintFactory = require('react-hint');
-const ReactHint = ReactHintFactory(React);
+import ReactTooltip from 'react-tooltip';
+// const ReactHintFactory = require('react-hint');
+// const ReactHint = ReactHintFactory(React);
 
 interface PersonsQuery {
     id      : number;
@@ -32,19 +32,20 @@ export default function PersonsRow(props: Props) {
                 borderRadius: "5px",
                 background: "rgba(0, 0, 0, 0.3)"
             }}>
-            <ReactHint autoPosition events />
+            <ReactTooltip id='avatar_hint' getContent={(dataTip) => `This little buddy is ${dataTip}`}/>
             {['aaaa', 'bbbbb', 'ccccc', 'dddd', 'eeeeeeee', 'fffffff'].map((person: string, index: number) => {
                 return (
                     <Avatar
                         key={index}
+                        data-for='avatar_hint'
+                        data-tip={person + ", " + person}
                         name={person}
                         size={80}
-                        data-rh={person + ", " + person}
                         marginRight={16}
                         isSolid={false}
                         onClick={(e: React.MouseEvent<HTMLElement>) => {console.log(person)}}
                     />
-            )})}
+                )})}
         </Panel>
     );
 }
