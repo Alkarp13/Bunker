@@ -39,16 +39,15 @@ export default function PersonsRow(props: Props) {
                     alignItems: "center",
                     flexDirection: "row"
                 }}>
+                <ReactHint position={'top'} events />
                 {['aaaa', 'bbbbb', 'ccccc', 'dddd', 'eeeeeeee', 'fffffff'].map((person: string, index: number) => {
                     return <Panel key={index}
                         style={{
                             float: "left",
                             justifyContent: "left",
                             alignItems: "center",
-                            width: "80px",
-                            marginRight: '16px'
+                            width: "80px"
                     }}>
-                        <ReactHint autoPosition events />
                         <Avatar
                             name={person}
                             size={80}
