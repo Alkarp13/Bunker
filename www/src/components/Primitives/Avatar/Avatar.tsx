@@ -20,7 +20,8 @@ interface Props {
     color?      : BaseColor;
     name?       : string;
     isSolid?    : boolean;
-    'data-rh'?    : string;
+    dataFor?    : string;
+    dataTip?    : string;
     style?      : CSS.Properties;
     marginRight?: number;
 
@@ -46,7 +47,8 @@ function getDefaultInitials(name: string): string {
 
 const defaultProps: Props = {
     size: 16,
-    'data-rh': "",
+    dataFor: "",
+    dataTip: "",
     isSolid: false,
     color: 'random',
     name: "",
@@ -97,7 +99,8 @@ export default function Avatar(props: Props) {
 
 	return (
 		<div className={avatarClass} 
-             data-rh={props['data-rh']}
+             data-tip={props.dataTip}
+             data-for={props.dataFor}
              style={{
                  backgroundImage: src,
                  marginRight: marginRight,

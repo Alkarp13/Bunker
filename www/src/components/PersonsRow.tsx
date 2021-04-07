@@ -32,13 +32,13 @@ export default function PersonsRow(props: Props) {
                 borderRadius: "5px",
                 background: "rgba(0, 0, 0, 0.3)"
             }}>
-            <ReactTooltip id='avatar_hint' getContent={(dataTip) => `This little buddy is ${dataTip}`}/>
+            <ReactTooltip id='avatar_hint' getContent={(dataTip) => `${dataTip}`}/>
             {['aaaa', 'bbbbb', 'ccccc', 'dddd', 'eeeeeeee', 'fffffff'].map((person: string, index: number) => {
                 return (
                     <Avatar
                         key={index}
-                        data-for='avatar_hint'
-                        data-tip={person + ", " + person}
+                        dataFor='avatar_hint'
+                        dataTip={person + ", " + person}
                         name={person}
                         size={80}
                         marginRight={16}
