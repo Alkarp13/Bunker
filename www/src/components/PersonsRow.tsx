@@ -40,7 +40,7 @@ export default function PersonsRow(props: Props) {
                     flexDirection: "row"
                 }}>
                 {props.other_persons.map((person: PersonInfo, index: number) => {
-                    return <div key={index}>
+                    return <Panel key={index}>
                         <ReactHint autoPosition events />
                         <Avatar
                             name={person.username}
@@ -50,7 +50,7 @@ export default function PersonsRow(props: Props) {
                             isSolid={(props.persons_query[props.current_person - 1].username === person.username) ? true : false}
                             onClick={(e: React.MouseEvent<HTMLElement>) => {props.showOtherPerson(e)}}
                         />
-                    </div>
+                    </Panel>
                 })}
             </Panel>
         </Panel>
