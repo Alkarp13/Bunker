@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import CSS from 'csstype';
+import { string } from "prop-types";
 
 const css = require('./Avatar.css');
 let classNames = require('classnames');
@@ -19,6 +20,7 @@ interface Props {
     color?      : BaseColor;
     name?       : string;
     isSolid?    : boolean;
+    'data-rh'?    : string;
     style?      : CSS.Properties;
     marginRight?: number;
 
@@ -44,6 +46,7 @@ function getDefaultInitials(name: string): string {
 
 const defaultProps: Props = {
     size: 16,
+    'data-rh': "",
     isSolid: false,
     color: 'random',
     name: "",
@@ -95,20 +98,21 @@ export default function Avatar(props: Props) {
 
 	return (
 		<div className={avatarClass} 
+             data-rh={props['data-rh']}
              style={{
                  backgroundImage: src,
                  marginRight: marginRight,
                  backgroundColor: avatar_color.bg_color, 
                  ...dimentions, 
                  ...style 
-        }}>
+            }}>
             <span className={'Primitives-Avatar__inner'} 
                 style={{
                     fontSize: Math.ceil((size * 37) / 96) + 'px',
                     ...dimentions,
                     color: avatar_color.text_color
                 }}
-                onClick={(e: React.MouseEvent<HTMLElement>) => onClick!(e)}
+                onClick={onClick}
             >
                 {getDefaultInitials(name!)}
             </span>
