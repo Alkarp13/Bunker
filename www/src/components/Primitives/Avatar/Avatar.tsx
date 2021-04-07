@@ -52,8 +52,7 @@ const defaultProps: Props = {
     name: "",
     src: 'none',
     marginRight: 5,
-    getInitials: getDefaultInitials,
-    onClick: () => {}
+    getInitials: getDefaultInitials
 }
 
 interface Color {
@@ -112,7 +111,7 @@ export default function Avatar(props: Props) {
                     ...dimentions,
                     color: avatar_color.text_color
                 }}
-                onClick={onClick}
+                onClick={(typeof onClick === 'function') ? onClick : () => {}}
             >
                 {getDefaultInitials(name!)}
             </span>
