@@ -32,33 +32,19 @@ export default function PersonsRow(props: Props) {
                 borderRadius: "5px",
                 background: "rgba(0, 0, 0, 0.3)"
             }}>
-            <Panel
-                style={{
-                    float: "left",
-                    justifyContent: "left",
-                    alignItems: "center",
-                    flexDirection: "row"
-                }}>
-                <ReactHint position={'top'} events />
-                {['aaaa', 'bbbbb', 'ccccc', 'dddd', 'eeeeeeee', 'fffffff'].map((person: string, index: number) => {
-                    return <Panel key={index}
-                        style={{
-                            float: "left",
-                            justifyContent: "left",
-                            alignItems: "center",
-                            width: "80px"
-                    }}>
-                        <Avatar
-                            name={person}
-                            size={80}
-                            data-rh={person + ", " + person}
-                            marginRight={16}
-                            isSolid={false}
-                            onClick={(e: React.MouseEvent<HTMLElement>) => {console.log(person)}}
-                        />
-                    </Panel>
-                })}
-            </Panel>
+            <ReactHint autoPosition events />
+            {['aaaa', 'bbbbb', 'ccccc', 'dddd', 'eeeeeeee', 'fffffff'].map((person: string, index: number) => {
+                return (
+                    <Avatar
+                        key={index}
+                        name={person}
+                        size={80}
+                        data-rh={person + ", " + person}
+                        marginRight={16}
+                        isSolid={false}
+                        onClick={(e: React.MouseEvent<HTMLElement>) => {console.log(person)}}
+                    />
+            )})}
         </Panel>
     );
 }
