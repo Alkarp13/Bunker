@@ -1,9 +1,9 @@
 import React from 'react';
-import { SelectField } from 'evergreen-ui';
 import PersonCard, { PersonInfo } from './PersonCard';
 import Button from './Primitives/Button/Button';
 import Spinner from './Primitives/Spinner/Spinner';
 import Panel from './Primitives/Panel/Panel';
+import SelectField from './Primitives/SelectField/SelectField';
 
 const DraggableWindow = React.lazy(() => import('./DraggableWindow/DraggableWindow'));
 
@@ -46,10 +46,11 @@ export default class CurrentPerson extends React.Component<Props, State> {
                         float: "left"
                     }}>
                         <SelectField
-                            width={200}
-                            className='black-theme'
-                            marginTop={10}
-                            marginLeft={5}
+                            style={{
+                                width: '200px',
+                                marginTop: '10px',
+                                marginLeft: '5px'
+                            }}
                             defaultValue='male'
                             label='Choose field to show: '
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.setState({ selected_field: e.currentTarget.value })}>

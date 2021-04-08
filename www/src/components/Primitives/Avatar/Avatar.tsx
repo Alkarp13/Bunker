@@ -1,6 +1,5 @@
 import React, { useMemo } from "react";
 import CSS from 'csstype';
-import { string } from "prop-types";
 
 const css = require('./Avatar.css');
 let classNames = require('classnames');
