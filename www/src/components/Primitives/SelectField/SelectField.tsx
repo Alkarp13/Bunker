@@ -10,7 +10,7 @@ interface Props {
     dark?       : boolean;
     style?      : CSS.Properties;
     children?   : React.ReactNode;
-    onChange?(e?: React.ChangeEvent<HTMLInputElement>): void;
+    onChange?(e?: React.ChangeEvent<HTMLSelectElement>): void;
 }
 
 const defaultProps: Props = {
@@ -21,7 +21,7 @@ const defaultProps: Props = {
 }
 
 export default function SelectField(props: Props) {
-    const {label, defaultValue, dark, style, children} = props;
+    const {label, defaultValue, dark, style, children, onChange} = props;
 	let selectClass = classNames({
 		'Primitives-SelectField'        : true,
         'Primitives-SelectField__dark'  : dark
@@ -36,7 +36,7 @@ export default function SelectField(props: Props) {
 		<div className={'Primitives-SelectField__container'} style={{ ...style }}>
             <label htmlFor={select_id}>{label}</label>
             <div className={'Primitives-SelectField__inner_box'}>
-                <select id={select_id} value={defaultValue} className={selectClass}>
+                <select id={select_id} value={defaultValue} className={selectClass} onChange={onChange}>
                     {children}
                 </select>
                 <svg className={'Primitives-SelectField__svg_arrow'} viewBox={'0 0 16 16'}>

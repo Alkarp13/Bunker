@@ -22,7 +22,7 @@ export default class CurrentPerson extends React.Component<Props, State> {
         selected_field: 'male'
     }
 
-    checkDisabled(shown_fields: Array<string> = [], field: string) {
+    checkDisabled(shown_fields: Array<string> = [], field: string): boolean {
         if (shown_fields.length > 0) {
             let result = false;
             shown_fields.forEach(function (s_field) {
@@ -51,9 +51,10 @@ export default class CurrentPerson extends React.Component<Props, State> {
                                 marginTop: '10px',
                                 marginLeft: '5px'
                             }}
+                            dark={true}
                             defaultValue='male'
                             label='Choose field to show: '
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.setState({ selected_field: e.currentTarget.value })}>
+                            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => this.setState({ selected_field: e.currentTarget.value })}>
                             <option disabled={this.checkDisabled(this.props.person.shown_fields, 'male')} value='male'>Male</option>
                             <option disabled={this.checkDisabled(this.props.person.shown_fields, 'age')} value='age'>Age</option>
                             <option disabled={this.checkDisabled(this.props.person.shown_fields, 'growth')} value='imt'>IMT</option>

@@ -22,7 +22,7 @@
 
 .Primitives-SelectField.Primitives-SelectField__dark {
     background-color: rgba(128, 128, 128, 0.3);
-    color: white;
+    color: rgb(251, 230, 162);
     background-image: none;
 }
 
@@ -35,7 +35,7 @@
     display: block;
     box-sizing: border-box;
     line-height: 20px;
-    color: rgb(66, 90, 112);
+    color: rgb(251, 230, 162);
     margin-bottom: 0px;
     letter-spacing: -0.05px;
     font-weight: 500;
