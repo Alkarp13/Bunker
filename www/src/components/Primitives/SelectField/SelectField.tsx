@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import CSS from 'csstype';
 
 const css = require('./SelectField.css');
@@ -26,6 +26,8 @@ export default function SelectField(props: Props) {
 		'Primitives-SelectField'        : true,
         'Primitives-SelectField__dark'  : dark
 	});
+
+    const [value, setValue] = useState(defaultValue);
     const select_id: string = useMemo(() => getRandomId(label), [label]);
 
     function getRandomId(label: string): string {
@@ -34,9 +36,13 @@ export default function SelectField(props: Props) {
 
 	return (
 		<div className={'Primitives-SelectField__container'} style={{ ...style }}>
-            <label htmlFor={select_id}>{label}</label>
+            <label className={'Primitives-SelectField__label'} htmlFor={select_id}>{label}</label>
             <div className={'Primitives-SelectField__inner_box'}>
-                <select id={select_id} value={defaultValue} className={selectClass} onChange={onChange}>
+                <select id={select_id} 
+                    value={value} 
+                    className={selectClass} 
+                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { setValue(e.currentTarget.value); return onChange; }
+                }>
                     {children}
                 </select>
                 <svg className={'Primitives-SelectField__svg_arrow'} viewBox={'0 0 16 16'}>
