@@ -10,14 +10,14 @@ interface Props {
     dark?       : boolean;
     style?      : CSS.Properties;
     children?   : React.ReactNode;
-    onChange?(e?: React.ChangeEvent<HTMLSelectElement>): void;
+    onChange?(value: string): void;
 }
 
 const defaultProps: Props = {
     label: '',
     defaultValue: '',
     dark: false,
-    onChange: () => {}
+    onChange: (v: string) => {}
 }
 
 export default function SelectField(props: Props) {
@@ -41,7 +41,7 @@ export default function SelectField(props: Props) {
                 <select id={select_id} 
                     value={value} 
                     className={selectClass} 
-                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { setValue(e.currentTarget.value); return onChange; }
+                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { setValue(e.currentTarget.value); console.log(e.currentTarget.value); return onChange!(e.currentTarget.value); }
                 }>
                     {children}
                 </select>

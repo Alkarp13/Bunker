@@ -54,7 +54,7 @@ export default class CurrentPerson extends React.Component<Props, State> {
                             dark={true}
                             defaultValue='male'
                             label='Choose field to show: '
-                            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => this.setState({ selected_field: e.currentTarget.value })}>
+                            onChange={(value: string) => this.setState({ selected_field: value })}>
                             <option disabled={this.checkDisabled(this.props.person.shown_fields, 'male')} value='male'>Male</option>
                             <option disabled={this.checkDisabled(this.props.person.shown_fields, 'age')} value='age'>Age</option>
                             <option disabled={this.checkDisabled(this.props.person.shown_fields, 'growth')} value='imt'>IMT</option>
