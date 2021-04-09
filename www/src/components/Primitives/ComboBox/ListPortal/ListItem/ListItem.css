@@ -23,7 +23,7 @@
     background-image: none;
 }
 
-.ComboBox-ListItem.ComboBox-ListItem__hover {
+.ListBox-ListItem.ListBox-ListItem__hover {
     background-color: rgba(202, 183, 16, 0.1) !important;
 }
 
