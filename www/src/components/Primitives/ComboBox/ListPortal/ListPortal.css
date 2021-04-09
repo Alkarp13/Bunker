@@ -18,10 +18,6 @@
     background-image: none;
 }
 
-.ComboBox-ListBox.ComboBox-ListBox__hover {
-    background-color: rgba(16, 112, 202, 0.04);
-}
-
 .ComboBox-ListBox.ComboBox-ListBox__hidden {
     visibility: hidden;
     display: none;

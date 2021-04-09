@@ -18,9 +18,13 @@
 
 .ListBox-ListItem.ListBox-ListItem__dark,
 .ListBox-ListItem__title.ListBox-ListItem__dark {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.01);
     color: rgb(251, 230, 162);
     background-image: none;
+}
+
+.ComboBox-ListItem.ComboBox-ListItem__hover {
+    background-color: rgba(16, 112, 202, 0.04);
 }
 
 .ListBox-ListItem__item {
