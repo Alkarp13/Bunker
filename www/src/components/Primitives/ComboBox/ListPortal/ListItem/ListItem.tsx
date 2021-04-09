@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import CSS from 'csstype';
 
 const css = require('./ListItem.css');
@@ -20,10 +20,12 @@ const defaultProps: Props = {
 }
 
 export default function ListItem(props: Props) {
+    const [hover, setHover] = useState(false);
 
     let itemClass = classNames({
         'ListBox-ListItem'        : true,
-        'ListBox-ListItem__dark'  : props.dark
+        'ListBox-ListItem__dark'  : props.dark,
+        'ListBox-ListItem__hover'  : hover
     });
 
     let titleClass = classNames({
@@ -37,8 +39,21 @@ export default function ListItem(props: Props) {
         }
     }
 
+    function handleMouseOver() {
+        setHover(true);
+    }
+
+    function handleMouseLeave() {
+        setHover(false);
+    }
+
     return (
-        <div className={itemClass} style={props.style} onClick={handleClick}>
+        <div 
+            className={itemClass} 
+            style={props.style} 
+            onClick={handleClick}
+            onMouseOver={handleMouseOver}
+            onMouseLeave={handleMouseLeave}>
             <div className={'ListBox-ListItem__item'}>
                 <span className={'ListBox-ListItem__title_container'}>
                     <div className={titleClass} >

@@ -20,21 +20,18 @@
 
 .Primitives-ComboBox__button.Primitives-ComboBox__dark,
 .Primitives-ComboBox.Primitives-ComboBox__dark {
-    background-color: rgba(128, 128, 128, 0.3);
+    background-color: rgba(0, 0, 0, 0.8);
     color: rgb(251, 230, 162);
     background-image: none;
 }
 
 .Primitives-ComboBox__main_container.Primitives-ComboBox__dark {
-    background-color: rgba(128, 128, 128, 0.8);
+    background-color: rgba(0, 0, 0, 0.8);
     color: rgb(251, 230, 162);
     background-image: none;
 }
 
 .Primitives-ComboBox__main_container {
-    background-color: white;
-    z-index: 100;
-    border-radius: 0 0 5px 5px;
     width: 100%;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;

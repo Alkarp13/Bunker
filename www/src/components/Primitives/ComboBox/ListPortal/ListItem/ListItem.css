@@ -18,7 +18,7 @@
 
 .ListBox-ListItem.ListBox-ListItem__dark,
 .ListBox-ListItem__title.ListBox-ListItem__dark {
-    background-color: rgba(128, 128, 128, 0.3);
+    background-color: rgba(0, 0, 0, 0.3);
     color: rgb(251, 230, 162);
     background-image: none;
 }
@@ -29,7 +29,7 @@
     align-self: stretch;
     flex-shrink: 0;
     padding-right: 12px;
-    border-bottom: 1px solid rgb(237, 240, 242);
+    border-bottom: 1px solid rgb(26, 28, 29);
     overflow-y: hidden;
     overflow-x: hidden;
     flex: 1 1 0%;
