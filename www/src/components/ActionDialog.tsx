@@ -35,6 +35,7 @@ export default class ActionDialog extends React.Component<Props, State> {
                 shouldCloseOnOverlayClick={false}>
                 <ComboBox
                     height={40}
+                    dark={true}
                     disabled={!this.props.is_anycard_shown}
                     items={card_property}
                     onChange={selected => this.setState({ anyone_card: selected })}
@@ -42,6 +43,7 @@ export default class ActionDialog extends React.Component<Props, State> {
                 />
                 <ComboBox
                     height={40}
+                    dark={true}
                     items={this.props.persons_query.map((item) => { return item.username })}
                     onChange={selected => this.setState({ anyone_person: selected })}
                     placeholder="Usernames"

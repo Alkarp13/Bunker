@@ -42,6 +42,11 @@ export default function ComboBox(props: Props) {
         'Primitives-ComboBox__dark'  : dark
     });
 
+    let containerClass = classNames({
+        'Primitives-ComboBox__main_container': true,
+        'Primitives-ComboBox__dark'  : dark
+    });
+
     function handleClick() {
         setIsShown(!isShown);
     }
@@ -55,7 +60,7 @@ export default function ComboBox(props: Props) {
     }
 
     return (
-        <div ref={combo_el} className={'Primitives-ComboBox__main_container'} style={{ ...style, height: height + 'px' }}>
+        <div ref={combo_el} className={containerClass} style={{ ...style, height: height + 'px' }}>
             <div className={'Primitives-ComboBox__container'}>
                 <input className={comboboxClass} type="text" placeholder={value} onClick={handleClick}/>
                 <button 

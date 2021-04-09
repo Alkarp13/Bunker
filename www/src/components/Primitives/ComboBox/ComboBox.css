@@ -14,6 +14,7 @@
     font-weight: 400;
     color: rgb(66, 90, 112);
     box-sizing: border-box;
+    outline: none;
     font-family: "SF UI Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
@@ -24,7 +25,16 @@
     background-image: none;
 }
 
+.Primitives-ComboBox__main_container.Primitives-ComboBox__dark {
+    background-color: rgba(128, 128, 128, 0.8);
+    color: rgb(251, 230, 162);
+    background-image: none;
+}
+
 .Primitives-ComboBox__main_container {
+    background-color: white;
+    z-index: 100;
+    border-radius: 0 0 5px 5px;
     width: 100%;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -58,7 +68,7 @@
     vertical-align: middle;
     text-decoration: none;
     border: none;
-    outline: none;
+    outline: none !important;
     cursor: pointer;
     color: rgb(66, 90, 112);
     background-color: white;
