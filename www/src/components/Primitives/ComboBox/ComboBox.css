@@ -33,7 +33,7 @@
 .Primitives-ComboBox__container {
     display: inline-flex;
     box-sizing: border-box;
-    width: 400px;
+    width: 100%;
     height: 100%;
 }
 

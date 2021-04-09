@@ -43,8 +43,6 @@ export default function ComboBox(props: Props) {
     });
 
     function handleClick() {
-        console.log(combo_el.current);
-        console.log(combo_el.current?.getBoundingClientRect());
         setIsShown(!isShown);
     }
 
@@ -59,7 +57,7 @@ export default function ComboBox(props: Props) {
     return (
         <div ref={combo_el} className={'Primitives-ComboBox__main_container'} style={{ ...style, height: height + 'px' }}>
             <div className={'Primitives-ComboBox__container'}>
-                <input className={comboboxClass} type="text" placeholder={value}/>
+                <input className={comboboxClass} type="text" placeholder={value} onClick={handleClick}/>
                 <button 
                     className={buttonClass} 
                     type={'button'} 
@@ -81,8 +79,8 @@ export default function ComboBox(props: Props) {
                     dark={dark}
                     isShown={isShown}
                     width={width} 
-                    top={(combo_el.current) ? combo_el.current!.offsetTop + width! : 9999} 
-                    left={(combo_el.current) ? combo_el.current!.offsetLeft : 9999}
+                    top={(combo_el.current) ? combo_el.current?.getBoundingClientRect().y + height! : 9999} 
+                    left={(combo_el.current) ? combo_el.current?.getBoundingClientRect().x : 9999}
                     onChange={handleChange}
                 />
             </ListPortal>
