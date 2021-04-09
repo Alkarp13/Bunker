@@ -28,6 +28,7 @@ export default function ComboBox(props: Props) {
     const {items, dark, disabled, placeholder, height, width, style, onChange} = props;
 
     const [isShown, setIsShown] = useState(false);
+    const [value, setValue] = useState(placeholder);
     const combo_el: React.RefObject<HTMLDivElement> = useRef(null);
 
     let comboboxClass = classNames({
@@ -42,20 +43,23 @@ export default function ComboBox(props: Props) {
     });
 
     function handleClick() {
+        console.log(combo_el.current);
+        console.log(combo_el.current?.getBoundingClientRect());
         setIsShown(!isShown);
     }
 
     function handleChange(selected: string): void {
         setIsShown(false);
+        setValue(selected);
         if (typeof onChange === 'function') { 
-            onChange!(selected)
+            onChange!(selected);
         }
     }
 
     return (
         <div ref={combo_el} className={'Primitives-ComboBox__main_container'} style={{ ...style, height: height + 'px' }}>
             <div className={'Primitives-ComboBox__container'}>
-                <input className={comboboxClass} type="text" placeholder={placeholder}/>
+                <input className={comboboxClass} type="text" placeholder={value}/>
                 <button 
                     className={buttonClass} 
                     type={'button'} 
