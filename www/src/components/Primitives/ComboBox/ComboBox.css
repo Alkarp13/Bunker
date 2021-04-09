@@ -35,6 +35,7 @@
     width: 100%;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    border-radius: 5px;
 }
 
 .Primitives-ComboBox__container {
