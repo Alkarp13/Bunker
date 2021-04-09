@@ -148,7 +148,7 @@ export default class Persons extends React.Component<Props, State> {
         }
     }
 
-    someoneSelected(anyone_person: PersonInfo, anyone_card: string) {
+    someoneSelected(anyone_person: string, anyone_card: string) {
         if (this.state.is_anycard_shown) {
             this.connection.send(JSON.stringify({ value: this.selected_field, someone: anyone_person, card: anyone_card }));
             this.setState({ is_anyperson_shown: false, is_anycard_shown: false });

@@ -41,7 +41,7 @@ export default function SelectField(props: Props) {
                 <select id={select_id} 
                     value={value} 
                     className={selectClass} 
-                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { setValue(e.currentTarget.value); console.log(e.currentTarget.value); return onChange!(e.currentTarget.value); }
+                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { setValue(e.currentTarget.value); return onChange!(e.currentTarget.value); }
                 }>
                     {children}
                 </select>

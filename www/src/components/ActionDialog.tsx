@@ -1,11 +1,12 @@
 import React from 'react';
-import { Dialog, Combobox } from 'evergreen-ui';
+import { Dialog } from 'evergreen-ui';
 import { PersonsQueryArray } from './PersonsRow';
 import { PersonInfo } from './PersonCard';
-import Button from './Primitives/Button/Button'
+import Button from './Primitives/Button/Button';
+import ComboBox from './Primitives/ComboBox/ComboBox';
 
 interface State {
-    anyone_person   : PersonInfo;
+    anyone_person   : string;
     anyone_card     : string;
 }
 
@@ -13,12 +14,14 @@ interface Props {
     persons_query       : PersonsQueryArray;
     is_anyperson_shown  : boolean;
     is_anycard_shown    : boolean;
-    someoneSelected(anyone_person: PersonInfo, anyone_card: string): void;
+    someoneSelected(anyone_person: string, anyone_card: string): void;
 }
+
+const card_property = ['male', 'age', 'IMT', 'profession', 'life', 'phobia', 'hobbi', 'character', 'skill', 'inventar'];
 
 export default class ActionDialog extends React.Component<Props, State> {
     state: Readonly<State> = {
-        anyone_person: {} as PersonInfo,
+        anyone_person: '',
         anyone_card: 'male'
     }
 
@@ -30,16 +33,14 @@ export default class ActionDialog extends React.Component<Props, State> {
                 hasFooter={false}
                 hasClose={false}
                 shouldCloseOnOverlayClick={false}>
-                <Combobox
-                    openOnFocus
+                <ComboBox
                     height={40}
                     disabled={!this.props.is_anycard_shown}
-                    items={['male', 'age', 'IMT', 'profession', 'life', 'phobia', 'hobbi', 'character', 'skill', 'inventar']}
+                    items={card_property}
                     onChange={selected => this.setState({ anyone_card: selected })}
                     placeholder="Cards"
                 />
-                <Combobox
-                    openOnFocus
+                <ComboBox
                     height={40}
                     items={this.props.persons_query.map((item) => { return item.username })}
                     onChange={selected => this.setState({ anyone_person: selected })}

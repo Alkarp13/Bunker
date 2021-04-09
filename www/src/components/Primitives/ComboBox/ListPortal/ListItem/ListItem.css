@@ -1,0 +1,70 @@
+:root {
+    --font-family: "SF UI Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.ListBox-ListItem {
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    height: 32px;
+    outline: none;
+    text-decoration: none;
+    color: rgb(66, 90, 112);
+    display: flex;
+    align-items: center;
+    -webkit-box-align: center;
+    box-sizing: border-box;
+}
+
+.ListBox-ListItem.ListBox-ListItem__dark,
+.ListBox-ListItem__title.ListBox-ListItem__dark {
+    background-color: rgba(128, 128, 128, 0.3);
+    color: rgb(251, 230, 162);
+    background-image: none;
+}
+
+.ListBox-ListItem__item {
+    display: flex;
+    cursor: pointer;
+    align-self: stretch;
+    flex-shrink: 0;
+    padding-right: 12px;
+    border-bottom: 1px solid rgb(237, 240, 242);
+    overflow-y: hidden;
+    overflow-x: hidden;
+    flex: 1 1 0%;
+    padding-left: 0px;
+    align-items: center;
+    -webkit-box-align: center;
+    box-sizing: border-box;
+}
+
+.ListBox-ListItem__title_container {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    flex: 1 1 0%;
+    letter-spacing: 0px;
+    line-height: 16px;
+    font-size: 12px;
+    font-weight: 400;
+    color: rgb(66, 90, 112);
+    cursor: pointer;
+    font-family: var(--font-family);
+}
+
+.ListBox-ListItem__title {
+    display: flex;
+    align-items: center;
+    -webkit-box-align: center;
+    box-sizing: border-box;
+    white-space: nowrap;
+    letter-spacing: 0px;
+    line-height: 16px;
+    font-size: 12px;
+    font-weight: 400;
+    color: rgb(66, 90, 112);
+    cursor: pointer;
+    font-family: var(--font-family);
+}

@@ -1,0 +1,34 @@
+.ComboBox-ListBox {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+    position: fixed;
+    z-index: 10;
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.175);
+    transition-duration: 0ms;
+    transition-property: opacity, -webkit-transform, transform;
+    transform-origin: 120px 0px;
+}
+
+.ComboBox-ListBox:hover {
+    background-color: rgba(16, 112, 202, 0.04);
+}
+
+.ComboBox-ListBox.ComboBox-ListBox__hidden {
+    visibility: hidden;
+    display: none;
+}
+
+.ComboBox-ListBox__items_container {
+    overflow: auto;
+    will-change: transform;
+    width: 100%;
+}
+
+.ComboBox-ListBox__items {
+    position: relative;
+    width: 100%;
+    min-height: 100%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}

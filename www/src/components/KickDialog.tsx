@@ -1,7 +1,8 @@
 import React from 'react';
-import { CornerDialog, Combobox } from 'evergreen-ui';
+import { CornerDialog } from 'evergreen-ui';
 import { PersonsQueryArray } from './PersonsRow';
 import Button from './Primitives/Button/Button';
+import ComboBox from './Primitives/ComboBox/ComboBox';
 
 interface State {
     person_to_kick: string;
@@ -26,8 +27,7 @@ export default class KickDialog extends React.Component<Props, State> {
                 width={320}
                 hasFooter={false}
                 hasClose={false}>
-                <Combobox
-                    openOnFocus
+                <ComboBox
                     height={40}
                     items={this.props.persons_query.map((item) => { return item.username })}
                     onChange={selected => this.setState({ person_to_kick: selected })}
