@@ -18,7 +18,6 @@ interface ListBoxProps {
     top?        : number;
     left?       : number;
     width?      : number;
-    dark?       : boolean;
     children?   : React.ReactNode;
     onChange?(selected: string): void;
 }
@@ -28,8 +27,7 @@ const defaultProps: ListBoxProps = {
     left: 9999,
     isShown: false,
     items: [],
-    width: 240,
-    dark: false
+    width: 240
 }
 
 export default class ListPortal extends React.Component<ListPortalProps, {}> {
@@ -53,11 +51,10 @@ export default class ListPortal extends React.Component<ListPortalProps, {}> {
 
 export function ListBox(props: ListBoxProps) {
 
-    const {isShown, dark, top, left, width, items, style, onChange} = props;
+    const {isShown, top, left, width, items, style, onChange} = props;
 
     let listClass = classNames({
         'ComboBox-ListBox'          : true,
-        'ComboBox-ListBox__dark'    : isShown && dark,
         'ComboBox-ListBox__hidden'  : !isShown
     });
 
@@ -70,8 +67,7 @@ export function ListBox(props: ListBoxProps) {
                     <div className={'ComboBox-ListBox__items'} style={{height: height}}>
                         {items.map(function (item, index) {
                             return (
-                                <ListItem 
-                                    dark={dark} 
+                                <ListItem
                                     title={item} 
                                     style={{top: index * 32 + 'px'}}
                                     onChange={onChange}

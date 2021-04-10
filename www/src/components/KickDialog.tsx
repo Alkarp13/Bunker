@@ -29,7 +29,6 @@ export default class KickDialog extends React.Component<Props, State> {
                 hasClose={false}>
                 <ComboBox
                     height={40}
-                    dark={true}
                     items={this.props.persons_query.map((item) => { return item.username })}
                     onChange={selected => this.setState({ person_to_kick: selected })}
                     placeholder="Usernames"

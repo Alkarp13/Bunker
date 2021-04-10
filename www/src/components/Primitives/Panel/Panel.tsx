@@ -6,19 +6,13 @@ let classNames = require('classnames');
 
 interface Props {
     style?      : CSS.Properties;
-    dark?       : boolean;
     children?   : React.ReactNode;
-}
-
-const defaultProps: Props = {
-    dark: false
 }
 
 export default function Panel(props: Props) {
 
 	let panelClass = classNames({
-		'Primitives-Panel'        : true,
-        'Primitives-Panel__dark'  : props.dark
+		'Primitives-Panel'        : true
 	});
 
 	return (
@@ -27,5 +21,3 @@ export default function Panel(props: Props) {
         </div>
 	)
 }
-
-Panel.defaultProps = defaultProps;

@@ -9,18 +9,12 @@
     height: 32px;
     outline: none;
     text-decoration: none;
-    color: rgb(66, 90, 112);
+    color: rgb(251, 230, 162);
+    background-color: rgba(0, 0, 0, 0.01);
     display: flex;
     align-items: center;
     -webkit-box-align: center;
     box-sizing: border-box;
-}
-
-.ListBox-ListItem.ListBox-ListItem__dark,
-.ListBox-ListItem__title.ListBox-ListItem__dark {
-    background-color: rgba(0, 0, 0, 0.01);
-    color: rgb(251, 230, 162);
-    background-image: none;
 }
 
 .ListBox-ListItem.ListBox-ListItem__hover {
@@ -53,7 +47,7 @@
     line-height: 16px;
     font-size: 12px;
     font-weight: 400;
-    color: rgb(66, 90, 112);
+    color: rgb(251, 230, 162);
     cursor: pointer;
     font-family: var(--font-family);
 }
@@ -63,12 +57,13 @@
     align-items: center;
     -webkit-box-align: center;
     box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0.01);
     white-space: nowrap;
     letter-spacing: 0px;
     line-height: 16px;
     font-size: 12px;
     font-weight: 400;
-    color: rgb(66, 90, 112);
+    color: rgb(251, 230, 162);
     cursor: pointer;
     font-family: var(--font-family);
 }

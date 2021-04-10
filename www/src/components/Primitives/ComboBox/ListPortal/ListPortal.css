@@ -7,15 +7,9 @@
     transition-duration: 0ms;
     transition-property: opacity, -webkit-transform, transform;
     transform-origin: 120px 0px;
-    background-color: white;
+    background-color: rgba(0, 0, 0, 0.8);
     z-index: 100;
     border-radius: 0 0 5px 5px;
-}
-
-.ComboBox-ListBox.ComboBox-ListBox__dark {
-    background-color: rgba(0, 0, 0, 0.8);
-    color: rgb(251, 230, 162);
-    background-image: none;
 }
 
 .ComboBox-ListBox.ComboBox-ListBox__hidden {

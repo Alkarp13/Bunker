@@ -30,13 +30,13 @@ export default function Button(props: Props) {
     const { appearance, intent, disabled, children, style, onClick } = props;
 
 	let btnClass = classNames({
-		'Primitives-Button'                : true,
+		'Primitives-Button'                 : true,
         'Primitives-Button__disabled'		: disabled,
 		'Primitives-Button__default'		: !disabled && (appearance === 'default'),
         'Primitives-Button__primary'		: !disabled && (appearance === 'primary'),
         'Primitives-Button__dark'		    : !disabled && (appearance === 'dark'),
         'Primitives-Button__intent_none'	: !disabled && (intent === 'none'),
-        'Primitives-Button__intent_success': !disabled && (intent === 'success'),
+        'Primitives-Button__intent_success' : !disabled && (intent === 'success'),
         'Primitives-Button__intent_danger'	: !disabled && (intent === 'danger')
 	});
 

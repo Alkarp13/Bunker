@@ -6,14 +6,12 @@ let classNames = require('classnames');
 
 interface Props {
     title       : string;
-    dark?       : boolean;
     style       : CSS.Properties;
     onChange?(selected: string): void;
 }
 
 const defaultProps: Props = {
     title: '',
-    dark: false,
     style: {
         top: '0px'
     }
@@ -24,13 +22,7 @@ export default function ListItem(props: Props) {
 
     let itemClass = classNames({
         'ListBox-ListItem'        : true,
-        'ListBox-ListItem__dark'  : props.dark,
         'ListBox-ListItem__hover'  : hover
-    });
-
-    let titleClass = classNames({
-        'ListBox-ListItem__title' : true,
-        'ListBox-ListItem__dark'  : props.dark
     });
 
     function handleClick(e: React.MouseEvent<HTMLDivElement>) {
@@ -56,7 +48,7 @@ export default function ListItem(props: Props) {
             onMouseLeave={handleMouseLeave}>
             <div className={'ListBox-ListItem__item'}>
                 <span className={'ListBox-ListItem__title_container'}>
-                    <div className={titleClass} >
+                    <div className={'ListBox-ListItem__title'} >
                         {props.title}
                     </div>
                 </span>

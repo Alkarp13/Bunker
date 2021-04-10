@@ -51,7 +51,6 @@ export default class CurrentPerson extends React.Component<Props, State> {
                                 marginTop: '10px',
                                 marginLeft: '5px'
                             }}
-                            dark={true}
                             defaultValue='male'
                             label='Choose field to show: '
                             onChange={(value: string) => this.setState({ selected_field: value })}>

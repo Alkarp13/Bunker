@@ -9,7 +9,6 @@ interface Props {
     items       : Array<string>;
     style?      : CSS.Properties;
     placeholder?: string;
-    dark?       : boolean;
     disabled    : boolean;
     height?     : number;
     width?      : number;
@@ -19,13 +18,12 @@ interface Props {
 const defaultProps: Props = {
     items: [],
     disabled: false,
-    dark: false,
     height: 40,
     width: 240
 }
 
 export default function ComboBox(props: Props) {
-    const {items, dark, disabled, placeholder, height, width, style, onChange} = props;
+    const {items, disabled, placeholder, height, width, style, onChange} = props;
 
     const [isShown, setIsShown] = useState(false);
     const [value, setValue] = useState(placeholder);
@@ -33,18 +31,7 @@ export default function ComboBox(props: Props) {
 
     let comboboxClass = classNames({
         'Primitives-ComboBox'           : true,
-        'Primitives-ComboBox__dark'     : dark,
         'Primitives-ComboBox__disabled' : disabled
-    });
-
-    let buttonClass = classNames({
-        'Primitives-ComboBox__button': true,
-        'Primitives-ComboBox__dark'  : dark
-    });
-
-    let containerClass = classNames({
-        'Primitives-ComboBox__main_container': true,
-        'Primitives-ComboBox__dark'  : dark
     });
 
     function handleClick() {
@@ -60,11 +47,11 @@ export default function ComboBox(props: Props) {
     }
 
     return (
-        <div ref={combo_el} className={containerClass} style={{ ...style, height: height + 'px' }}>
+        <div ref={combo_el} className={'Primitives-ComboBox__main_container'} style={{ ...style, height: height + 'px' }}>
             <div className={'Primitives-ComboBox__container'}>
                 <input className={comboboxClass} type="text" placeholder={value} onClick={handleClick}/>
                 <button 
-                    className={buttonClass} 
+                    className={'Primitives-ComboBox__button'} 
                     type={'button'} 
                     role={'button'}
                     onClick={handleClick}
@@ -80,8 +67,7 @@ export default function ComboBox(props: Props) {
             </div>
             <ListPortal>
                 <ListBox 
-                    items={items} 
-                    dark={dark}
+                    items={items}
                     isShown={isShown}
                     width={width} 
                     top={(combo_el.current) ? combo_el.current?.getBoundingClientRect().y + height! : 9999} 

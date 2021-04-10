@@ -1,7 +1,6 @@
 import React from 'react';
 import { Dialog } from 'evergreen-ui';
 import { PersonsQueryArray } from './PersonsRow';
-import { PersonInfo } from './PersonCard';
 import Button from './Primitives/Button/Button';
 import ComboBox from './Primitives/ComboBox/ComboBox';
 
@@ -35,7 +34,6 @@ export default class ActionDialog extends React.Component<Props, State> {
                 shouldCloseOnOverlayClick={false}>
                 <ComboBox
                     height={40}
-                    dark={true}
                     disabled={!this.props.is_anycard_shown}
                     items={card_property}
                     onChange={selected => this.setState({ anyone_card: selected })}
@@ -43,7 +41,6 @@ export default class ActionDialog extends React.Component<Props, State> {
                 />
                 <ComboBox
                     height={40}
-                    dark={true}
                     items={this.props.persons_query.map((item) => { return item.username })}
                     onChange={selected => this.setState({ anyone_person: selected })}
                     placeholder="Usernames"

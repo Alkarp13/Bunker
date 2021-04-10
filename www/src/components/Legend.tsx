@@ -30,7 +30,7 @@ export default function Legend(props: LegendInterface) {
                     <Text color='#DDEBF7'>{props.number_of_seats}</Text>
                 </div>
             </Panel>
-            <Panel dark={true} style={{width: "100%"}}>
+            <Panel style={{width: "100%"}}>
                 <Strong color='#FBE6A2' size={400}>Story: </Strong>
                 <Text color='#DDEBF7'>{props.story}</Text>
             </Panel>

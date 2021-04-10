@@ -1,3 +1,7 @@
+:root {
+    --font-family: "SF UI Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
 .Primitives-SelectField{
     appearance: none;
     border: none;
@@ -15,15 +19,11 @@
     line-height: 16px;
     font-size: 12px;
     font-weight: 400;
-    color: rgb(66, 90, 112);
-    border-radius: 3px;
-    font-family: "SF UI Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-}
-
-.Primitives-SelectField.Primitives-SelectField__dark {
     background-color: rgba(128, 128, 128, 0.3);
-    color: rgb(251, 230, 162);
     background-image: none;
+    color: rgb(251, 230, 162);
+    border-radius: 3px;
+    font-family: var(--font-family);
 }
 
 .Primitives-SelectField__container {
@@ -40,7 +40,7 @@
     letter-spacing: -0.05px;
     font-weight: 500;
     font-size: 14px;
-    font-family: "SF UI Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: var(--font-family);
 }
 
 .Primitives-SelectField__inner_box {

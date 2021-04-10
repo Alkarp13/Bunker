@@ -7,7 +7,6 @@ let classNames = require('classnames');
 interface Props {
     label       : string;
     defaultValue: string;
-    dark?       : boolean;
     style?      : CSS.Properties;
     children?   : React.ReactNode;
     onChange?(value: string): void;
@@ -16,15 +15,13 @@ interface Props {
 const defaultProps: Props = {
     label: '',
     defaultValue: '',
-    dark: false,
     onChange: (v: string) => {}
 }
 
 export default function SelectField(props: Props) {
-    const {label, defaultValue, dark, style, children, onChange} = props;
+    const {label, defaultValue, style, children, onChange} = props;
 	let selectClass = classNames({
-		'Primitives-SelectField'        : true,
-        'Primitives-SelectField__dark'  : dark
+		'Primitives-SelectField': true
 	});
 
     const [value, setValue] = useState(defaultValue);
