@@ -1,6 +1,6 @@
 import React from 'react';
-import { CornerDialog } from 'evergreen-ui';
 import Button from './Primitives/Button/Button';
+import ModalWindow from './Primitives/ModalWindow/ModalWindow';
 
 const Timer = React.lazy(() => import('./Timer'));
 
@@ -20,23 +20,39 @@ export default class CornerAlert extends React.Component<Props, State> {
         isPlaying: false
     };
 
+    private footer: React.ReactNode = (
+        <>
+            <Button 
+                intent="success" 
+                disabled={this.state.isPlaying} 
+                onClick={
+                    () => this.setState({ isPlaying: true})
+                }>
+                Start speech
+            </Button>
+            <Button 
+                appearance="primary" 
+                intent="danger" 
+                onClick={
+                    () => this.props.passMove()
+                }>
+                Stop speech
+            </Button>
+        </>
+    );
+
     render() {
-        const { isPlaying } = this.state;
         return (
-            <CornerDialog
+            <ModalWindow
                 title="Your time to talk"
+                modalPosition={'bottom-right'}
                 isShown={this.props.isShown}
                 width={270}
-                hasFooter={false}
-                hasClose={false}>
+                footer={this.footer}>
                 <React.Suspense fallback="Loading..." >
-                    <Timer isPlaying={isPlaying} duration={this.props.duration} />
+                    <Timer isPlaying={this.state.isPlaying} duration={this.props.duration} />
                 </React.Suspense>
-                <div className='bottom-alert-footer'>
-                    <Button intent="success" disabled={isPlaying} onClick={() => this.setState({ isPlaying: true})}>Start speech</Button>
-                    <Button appearance="primary" intent="danger" onClick={() => this.props.passMove()}>Stop speech</Button>
-                </div>
-            </CornerDialog>
+            </ModalWindow>
         );
     }
 }

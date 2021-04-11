@@ -1,8 +1,8 @@
 import React from 'react';
-import { Dialog } from 'evergreen-ui';
 import { PersonsQueryArray } from './PersonsRow';
 import Button from './Primitives/Button/Button';
 import ComboBox from './Primitives/ComboBox/ComboBox';
+import ModalWindow from './Primitives/ModalWindow/ModalWindow';
 
 interface State {
     anyone_person   : string;
@@ -24,14 +24,25 @@ export default class ActionDialog extends React.Component<Props, State> {
         anyone_card: 'male'
     }
 
+    private footer: React.ReactNode = (
+        <Button 
+            intent="success" 
+            onClick={
+                () => {
+                    this.props.someoneSelected(this.state.anyone_person, this.state.anyone_card)
+                }
+            }>
+            Send
+        </Button>
+    );
+
     render() {
         return (
-            <Dialog
+            <ModalWindow
+                modalPosition={'center'}
                 isShown={this.props.is_anyperson_shown}
                 title="Choose anyone"
-                hasFooter={false}
-                hasClose={false}
-                shouldCloseOnOverlayClick={false}>
+                footer={this.footer}>
                 <ComboBox
                     height={40}
                     disabled={!this.props.is_anycard_shown}
@@ -45,10 +56,7 @@ export default class ActionDialog extends React.Component<Props, State> {
                     onChange={selected => this.setState({ anyone_person: selected })}
                     placeholder="Usernames"
                 />
-                <div className='bottom-alert-footer'>
-                    <Button intent="success" onClick={() => this.props.someoneSelected(this.state.anyone_person, this.state.anyone_card)}>Send</Button>
-                </div>
-            </Dialog>
+            </ModalWindow>
         );
     }
 }

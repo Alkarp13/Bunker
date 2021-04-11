@@ -1,8 +1,8 @@
 import React from 'react';
-import { CornerDialog } from 'evergreen-ui';
 import { PersonsQueryArray } from './PersonsRow';
 import Button from './Primitives/Button/Button';
 import ComboBox from './Primitives/ComboBox/ComboBox';
+import ModalWindow from './Primitives/ModalWindow/ModalWindow';
 
 interface State {
     person_to_kick: string;
@@ -19,24 +19,31 @@ export default class KickDialog extends React.Component<Props, State> {
         person_to_kick: ''
     }
 
+    private footer: React.ReactNode = (
+        <Button 
+            intent="success" 
+            onClick={
+                () => this.props.kickSelectedPlayer(this.state.person_to_kick)
+            }>
+            Kick now
+        </Button>
+    );
+
     render() {
         return (
-            <CornerDialog
+            <ModalWindow
                 title="Time to kick someone"
+                modalPosition={'bottom-right'}
                 isShown={this.props.is_round_over}
                 width={320}
-                hasFooter={false}
-                hasClose={false}>
+                footer={this.footer}>
                 <ComboBox
                     height={40}
                     items={this.props.persons_query.map((item) => { return item.username })}
                     onChange={selected => this.setState({ person_to_kick: selected })}
                     placeholder="Usernames"
                 />
-                <div className='bottom-alert-footer'>
-                    <Button intent="success" onClick={() => this.props.kickSelectedPlayer(this.state.person_to_kick)}>Kick now</Button>
-                </div>
-            </CornerDialog>
+            </ModalWindow>
         );
     }
 }

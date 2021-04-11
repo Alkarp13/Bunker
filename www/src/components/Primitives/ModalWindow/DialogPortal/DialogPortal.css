@@ -1,0 +1,63 @@
+:root {
+    --font-family: "SF UI Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.ModalWindow-Dialog {
+    position: fixed;
+    visibility: visible;
+    animation: 240ms cubic-bezier(0.175, 0.885, 0.32, 1.175) 0s 1 normal both running open;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.ModalWindow-Dialogl.ModalWindow-Dialog__hidden {
+    visibility: hidden;
+    display: none;
+}
+
+.ModalWindow-Dialog__title_container {
+    display: flex;
+    align-items: center;
+    -webkit-box-align: center;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+}
+
+.ModalWindow-Dialog__title {
+    flex: 1 1 0%;
+    color: rgb(251, 230, 162);
+    letter-spacing: -0.07px;
+    font-family: var(--font-family);
+    line-height: 24px;
+    font-size: 20px;
+    font-weight: 500;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.ModalWindow-Dialog__content {
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.ModalWindow-Dialog__footer {
+    display: flex;
+    flex-direction: row-reverse;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+    flex-shrink: 0;
+    margin-top: 24px;
+    box-sizing: border-box;
+}
+
+@keyframes show {
+    0% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
