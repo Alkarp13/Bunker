@@ -19,7 +19,6 @@
     "@types/react-dom": "^17.0.3",
     "babel-loader": "^8.1.0",
     "csstype": "^3.0.7",
-    "mini-css-extract-plugin": "^1.4.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-tooltip": "^4.2.17",

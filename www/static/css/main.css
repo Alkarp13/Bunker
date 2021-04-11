@@ -33,6 +33,7 @@ input {
 
 .btn{
     display:inline-block;
+    height: 35px;
     font-weight:400;
     color:#212529;
     text-align:center;
