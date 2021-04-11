@@ -35,11 +35,11 @@ export default function Legend(props: LegendInterface) {
                     <Text color='#DDEBF7'>{props.number_of_seats}</Text>
                 </Panel>
             </Panel>
-            <Panel style={{width: "100%"}}>
+            <Panel style={{width: "100%", backgroundColor: 'rgba(0,0,0,0.8)'}}>
                 <Text color='#FBE6A2' size={400} strong={true}>Story: </Text>
                 <Text color='#DDEBF7'>{props.story}</Text>
             </Panel>
-            <Panel style={{width: "100%"}}>
+            <Panel style={{width: "100%", backgroundColor: 'rgba(0,0,0,0.8)'}}>
                 <Panel style={{width: "100%"}}>
                     <Text color='#FBE6A2' size={400} strong={true}>Bunker square: </Text>
                     <Text color='#DDEBF7'>{props.legend.square} m<sup>2</sup></Text>

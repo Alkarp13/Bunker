@@ -22,7 +22,7 @@
 
 .Primitives-TextArea__label {
     display: block;
-    color: white;
+    color: rgb(251, 230, 162);
     line-height: 20px;
     margin-bottom: 0px;
     letter-spacing: -0.05px;
@@ -33,6 +33,7 @@
 }
 
 .Primitives-TextArea__container {
+    margin-top: 10px;
     margin-bottom: 24px;
     box-sizing: border-box;
 }
