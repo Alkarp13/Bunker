@@ -19,7 +19,6 @@
 
 .ComboBox-ListBox__items_container {
     overflow: auto;
-    will-change: transform;
     width: 100%;
     padding: 0 0 0 10px;
 }

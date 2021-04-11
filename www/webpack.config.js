@@ -1,16 +1,22 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = {
     resolve: {
-        extensions: [".ts", ".tsx", ".js", ".jsx"],
+        extensions: [".ts", ".tsx", ".js", ".jsx", ".css"],
     },
     entry: {
-        main: path.resolve(__dirname, 'src/input.js'),
+        main: path.resolve(__dirname, 'src/input.js')
     },
     plugins: [
         new webpack.HashedModuleIdsPlugin(),
+        new MiniCssExtractPlugin({filename: "[name].min.css"}),
+        new FixStyleOnlyEntriesPlugin(),
+        new OptimizeCSSAssetsPlugin({}),
         new HtmlWebpackPlugin({
             filename: '../../templates/scripts.html',
             inject: false,
@@ -38,7 +44,7 @@ module.exports = {
             { 
                 test: /\.css$/, 
                 use: [
-                    'style-loader', 'css-loader'
+                    MiniCssExtractPlugin.loader, 'css-loader?url=false'
                 ]
             }
         ]
