@@ -19,46 +19,51 @@ export interface LegendInterface {
 
 export default function Legend(props: LegendInterface) {
     return (
-        <div className='legend'>
+        <Panel style={{
+            width: "400px", 
+            position: 'absolute',
+            top: '150px',
+            left: '0px'
+        }}>
             <Panel style={{width: "100%"}}>
-                <div className='black-background'>
+                <Panel style={{width: "100%"}}>
                     <Strong color='#FBE6A2' size={400}>Current turn: </Strong>
                     <Text color='#DDEBF7'>{props.turn}</Text>
-                </div>
-                <div className='black-background'>
+                </Panel>
+                <Panel style={{width: "100%"}}>
                     <Strong color='#FBE6A2' size={400}>Number of seats in bunker: </Strong>
                     <Text color='#DDEBF7'>{props.number_of_seats}</Text>
-                </div>
+                </Panel>
             </Panel>
             <Panel style={{width: "100%"}}>
                 <Strong color='#FBE6A2' size={400}>Story: </Strong>
                 <Text color='#DDEBF7'>{props.story}</Text>
             </Panel>
             <Panel style={{width: "100%"}}>
-                <div className='black-background'>
+                <Panel style={{width: "100%"}}>
                     <Strong color='#FBE6A2' size={400}>Bunker square: </Strong>
                     <Text color='#DDEBF7'>{props.legend.square} m<sup>2</sup></Text>
-                </div>
-                <div className='black-background'>
+                </Panel>
+                <Panel style={{width: "100%"}}>
                     <Strong color='#FBE6A2' size={400}>Awaiting time in bunker: </Strong>
                     <Text color='#DDEBF7'>{props.legend.await_time} days</Text>
-                </div>
+                </Panel>
                 {(props.legend.medicines) ?
-                    <div className='black-background'>
+                    <Panel style={{width: "100%"}}>
                         <Strong color='#FBE6A2' size={400}>First aid kits: </Strong>
                         <Text color='#DDEBF7'>{props.legend.medicines}</Text>
-                    </div> : null}
+                    </Panel> : null}
                 {(props.legend.armor) ?
-                    <div className='black-background'>
+                    <Panel style={{width: "100%"}}>
                         <Strong color='#FBE6A2' size={400}>Pistols: </Strong>
                         <Text color='#DDEBF7'>{props.legend.armor}</Text>
-                    </div> : null}
+                    </Panel> : null}
                 {(props.legend.additional_info) ?
-                    <div className='black-background'>
+                    <Panel style={{width: "100%"}}>
                         <Strong color='#FBE6A2' size={400}>Additional info: </Strong>
                         <Text color='#DDEBF7'>{props.legend.additional_info}</Text>
-                    </div> : null}
+                    </Panel> : null}
             </Panel>
-        </div>
+        </Panel>
     );
 }

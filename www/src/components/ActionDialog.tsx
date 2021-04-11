@@ -41,6 +41,8 @@ export default class ActionDialog extends React.Component<Props, State> {
             <ModalWindow
                 modalPosition={'center'}
                 isShown={this.props.is_anyperson_shown}
+                width={300}
+                height={190}
                 title="Choose anyone"
                 footer={this.footer}>
                 <ComboBox

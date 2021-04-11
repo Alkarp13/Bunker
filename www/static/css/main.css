@@ -74,13 +74,6 @@ body, html {
     color: white !important;
 }
 
-.legend {
-    width: 400px;
-    position: absolute;
-    top: 150px;
-    left: 0;
-}
-
 .timer-wrapper {
     display: flex;
     justify-content: center;

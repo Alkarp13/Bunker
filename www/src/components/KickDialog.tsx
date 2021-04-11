@@ -36,6 +36,7 @@ export default class KickDialog extends React.Component<Props, State> {
                 modalPosition={'bottom-right'}
                 isShown={this.props.is_round_over}
                 width={320}
+                height={150}
                 footer={this.footer}>
                 <ComboBox
                     height={40}

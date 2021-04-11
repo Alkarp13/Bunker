@@ -12,7 +12,7 @@
     padding: 10px;
 }
 
-.ModalWindow-Dialogl.ModalWindow-Dialog__hidden {
+.ModalWindow-Dialog.ModalWindow-Dialog__hidden {
     visibility: hidden;
     display: none;
 }
@@ -38,7 +38,8 @@
 }
 
 .ModalWindow-Dialog__content {
-    overflow-y: auto;
+    overflow-y: hidden;
+    overflow-x: hidden;
     box-sizing: border-box;
 }
 

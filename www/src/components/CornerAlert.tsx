@@ -48,6 +48,7 @@ export default class CornerAlert extends React.Component<Props, State> {
                 modalPosition={'bottom-right'}
                 isShown={this.props.isShown}
                 width={270}
+                height={300}
                 footer={this.footer}>
                 <React.Suspense fallback="Loading..." >
                     <Timer isPlaying={this.state.isPlaying} duration={this.props.duration} />
