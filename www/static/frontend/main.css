@@ -1,0 +1,630 @@
+.Primitives-Spinner {
+    background: transparent !important;
+    border-radius: 100%;
+    border: 2px solid;
+    border-color: gray;
+    border-bottom-color: transparent;
+    display: inline-block;
+    animation: clip 0.75s 0s infinite linear;
+    animation-fill-mode: both;
+}
+
+@keyframes clip {
+    0% {transform: rotate(0deg) scale(1)}
+    50% {transform: rotate(180deg) scale(0.8)}
+    100% {transform: rotate(360deg) scale(1)}
+}
+:root {
+    --button-height  : 32px;
+    --button-radius  : 3;
+    --font-size      : 12px;
+    --font-family    : -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+.Primitives-Button {
+    position: relative;
+    display: inline-flex;
+    box-sizing: border-box;
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    margin: 0;
+    padding: 0 16px 0 16px;
+    font-weight: 500;
+    border-radius: var(--button-radius);
+    align-items: center;
+    -webkit-box-align: center;
+    flex-wrap: nowrap;
+    line-height: var(--button-height);
+    letter-spacing: 0px;
+    height: var(--button-height);
+    box-shadow: rgb(67 90 111 / 30%) 0px 0px 0px 1px inset, rgb(67 90 111 / 6%) 0px -1px 1px 0px inset;
+    -webkit-font-smoothing: antialiased;
+    appearance: none;
+    vertical-align: middle;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: rgb(66, 90, 112);
+    background-color: white;
+    background-image: linear-gradient(rgb(255, 255, 255), rgb(244, 245, 247));
+}
+
+.Primitives-Button.Primitives-Button__disabled {
+    cursor: not-allowed;
+    opacity: 0.8;
+    background-image: none;
+    background-color: rgba(67, 90, 111, 0.06);
+    box-shadow: none;
+    color: rgba(67, 90, 111, 0.7);
+    pointer-events: none;
+}
+
+.Primitives-Button.Primitives-Button__intent_none {
+    color: white;
+    background-image: linear-gradient(rgb(7, 136, 222), rgb(17, 106, 184));
+}
+
+.Primitives-Button.Primitives-Button__intent_success {
+    color: rgb(0, 120, 62);
+}
+
+.Primitives-Button.Primitives-Button__intent_danger {
+    color: rgb(191, 14, 8);
+}
+
+.Primitives-Button.Primitives-Button__intent_none.Primitives-Button__primary {
+    color: white;
+    background-color: white;
+    background-image: linear-gradient(rgb(7, 136, 222), rgb(17, 106, 184));
+}
+
+.Primitives-Button.Primitives-Button__intent_success.Primitives-Button__primary {
+    color: white;
+    background-color: white;
+    background-image: linear-gradient(rgb(35, 194, 119), rgb(57, 157, 108));
+}
+
+.Primitives-Button.Primitives-Button__intent_danger.Primitives-Button__primary {
+    color: white;
+    background-color: white;
+    background-image: linear-gradient(rgb(236, 76, 71), rgb(214, 69, 64));
+}
+
+.Primitives-Button.Primitives-Button__intent_danger.Primitives-Button__dark {
+    background-color: rgba(128, 128, 128, 0.3);
+    color: white;
+    background-image: none;
+}
+
+.Primitives-Button.Primitives-Button__intent_success.Primitives-Button__dark {
+    background-color: rgba(128, 128, 128, 0.3);
+    color: white;
+    background-image: none;
+}
+.Primitives-Panel {
+    display: block;
+    flex: 1;
+    align-items: center;
+    -webkit-box-align: center;
+    box-sizing: border-box;
+    justify-content: center;
+    -webkit-box-pack: center;
+}
+.Primitives-Avatar {
+    position: relative;
+    display: inline-flex;
+    box-sizing: border-box;
+    margin-right: 5px;
+    border-radius: 100%;
+    border-width: 0;
+    flex-shrink: 0;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    justify-content: center;
+    -webkit-box-pack: center;
+}
+
+.Primitives-Avatar__inner {
+    position: absolute;
+    display: flex;
+    top: 0px;
+    line-height: 1;
+    justify-content: center;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    font-family: "SF UI Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    letter-spacing: -0.05px;
+    font-weight: 400;
+    font-size: 37px;
+    color: black;
+}
+
+.Primitives-Avatar.Primitives-Avatar__solid {
+    border: 2px solid darkgreen;
+    border-radius: 100%;
+}
+.Primitives-Text {
+    font-family: "SF UI Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    line-height: 24px;
+    font-size: 20px;
+    font-weight: 400;
+    box-sizing: border-box;
+    color: white;
+}
+
+.Primitives-Text.Primitives-Text__strong {
+    color: rgb(251, 230, 162);
+    font-weight: 600;
+}
+:root {
+    --font-family: "SF UI Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.Primitives-TextArea {
+    background-color: rgba(128, 128, 128, 0.3) !important;
+    color: white !important;
+    height: 100%;
+    width: 100%;
+    padding: 8px 10px 8px 10px;
+    min-height: 80px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    line-height: 20px;
+    font-weight: 400;
+    letter-spacing: -0.05px;
+    border-radius: 3px;
+    font-size: 14px;
+    font-family: var(--font-family);
+    box-sizing: border-box;
+}
+
+.Primitives-TextArea__label {
+    display: block;
+    color: rgb(251, 230, 162);
+    line-height: 20px;
+    margin-bottom: 0px;
+    letter-spacing: -0.05px;
+    font-weight: 500;
+    font-size: 14px;
+    font-size: var(--font-family);
+    box-sizing: border-box;
+}
+
+.Primitives-TextArea__container {
+    margin-top: 10px;
+    margin-bottom: 24px;
+    box-sizing: border-box;
+}
+:root {
+    --font-family: "SF UI Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.Primitives-SelectField{
+    appearance: none;
+    border: none;
+    background: linear-gradient(rgb(255, 255, 255), rgb(244, 245, 247)) white;
+    width: 100%;
+    -webkit-font-smoothing: antialiased;
+    text-decoration: none;
+    outline: none;
+    cursor: pointer;
+    box-shadow: rgb(67 90 111 / 14%) 0px 0px 0px 1px inset, rgb(67 90 111 / 6%) 0px -1px 1px 0px inset;
+    flex: 1 1 0%;
+    padding-right: 28px;
+    padding-left: 10px;
+    letter-spacing: 0px;
+    line-height: 16px;
+    font-size: 12px;
+    font-weight: 400;
+    background-color: rgba(128, 128, 128, 0.3);
+    background-image: none;
+    color: rgb(251, 230, 162);
+    border-radius: 3px;
+    font-family: var(--font-family);
+}
+
+.Primitives-SelectField__container {
+    box-sizing: border-box;
+    margin-bottom: 24px;
+}
+
+.Primitives-SelectField__label {
+    display: block;
+    box-sizing: border-box;
+    line-height: 20px;
+    color: rgb(251, 230, 162);
+    margin-bottom: 0px;
+    letter-spacing: -0.05px;
+    font-weight: 500;
+    font-size: 14px;
+    font-family: var(--font-family);
+}
+
+.Primitives-SelectField__inner_box {
+    position: relative;
+    display: inline-flex;
+    flex: 1 1 0%;
+    width: 100%;
+    height: 32px;
+}
+
+.Primitives-SelectField__svg_arrow {
+    position: absolute;
+    fill: rgb(102, 120, 138);
+    height: 12px;
+    width: 12px;
+    right: 8px;
+    top: 50%;
+    margin-top: -6px;
+    pointer-events: none;
+    box-sizing: border-box;
+}
+:root {
+    --title-height   : 25px;
+    --title-bar-color: #0095ff;
+    --button-radius  : 6;
+    --font-size-14   : 14px;
+    --font-family    : Helvetica, sans-serif;
+}
+
+.TitleBar-HeaderButton {
+    padding: 0;
+	margin: 0;
+	width: 25px;
+	height: 25px;
+	outline: none !important;
+	border: none !important;
+	text-align: center;
+}
+
+.TitleBar-HeaderButton__close {
+    font-size: 20px;
+	font-weight: 500;
+	line-height: 36px;
+	background-color: var(--title-bar-color);
+}
+
+.TitleBar-HeaderButton__close.HeaderButton_state_hover {
+    background-color: #ec6060;
+}
+
+.TitleBar-HeaderButton__close.HeaderButton_state_down {
+    background-color: #bc4040;
+}
+
+.TitleBar-HeaderButton__minimize {
+	line-height: 22px;
+	background-color: var(--title-bar-color);
+}
+
+.TitleBar-HeaderButton__minimize.HeaderButton_state_hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.TitleBar-HeaderButton__minimize.HeaderButton_state_down {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.TitleBar-HeaderButton__maximize {
+	line-height: 12px;
+	background-color: var(--title-bar-color);
+}
+
+.TitleBar-HeaderButton__maximize.HeaderButton_state_hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.TitleBar-HeaderButton__maximize.HeaderButton_state_down {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+:root {
+    --title-height  : 25px;
+    --button-radius : 6;
+    --font-size  : 14px;
+    --font-family   : Helvetica, sans-serif;
+    --title-bar-color: #0095ff;
+}
+
+.TitleBar {
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    overflow: hidden;
+    width: 100%;
+    font-family: var(--font-family);
+	background: var(--title-bar-color);
+	color: rgba(0, 0, 0, 0.7);
+	font-size: var(--font-size);
+    height: var(--title-height);
+}
+
+.TitleBar_buttons_group {
+    height: var(--title-height);
+	position: absolute;
+	right: 0;
+	margin: 0;
+	display: flex;
+	align-items: center;
+	vertical-align: baseline;
+}
+
+.TitleBar_title {
+    width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.DraggableWindow {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    width: 300px;
+    height: 550px;
+    top: 30%;
+    left: 50%;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.DraggableWindow__content {
+    position: absolute; 
+    width: 100%;
+    top: 25px;
+    bottom: 0;
+}
+:root {
+    --font-family: "SF UI Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.ModalWindow-Dialog {
+    position: fixed;
+    visibility: visible;
+    animation: 240ms cubic-bezier(0.175, 0.885, 0.32, 1.175) 0s 1 normal both running open;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.ModalWindow-Dialog.ModalWindow-Dialog__hidden {
+    visibility: hidden;
+    display: none;
+}
+
+.ModalWindow-Dialog__title_container {
+    display: flex;
+    align-items: center;
+    -webkit-box-align: center;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+}
+
+.ModalWindow-Dialog__title {
+    flex: 1 1 0%;
+    color: rgb(251, 230, 162);
+    letter-spacing: -0.07px;
+    font-family: var(--font-family);
+    line-height: 24px;
+    font-size: 20px;
+    font-weight: 500;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.ModalWindow-Dialog__content {
+    overflow-y: hidden;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+.ModalWindow-Dialog__footer {
+    display: flex;
+    flex-direction: row-reverse;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+    flex-shrink: 0;
+    margin-top: 24px;
+    box-sizing: border-box;
+}
+
+@keyframes show {
+    0% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+:root {
+    --font-family: "SF UI Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.ListBox-ListItem {
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    height: 32px;
+    outline: none;
+    text-decoration: none;
+    color: rgb(251, 230, 162);
+    background-color: rgba(0, 0, 0, 0.01);
+    display: flex;
+    align-items: center;
+    -webkit-box-align: center;
+    box-sizing: border-box;
+}
+
+.ListBox-ListItem.ListBox-ListItem__hover {
+    background-color: rgba(202, 183, 16, 0.1) !important;
+}
+
+.ListBox-ListItem__item {
+    display: flex;
+    cursor: pointer;
+    align-self: stretch;
+    flex-shrink: 0;
+    padding-right: 12px;
+    border-bottom: 1px solid rgb(26, 28, 29);
+    overflow-y: hidden;
+    overflow-x: hidden;
+    flex: 1 1 0%;
+    padding-left: 0px;
+    align-items: center;
+    -webkit-box-align: center;
+    box-sizing: border-box;
+}
+
+.ListBox-ListItem__title_container {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    flex: 1 1 0%;
+    letter-spacing: 0px;
+    line-height: 16px;
+    font-size: 12px;
+    font-weight: 400;
+    color: rgb(251, 230, 162);
+    cursor: pointer;
+    font-family: var(--font-family);
+}
+
+.ListBox-ListItem__title {
+    display: flex;
+    align-items: center;
+    -webkit-box-align: center;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0.01);
+    white-space: nowrap;
+    letter-spacing: 0px;
+    line-height: 16px;
+    font-size: 12px;
+    font-weight: 400;
+    color: rgb(251, 230, 162);
+    cursor: pointer;
+    font-family: var(--font-family);
+}
+.ComboBox-ListBox {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+    position: fixed;
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.175);
+    transition-duration: 0ms;
+    transition-property: opacity, -webkit-transform, transform;
+    transform-origin: 120px 0px;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 100;
+    border-radius: 0 0 5px 5px;
+}
+
+.ComboBox-ListBox.ComboBox-ListBox__hidden {
+    visibility: hidden;
+    display: none;
+}
+
+.ComboBox-ListBox__items_container {
+    overflow: auto;
+    will-change: transform;
+    width: 100%;
+    padding: 0 0 0 10px;
+}
+
+.ComboBox-ListBox__items {
+    position: relative;
+    width: 100%;
+    min-height: 100%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+:root {
+    --font-family: "SF UI Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.Primitives-ComboBox{
+    appearance: none;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.8);
+    box-shadow: rgb(67 90 111 / 30%) 0px 0px 0px 1px inset, rgb(67 90 111 / 14%) 0px 1px 2px inset;
+    flex: 1 1 0%;
+    border-radius: 3px 0 0 3px;
+    padding: 0 10px 0 10px;
+    width: 0px;
+    height: 100%;
+    letter-spacing: 0px;
+    line-height: 16px;
+    font-size: 12px;
+    font-weight: 400;
+    color: rgb(251, 230, 162);
+    box-sizing: border-box;
+    outline: none;
+    font-family: var(--font-family);
+}
+
+.Primitives-ComboBox__main_container {
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 5px;
+    color: rgb(251, 230, 162);
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.Primitives-ComboBox__container {
+    display: inline-flex;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+}
+
+.Primitives-ComboBox__button {
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    width: 32px;
+    margin-left: -1px;
+    border-radius: 0 3px 3px 0;
+    line-height: 32px;
+    letter-spacing: 0px;
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    justify-content: center;
+    -webkit-box-pack: center;
+    -webkit-font-smoothing: antialiased;
+    appearance: none;
+    vertical-align: middle;
+    text-decoration: none;
+    border: none;
+    outline: none !important;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.Primitives-ComboBox__inner_box {
+    box-sizing: border-box;
+    display: inline-flex;
+}
+
+.Primitives-ComboBox__svg_arrow {
+    position: absolute;
+    fill: rgb(251, 230, 162);
+    height: 12px;
+    width: 12px;
+    right: 8px;
+    top: 50%;
+    margin-top: -6px;
+    pointer-events: none;
+    box-sizing: border-box;
+}
