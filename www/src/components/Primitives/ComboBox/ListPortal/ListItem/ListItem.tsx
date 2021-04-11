@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import CSS from 'csstype';
+import './ListItem.css';
 
-const css = require('./ListItem.css');
 let classNames = require('classnames');
 
 interface Props {

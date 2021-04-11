@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import CSS from 'csstype';
+import './DialogPortal.css';
 
-const css = require('./DialogPortal.css');
 const portal = document.getElementById('portal-for-dialog');
 let classNames = require('classnames');
 

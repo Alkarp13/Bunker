@@ -1,8 +1,8 @@
 import React, {useRef, useState} from 'react';
 import CSS from 'csstype';
 import ListPortal, { ListBox } from './ListPortal/ListPortal';
+import './ComboBox.css';
 
-const css = require('./ComboBox.css');
 let classNames = require('classnames');
 
 interface Props {

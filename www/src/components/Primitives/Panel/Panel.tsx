@@ -1,7 +1,7 @@
 import * as React from "react";
 import CSS from 'csstype';
+import './Panel.css';
 
-const css = require('./Panel.css');
 let classNames = require('classnames');
 
 interface Props {

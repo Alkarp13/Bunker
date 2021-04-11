@@ -1,7 +1,7 @@
 import React from "react";
 import HeaderButton from "../HeaderButton/HeaderButton";
+import './TitleBar.css';
 
-const css = require('./TitleBar.css');
 let classNames = require('classnames/bind');
 
 export interface ButtonFunctions {

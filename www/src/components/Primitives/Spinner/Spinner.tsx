@@ -1,6 +1,6 @@
 import * as React from "react";
+import './Spinner.css';
 
-const css = require('./Spinner.css');
 let classNames = require('classnames');
 
 interface Props {

@@ -1,6 +1,6 @@
 import React from 'react';
+import './Text.css';
 
-const css = require('./Text.css');
 let classNames = require('classnames');
 
 type Size = 300 | 400 | 500 | 600;

@@ -1,7 +1,7 @@
 import React from "react";
 import CSS from "csstype";
+import './Button.css';
 
-const css = require('./Button.css');
 let classNames = require('classnames');
 
 interface VisualProps {

@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import CSS from 'csstype';
+import './SelectField.css';
 
-const css = require('./SelectField.css');
 let classNames = require('classnames');
 
 interface Props {

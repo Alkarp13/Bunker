@@ -1,6 +1,5 @@
 import React, {useMemo} from 'react';
-
-const css = require('./TextArea.css');
+import './TextArea.css';
 
 interface Props {
     value?       : string;

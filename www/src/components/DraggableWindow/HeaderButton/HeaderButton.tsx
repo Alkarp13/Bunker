@@ -1,6 +1,6 @@
 import React, { useState } from "react";
+import './HeaderButton.css';
 
-const css = require('./HeaderButton.css');
 let classNames = require('classnames');
 
 export interface ButtonInterface {

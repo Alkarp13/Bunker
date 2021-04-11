@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import CSS from 'csstype';
 import ListItem from './ListItem/ListItem';
+import './ListPortal.css';
 
-const css = require('./ListPortal.css');
 const portal = document.getElementById('portal-for-combo');
 let classNames = require('classnames');
 

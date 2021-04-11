@@ -1,7 +1,7 @@
 import React from "react";
 import TitleBar, { ButtonFunctions } from "./TitleBar/TitleBar";
+import './DraggableWindow.css';
 
-const css = require('./DraggableWindow.css');
 let classNames = require('classnames/bind');
 
 interface Props extends ButtonFunctions {

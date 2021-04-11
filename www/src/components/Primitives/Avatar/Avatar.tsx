@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import CSS from 'csstype';
+import './Avatar.css';
 
-const css = require('./Avatar.css');
 let classNames = require('classnames');
 type BaseColor = 'random' | 'red' | 'green' | 'blue' | 'yellow' | 'orange';
 
