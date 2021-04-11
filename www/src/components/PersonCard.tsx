@@ -1,6 +1,7 @@
 import React from 'react';
-import { Strong, Text, TextareaField } from 'evergreen-ui';
 import Panel from './Primitives/Panel/Panel';
+import Text from './Primitives/Text/Text';
+import TextArea from './Primitives/TextArea/TextArea';
 
 type Male = 'M' | 'F';
 
@@ -69,54 +70,54 @@ export default function PersonCard(props: Props) {
                 paddingBottom: '5px'
             }}>
             <Panel>
-                <Strong color='#FBE6A2' size={400}>Male: </Strong>
+                <Text color='#FBE6A2' size={400} strong={true}>Male: </Text>
                 <Text color='#DDEBF7'>{props.person.male}</Text>
             </Panel>
             <Panel>
-                <Strong color='#FBE6A2' size={400}>Age: </Strong>
+                <Text color='#FBE6A2' size={400} strong={true}>Age: </Text>
                 <Text color='#DDEBF7'>{props.person.age}</Text>
             </Panel>
             <Panel>
-                <Strong color='#FBE6A2' size={400}>IMT: </Strong>
+                <Text color='#FBE6A2' size={400} strong={true}>IMT: </Text>
                 <Text color='#DDEBF7'>{ getIMTString(props.person.weight, props.person.growth) }</Text>
             </Panel>
             <Panel>
-                <Strong color='#FBE6A2' size={400}>Profession: </Strong>
+                <Text color='#FBE6A2' size={400} strong={true}>Profession: </Text>
                 <Text color='#DDEBF7'>{props.person.profession}</Text>
             </Panel>
             <Panel>
-                <Strong color='#FBE6A2' size={400}>Life: </Strong>
+                <Text color='#FBE6A2' size={400} strong={true}>Life: </Text>
                 <Text color='#DDEBF7'>{props.person.life}</Text>
             </Panel>
             <Panel>
-                <Strong color='#FBE6A2' size={400}>Phobia: </Strong>
+                <Text color='#FBE6A2' size={400} strong={true}>Phobia: </Text>
                 <Text color='#DDEBF7'>{props.person.phobia}</Text>
             </Panel>
             <Panel>
-                <Strong color='#FBE6A2' size={400}>Hobbi: </Strong>
+                <Text color='#FBE6A2' size={400} strong={true}>Hobbi: </Text>
                 <Text color='#DDEBF7'>{props.person.hobbi}</Text>
             </Panel>
             <Panel>
-                <Strong color='#FBE6A2' size={400}>Character: </Strong>
+                <Text color='#FBE6A2' size={400} strong={true}>Character: </Text>
                 <Text color='#DDEBF7'>{props.person.character}</Text>
             </Panel>
             <Panel>
-                <Strong color='#FBE6A2' size={400}>Skill: </Strong>
+                <Text color='#FBE6A2' size={400} strong={true}>Skill: </Text>
                 <Text color='#DDEBF7'>{props.person.skill}</Text>
             </Panel>
             <Panel>
-                <Strong color='#FBE6A2' size={400}>Inventar: </Strong>
+                <Text color='#FBE6A2' size={400} strong={true}>Inventar: </Text>
                 <Text color='#DDEBF7'>{props.person.inventar}</Text>
             </Panel>
             <Panel>
-                <Strong color='#FBE6A2' size={400}>First action card: </Strong>
+                <Text color='#FBE6A2' size={400} strong={true}>First action card: </Text>
                 <Text color='#DDEBF7'>{props.person.action_1}</Text>
             </Panel>
             <Panel>
-                <Strong color='#FBE6A2' size={400}>Second action card: </Strong>
+                <Text color='#FBE6A2' size={400} strong={true}>Second action card: </Text>
                 <Text color='#DDEBF7'>{props.person.action_2}</Text>
             </Panel>
-            {(props.other) ? <TextareaField label="Notes" value={props.person.note} className='black-theme' onChange={(e: React.ChangeEvent<HTMLInputElement>) => props.changeNoteHandler(e.currentTarget.value, username)}/> : null}
+            {(props.other) ? <TextArea label="Notes" value={props.person.note} onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => props.changeNoteHandler(e.currentTarget.value, username)}/> : null}
         </Panel>
     );
 }

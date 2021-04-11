@@ -26,7 +26,6 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
-    "evergreen-ui": "^4.28.1",
     "html-webpack-plugin": "^4.5.0",
     "prebuild-install": "^6.0.1",
     "prop-types": "^15.7.2",

@@ -23,7 +23,8 @@ export default class CornerAlert extends React.Component<Props, State> {
     private footer: React.ReactNode = (
         <>
             <Button 
-                intent="success" 
+                intent="success"
+                appearance="dark"
                 disabled={this.state.isPlaying} 
                 onClick={
                     () => this.setState({ isPlaying: true})

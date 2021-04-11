@@ -26,7 +26,8 @@ export default class ActionDialog extends React.Component<Props, State> {
 
     private footer: React.ReactNode = (
         <Button 
-            intent="success" 
+            intent="success"
+            appearance="dark"
             onClick={
                 () => {
                     this.props.someoneSelected(this.state.anyone_person, this.state.anyone_card)

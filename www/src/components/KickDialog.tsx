@@ -21,7 +21,8 @@ export default class KickDialog extends React.Component<Props, State> {
 
     private footer: React.ReactNode = (
         <Button 
-            intent="success" 
+            intent="success"
+            appearance="dark"
             onClick={
                 () => this.props.kickSelectedPlayer(this.state.person_to_kick)
             }>
