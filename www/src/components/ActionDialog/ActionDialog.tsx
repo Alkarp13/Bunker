@@ -1,8 +1,8 @@
 import React from 'react';
-import { PersonsQueryArray } from './PersonsRow';
-import Button from './Primitives/Button/Button';
-import ComboBox from './Primitives/ComboBox/ComboBox';
-import ModalWindow from './Primitives/ModalWindow/ModalWindow';
+import { PersonsQueryArray } from '../PersonsRow/PersonsRow';
+import Button from '../Primitives/Button/Button';
+import ComboBox from '../Primitives/ComboBox/ComboBox';
+import ModalWindow from '../Primitives/ModalWindow/ModalWindow';
 
 interface State {
     anyone_person   : string;

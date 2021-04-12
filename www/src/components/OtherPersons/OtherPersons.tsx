@@ -1,8 +1,8 @@
 import React from 'react';
-import Spinner from './Primitives/Spinner/Spinner';
-import PersonCard, { PersonInfo } from './PersonCard';
+import Spinner from '../Primitives/Spinner/Spinner';
+import PersonCard, { PersonInfo } from '../PersonCard/PersonCard';
 
-const DraggableWindow = React.lazy(() => import('./DraggableWindow/DraggableWindow'));
+const DraggableWindow = React.lazy(() => import('../DraggableWindow/DraggableWindow'));
 
 interface Props {
     other_persons: Array<PersonInfo>;

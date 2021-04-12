@@ -1,8 +1,8 @@
 import React from 'react';
-import Button from './Primitives/Button/Button';
-import ModalWindow from './Primitives/ModalWindow/ModalWindow';
+import Button from '../Primitives/Button/Button';
+import ModalWindow from '../Primitives/ModalWindow/ModalWindow';
 
-const Timer = React.lazy(() => import('./Timer'));
+const Timer = React.lazy(() => import('../Timer/Timer'));
 
 interface Props {
     username    : string;

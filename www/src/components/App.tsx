@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Spinner from './Primitives/Spinner/Spinner';
 import ReconnectingWebSocket from 'reconnecting-websocket';
-import Lobby, { UsersArray } from './Lobby'
+import Lobby, { UsersArray } from './Lobby/Lobby'
 
-const Persons = React.lazy(() => import('./Persons'));
+const Persons = React.lazy(() => import('./Persons/Persons'));
 
 interface Props {}
 interface LobbyState {

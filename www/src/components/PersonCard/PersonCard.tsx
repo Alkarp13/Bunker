@@ -1,7 +1,7 @@
 import React from 'react';
-import Panel from './Primitives/Panel/Panel';
-import Text from './Primitives/Text/Text';
-import TextArea from './Primitives/TextArea/TextArea';
+import Panel from '../Primitives/Panel/Panel';
+import Text from '../Primitives/Text/Text';
+import TextArea from '../Primitives/TextArea/TextArea';
 
 type Male = 'M' | 'F';
 

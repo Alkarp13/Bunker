@@ -1,11 +1,11 @@
 import React from 'react';
-import PersonCard, { PersonInfo } from './PersonCard';
-import Button from './Primitives/Button/Button';
-import Spinner from './Primitives/Spinner/Spinner';
-import Panel from './Primitives/Panel/Panel';
-import SelectField from './Primitives/SelectField/SelectField';
+import PersonCard, { PersonInfo } from '../PersonCard/PersonCard';
+import Button from '../Primitives/Button/Button';
+import Spinner from '../Primitives/Spinner/Spinner';
+import Panel from '../Primitives/Panel/Panel';
+import SelectField from '../Primitives/SelectField/SelectField';
 
-const DraggableWindow = React.lazy(() => import('./DraggableWindow/DraggableWindow'));
+const DraggableWindow = React.lazy(() => import('../DraggableWindow/DraggableWindow'));
 
 interface Props {
     person: PersonInfo;

@@ -1,15 +1,15 @@
 import React from 'react';
-import Spinner from './Primitives/Spinner/Spinner';
+import Spinner from '../Primitives/Spinner/Spinner';
 import ReconnectingWebSocket from 'reconnecting-websocket';
-import Legend, { LegendInterface, LegendInfo } from './Legend';
-import PersonsRow, { PersonsQueryArray } from './PersonsRow';
-import { PersonInfo } from './PersonCard';
+import Legend, { LegendInterface, LegendInfo } from '../Legend/Legend';
+import PersonsRow, { PersonsQueryArray } from '../PersonsRow/PersonsRow';
+import { PersonInfo } from '../PersonCard/PersonCard';
 
-const CurrentPerson = React.lazy(() => import('./CurrentPerson'));
-const OtherPersons = React.lazy(() => import('./OtherPersons'));
-const CornerAlert = React.lazy(() => import('./CornerAlert'));
-const ActionDialog = React.lazy(() => import('./ActionDialog'));
-const KickDialog = React.lazy(() => import('./KickDialog'));
+const CurrentPerson = React.lazy(() => import('../CurrentPerson/CurrentPerson'));
+const OtherPersons = React.lazy(() => import('../OtherPersons/OtherPersons'));
+const CornerAlert = React.lazy(() => import('../CornerAlert/CornerAlert'));
+const ActionDialog = React.lazy(() => import('../ActionDialog/ActionDialog'));
+const KickDialog = React.lazy(() => import('../KickDialog/KickDialog'));
 
 interface Props {}
 interface State extends LegendInterface {

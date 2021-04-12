@@ -1,7 +1,7 @@
 import React from 'react';
-import { PersonInfo } from './PersonCard';
-import Panel from './Primitives/Panel/Panel';
-import Avatar from './Primitives/Avatar/Avatar';
+import { PersonInfo } from '../PersonCard/PersonCard';
+import Panel from '../Primitives/Panel/Panel';
+import Avatar from '../Primitives/Avatar/Avatar';
 import ReactTooltip from 'react-tooltip';
 
 interface PersonsQuery {

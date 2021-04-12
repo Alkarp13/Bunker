@@ -1,6 +1,6 @@
 import React from 'react';
-import Panel from './Primitives/Panel/Panel';
-import Text from './Primitives/Text/Text';
+import Panel from '../Primitives/Panel/Panel';
+import Text from '../Primitives/Text/Text';
 
 export interface LegendInfo {
     square          : number;
