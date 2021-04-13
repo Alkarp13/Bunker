@@ -48,6 +48,8 @@ export default function Text(props: Props) {
             style.fontSize = '20px';
             break;
         default:
+            style.lineHeight = '20px';
+            style.fontSize = '14px';
             break;
     }
 

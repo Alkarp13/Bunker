@@ -26,9 +26,7 @@ export default function TextArea(props: Props) {
             <label className={'Primitives-TextArea__label'} htmlFor={area_id}>
                 {label}
             </label>
-            <textarea id={area_id} className={'Primitives-TextArea'} onChange={onChange}>
-                {value}
-            </textarea>
+            <textarea id={area_id} className={'Primitives-TextArea'} onChange={onChange} value={value}/>
         </div>
     )
 }

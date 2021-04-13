@@ -1,12 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import {Route, Switch, Redirect, RouteComponentProps, withRouter} from "react-router-dom";
 import Spinner from './Primitives/Spinner/Spinner';
 import ReconnectingWebSocket from 'reconnecting-websocket';
-import Lobby, { UsersArray } from './Lobby/Lobby'
+import Lobby, { UsersArray } from './Lobby/Lobby';
 
 const Persons = React.lazy(() => import('./Persons/Persons'));
 
-interface Props {}
 interface LobbyState {
     lobby_state: string;
 }
@@ -19,7 +18,7 @@ interface State extends LobbyUsers {
     isLoaded: boolean;
 }
 
-class App extends React.Component<Props, State> {
+class App extends React.Component<RouteComponentProps, State> {
     state: Readonly<State> = {
         isLoaded: false,
         lobby_state: '',
@@ -74,25 +73,26 @@ class App extends React.Component<Props, State> {
 
     render() {
         const { isLoaded, users, lobby_state } = this.state;
+
         if (!isLoaded) {
             return <Spinner size={32} />;
-        } else if (lobby_state === 'R') {
-            return (
-                <Lobby lobby_state={lobby_state} users={users} connection={this.connection} />
-            );
-        } else if (/person/i.test(window.location.href)) {
-            return (
-                <React.Suspense fallback={<Spinner size={32} />} >
-                    <Persons />
-                </React.Suspense>
-            );
-        } else if (lobby_state === 'S') {
-            window.location.href = '/person';
+        } else if ((lobby_state === 'S') && !(/person/i.test(window.location.href))) {
+            return <Redirect to={"/person"}/>
         }
+
+        return (
+            <Switch>
+                <Route path='/lobby' render={() => (
+                    <Lobby lobby_state={lobby_state} users={users} connection={this.connection} />
+                )} />
+                <Route path='/person' render={() => (
+                    <React.Suspense fallback={<Spinner size={32} />} >
+                        <Persons />
+                    </React.Suspense>
+                )} />
+            </Switch>
+        );
     }
 }
 
-ReactDOM.render(
-    <App />,
-    document.getElementById('app')
-);
+export default withRouter(App);

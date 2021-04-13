@@ -24,6 +24,9 @@ export default {
 
   // The directory where Jest should output its coverage files
   coverageDirectory: "coverage",
+  moduleNameMapper: {
+      "\\.(css|less|scss|sass)$": "identity-obj-proxy"
+  }
 
   // An array of regexp pattern strings used to skip coverage collection
   // coveragePathIgnorePatterns: [
