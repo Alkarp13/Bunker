@@ -22,15 +22,13 @@ interface Props {
 
 interface State {
     is_ready    : boolean;
-    lobby_state : string;
 }
 
 export default class Lobby extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            is_ready: false,
-            lobby_state: props.lobby_state
+            is_ready: false
         };
         this.setReadyState = this.setReadyState.bind(this);
     }
@@ -42,8 +40,7 @@ export default class Lobby extends React.Component<Props, State> {
                 (result) => {
                     this.props.connection.send(JSON.stringify({ update_lobby: true }));
                     this.setState({ 
-                        is_ready: !this.state.is_ready, 
-                        lobby_state: result.lobby_state 
+                        is_ready: !this.state.is_ready
                     });
                 },
                 (error) => {
@@ -53,7 +50,7 @@ export default class Lobby extends React.Component<Props, State> {
     }
 
     render() {
-        if (this.state.lobby_state === 'S') {
+        if (this.props.lobby_state === 'S') {
             return (<Redirect to={'/person'} />);
         } else {
             return (
