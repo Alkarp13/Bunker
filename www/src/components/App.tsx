@@ -3,9 +3,8 @@ import {Route, Switch, Redirect, RouteComponentProps, withRouter} from "react-ro
 import Spinner from './Primitives/Spinner/Spinner';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 import Lobby, { UsersArray } from './Lobby/Lobby';
-import Persons from './Persons/Persons';
 
-//const Persons = React.lazy(() => import('./Persons/Persons'));
+const Persons = React.lazy(() => import('./Persons/Persons'));
 
 interface LobbyState {
     lobby_state: string;
@@ -86,7 +85,11 @@ class App extends React.Component<RouteComponentProps, State> {
                 <Route path='/lobby' render={() => (
                     <Lobby lobby_state={lobby_state} users={users} connection={this.connection} />
                 )} />
-                <Route path='/person' component={Persons} />
+                <Route path='/person' component={Persons} render={() => (
+                    <React.Suspense fallback={<Spinner size={32} />} >
+                        <Persons />
+                    </React.Suspense>
+                )} />
             </Switch>
         );
     }
