@@ -3,8 +3,9 @@ import {Route, Switch, Redirect, RouteComponentProps, withRouter} from "react-ro
 import Spinner from './Primitives/Spinner/Spinner';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 import Lobby, { UsersArray } from './Lobby/Lobby';
+import Persons from './Persons/Persons';
 
-const Persons = React.lazy(() => import('./Persons/Persons'));
+//const Persons = React.lazy(() => import('./Persons/Persons'));
 
 interface LobbyState {
     lobby_state: string;
