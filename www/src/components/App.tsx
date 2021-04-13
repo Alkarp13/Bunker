@@ -77,7 +77,7 @@ class App extends React.Component<RouteComponentProps, State> {
         if (!isLoaded) {
             return <Spinner size={32} />;
         } else if ((lobby_state === 'S') && !(/person/i.test(window.location.href))) {
-            return <Redirect from={"/lobby"} to={"/person"}/>
+            return <Redirect push to={"/person"}/>
         }
 
         return (
