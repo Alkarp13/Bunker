@@ -85,7 +85,7 @@ class App extends React.Component<RouteComponentProps, State> {
                 <Route path='/lobby' render={() => (
                     <Lobby lobby_state={lobby_state} users={users} connection={this.connection} />
                 )} />
-                <Route path='/person' component={Persons} render={() => (
+                <Route path='/person' render={() => (
                     <React.Suspense fallback={<Spinner size={32} />} >
                         <Persons />
                     </React.Suspense>
