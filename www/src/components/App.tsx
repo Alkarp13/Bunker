@@ -77,19 +77,19 @@ class App extends React.Component<RouteComponentProps, State> {
         if (!isLoaded) {
             return <Spinner size={32} />;
         } else if ((lobby_state === 'S') && !(/person/i.test(window.location.href))) {
-            return <Redirect to={"/person"}/>
+            return <Redirect from={"/lobby"} to={"/person"}/>
         }
 
         return (
             <Switch>
-                <Route path='/lobby' render={() => (
+                <Route path='/lobby'>
                     <Lobby lobby_state={lobby_state} users={users} connection={this.connection} />
-                )} />
-                <Route path='/person' render={() => (
+                </Route>
+                <Route path='/person'>
                     <React.Suspense fallback={<Spinner size={32} />} >
                         <Persons />
                     </React.Suspense>
-                )} />
+                </Route>
             </Switch>
         );
     }
